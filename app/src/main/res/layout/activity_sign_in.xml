@@ -6,14 +6,68 @@
         android:layout_width="match_parent"
 
         android:layout_height="match_parent"
-        android:background="@android:color/background_light"
+        android:background="@android:color/darker_gray"
         tools:context=".SignIn">
-    <ImageView android:layout_width="350dp"
+    <ImageView
+               android:id="@+id/logo"
+               android:layout_width="350dp"
                android:layout_height="200dp"
                android:src="@drawable/icon"
 
-               tools:ignore="MissingConstraints" tools:layout_editor_absoluteY="45dp"
+               tools:ignore="MissingConstraints"
+               tools:layout_editor_absoluteY="45dp"
                tools:layout_editor_absoluteX="30dp"/>
+
+    <EditText
+            android:id="@+id/email"
+            android:layout_width="312dp"
+            android:layout_height="48dp"
+            android:hint="Email......"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:background="@color/cardview_light_background"
+
+            tools:ignore="MissingConstraints"
+
+            tools:layout_editor_absoluteY="300dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="48dp"/>
+
+
+    <EditText
+            android:id="@+id/Password"
+            android:layout_width="312dp"
+            android:layout_height="48dp"
+            android:hint="Password......"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:background="@color/cardview_light_background"
+
+            tools:ignore="MissingConstraints,TextFields"
+
+            tools:layout_editor_absoluteY="384dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="48dp"/>
+
+
+    <Button
+            android:id="@+id/login"
+            android:layout_width="190dp"
+            android:layout_height="27dp"
+            android:background="@color/cardview_light_background"
+            tools:ignore="MissingConstraints" tools:layout_editor_absoluteY="480dp"
+            android:text="LogIn"
+            android:textSize="15dp"
+            android:textAllCaps="true"
+            tools:layout_editor_absoluteX="110dp"/>
+    <Button
+            android:id="@+id/signup"
+            android:layout_width="228dp"
+            android:layout_height="56dp"
+            android:background="@color/cardview_light_background"
+            tools:ignore="MissingConstraints" tools:layout_editor_absoluteY="641dp"
+            android:text="New User? - Sign Up"
+            android:textSize="15dp"
+            android:textAllCaps="true"
+            tools:layout_editor_absoluteX="91dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
