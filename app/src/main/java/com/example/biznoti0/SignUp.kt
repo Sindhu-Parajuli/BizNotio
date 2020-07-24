@@ -67,7 +67,7 @@ class SignUp : AppCompatActivity() {
 
     }
 
-    private fun store(Names:String,emails:String)
+   private fun store(Names:String,emails:String)
     {
 
     }
