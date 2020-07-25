@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
 
-            R.id.navigation_dashboard -> {
+            R.id.search -> {
                
                 return@OnNavigationItemSelectedListener true
             }
