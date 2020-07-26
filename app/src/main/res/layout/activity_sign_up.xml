@@ -125,7 +125,7 @@
             android:id="@+id/register"
             android:layout_width="190dp"
             android:layout_height="48dp"
-            android:background="@color/cardview_light_background"
+            android:background="@drawable/background"
             tools:ignore="MissingConstraints"
             android:text="Register"
             android:textSize="15dp"
