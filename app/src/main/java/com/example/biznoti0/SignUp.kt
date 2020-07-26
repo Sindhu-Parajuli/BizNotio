@@ -3,6 +3,7 @@ package com.example.biznoti0
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -33,6 +34,13 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun Registration() {
+        var acType: String = ""
+        RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.AT_investor)
+                acType = "Investor"
+            if (checkedId == R.id.AT_investee)
+                acType = "Investee"
+        }
         val Fnames = SignUpFName.text.toString()
         val Lnames = SignUpLName.text.toString()
         val Mnames = SignUpMName.text.toString()
@@ -56,10 +64,10 @@ class SignUp : AppCompatActivity() {
             mFireAuth.createUserWithEmailAndPassword(emails, passwords).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         if (Mnames == "") {
-                            store(Fnames, "N/A", Lnames, emails, progressDialog)
+                            store(Fnames, "N/A", Lnames, emails, progressDialog, acType)
                         }
                         else {
-                            store(Fnames, Mnames, Lnames, emails, progressDialog)
+                            store(Fnames, Mnames, Lnames, emails, progressDialog, acType)
                         }
                     } else {
                         Toast.makeText(this, "Sign up failed", Toast.LENGTH_LONG).show();
@@ -71,7 +79,7 @@ class SignUp : AppCompatActivity() {
 
     }
 
-    private fun store(Fnames: String, Mnames: String, Lnames: String, emails: String, progressDialog: ProgressDialog) {
+    private fun store(Fnames: String, Mnames: String, Lnames: String, emails: String, progressDialog: ProgressDialog, acType: String) {
 
         var curruserId = mFireAuth.currentUser!!.uid
         userreference = FirebaseDatabase.getInstance().reference.child("usersID").child(curruserId)
@@ -79,6 +87,7 @@ class SignUp : AppCompatActivity() {
         val currUserHashMap = HashMap<String, Any>()
 
         currUserHashMap["usersID"] = curruserId
+        currUserHashMap["ACType"] = acType
         currUserHashMap["FName"] = Fnames
         currUserHashMap["MName"] = Mnames
         currUserHashMap["LName"] = Lnames
