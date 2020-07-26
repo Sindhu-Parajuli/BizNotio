@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
 class SignUp : AppCompatActivity() {
+    private lateinit var mFireAuth: FirebaseAuth
+    private lateinit var userreference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,8 +21,10 @@ class SignUp : AppCompatActivity() {
 
         signUpIn.setOnClickListener {
             startActivity(Intent(this, SignInActivity::class.java))
-
+            finish()
         }
+
+        mFireAuth = FirebaseAuth.getInstance()
 
         register.setOnClickListener {
             Registration()
@@ -29,7 +33,6 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun Registration() {
-        val mfirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
         val Fnames = SignUpFName.text.toString()
         val Lnames = SignUpLName.text.toString()
         val Mnames = SignUpMName.text.toString()
@@ -37,31 +40,31 @@ class SignUp : AppCompatActivity() {
         val passwords = SignUpPassword.text.toString()
 
         if (Fnames.isEmpty()) {
-            Toast.makeText(this, "First Name is required", Toast.LENGTH_LONG)
+            Toast.makeText(this, "First Name is required", Toast.LENGTH_LONG).show()
         } else if (Lnames.isEmpty()) {
-            Toast.makeText(this, "Last Name is required", Toast.LENGTH_LONG)
+            Toast.makeText(this, "Last Name is required", Toast.LENGTH_LONG).show()
         } else if (emails.isEmpty()) {
-            Toast.makeText(this, "Email is required", Toast.LENGTH_LONG)
+            Toast.makeText(this, "Email is required", Toast.LENGTH_LONG).show()
         } else if (passwords.isEmpty()) {
-            Toast.makeText(this, "Password is required", Toast.LENGTH_LONG)
+            Toast.makeText(this, "Password is required", Toast.LENGTH_LONG).show()
         } else {
             val progressDialog = ProgressDialog(this@SignUp)
             progressDialog.setTitle("SignUp")
             progressDialog.setMessage("Sign up Process in Progress.....")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
-            mfirebaseAuth.createUserWithEmailAndPassword(emails, passwords)
-                .addOnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        Toast.makeText(this, "Sign up failed", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (!Mnames.isEmpty()) {
+            mFireAuth.createUserWithEmailAndPassword(emails, passwords).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        if (Mnames == "") {
                             store(Fnames, "N/A", Lnames, emails, progressDialog)
                         }
-                        store(Fnames, Mnames, Lnames, emails, progressDialog)
+                        else {
+                            store(Fnames, Mnames, Lnames, emails, progressDialog)
+                        }
+                    } else {
+                        Toast.makeText(this, "Sign up failed", Toast.LENGTH_LONG).show();
+                        finish()
                     }
-
-
                 }
         }
 
@@ -70,23 +73,24 @@ class SignUp : AppCompatActivity() {
 
     private fun store(Fnames: String, Mnames: String, Lnames: String, emails: String, progressDialog: ProgressDialog) {
 
-        val curruserId = FirebaseAuth.getInstance().currentUser!!.uid
+        var curruserId = mFireAuth.currentUser!!.uid
+        userreference = FirebaseDatabase.getInstance().reference.child("usersID").child(curruserId)
 
-        val userreference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(curruserId)
+        val currUserHashMap = HashMap<String, Any>()
 
-        userreference.child("FName").setValue(Fnames)
-        userreference.child("MName").setValue(Mnames)
-        userreference.child("LName").setValue(Lnames)
-        userreference.child("email").setValue(emails)
-        userreference.child("Image").setValue("gs://bitnoti0.appspot.com/user Info/profile.png")
+        currUserHashMap["usersID"] = curruserId
+        currUserHashMap["FName"] = Fnames
+        currUserHashMap["MName"] = Mnames
+        currUserHashMap["LName"] = Lnames
+        currUserHashMap["Email"] = emails
+        currUserHashMap["Image"] = "ts://bitnoti0.appspot.com/user Info/profile.png"
+        userreference.updateChildren(currUserHashMap)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Sign up Success", Toast.LENGTH_SHORT).show();
-
-                    val intent = Intent(this@SignUp,MainActivity::class.java)
+                    val intent = Intent(this@SignUp, MainActivity::class.java)
                     startActivity(intent)
                     finish()
-
                 }
                 else
                 {
