@@ -38,20 +38,16 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun SignIn() {
         val mfirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
         val emails = email.text.toString()
         val passwords = Password.text.toString()
 
         if (emails.isEmpty()) {
-            Toast.makeText(this, "Email is must", Toast.LENGTH_LONG)
+            Toast.makeText(this, "Email is must", Toast.LENGTH_LONG).show()
         } else if (passwords.isEmpty()) {
-            Toast.makeText(this, "Password is must", Toast.LENGTH_LONG)
+            Toast.makeText(this, "Password is must", Toast.LENGTH_LONG).show()
         } else {
-
-
 
             val progressDialog = ProgressDialog(this@SignInActivity)
             progressDialog.setTitle("Logging In")
@@ -59,72 +55,18 @@ class SignInActivity : AppCompatActivity() {
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
 
-
             mfirebaseAuth.signInWithEmailAndPassword(emails, passwords)
-                    .addOnCompleteListener { task ->
-                        if (!task.isSuccessful) {
-                            Toast.makeText(this, "Sign up failed", Toast.LENGTH_SHORT).show();
-
-
-                            progressDialog.dismiss()
-                        } else {
-
-                            val intent = Intent(this@SignInActivity, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-
-                        }
-
-
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Toast.makeText(this, "Sign up failed", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss()
+                    } else {
+                        val intent = Intent(this@SignInActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
+                }
         }
-
-
     }
 
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
