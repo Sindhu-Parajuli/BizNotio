@@ -11,6 +11,23 @@
 
     <string name="home_second">Home Second</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="create_post">Create Post</string>
+    <string name="create_post_next">Create Post Next</string>
+
+
+    <string name="home_page">Home Page</string>
+    <string name="home_page_next">Home Page Next</string>
+
+    <string name="notification">Notifications</string>
+    <string name="notification_next">Notifications Next</string>
+
+    <string name="profile_page">Profile</string>
+    <string name="profile_next">Profile Next</string>
+
+    <string name="search_page">Search</string>
+    <string name="search_next">Search Next</string>
+
 </resources>
