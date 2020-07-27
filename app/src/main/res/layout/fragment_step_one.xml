@@ -1,16 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="Fragments.CreatePost">
+    android:layout_height="match_parent">
+
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/create_post"
+        android:text="step one"
         android:textAlignment="center"
         android:textSize="52sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +24,9 @@
         android:id="@+id/next_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/create_post_next"
+        android:text="next step"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
