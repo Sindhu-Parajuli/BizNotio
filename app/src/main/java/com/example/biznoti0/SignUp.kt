@@ -44,9 +44,7 @@ class SignUp : AppCompatActivity() {
         } else {
 
             val progressDialog = ProgressDialog(this@SignUp)
-            progressDialog.setTitle("SignUp")
             progressDialog.setMessage("Sign up Process in Progress.....")
-            progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
 
 

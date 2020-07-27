@@ -6,16 +6,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize">
-    <TextView
-            android:id="@+id/message"
+
+
+
+    <FrameLayout
+            android:id="@+id/frame_layout"
             android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="16dp"
-              android:layout_marginTop="16dp"
-              android:text="Home"
-              android:textAlignment="center"
-              android:textSize="20dp"
-              android:layout_centerVertical="true"/>
+            android:layout_height="match_parent"
+            android:layout_above="@+id/nav_view"
+    >
+    </FrameLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
