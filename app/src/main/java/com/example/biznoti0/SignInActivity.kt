@@ -21,10 +21,14 @@ class SignInActivity : AppCompatActivity() {
 
         }
 
-
         login.setOnClickListener {
             SignIn();
         }
+
+        resetBut.setOnClickListener {
+            startActivity(Intent(this, passwordResetActivity::class.java))
+        }
+
     }
 
     override fun onStart() {
