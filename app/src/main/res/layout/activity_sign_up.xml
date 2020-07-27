@@ -22,7 +22,7 @@
     <RadioGroup
             android:layout_width="228dp"
             android:layout_height="80dp"
-            android:id="@+id/AT_Radiogroup"
+            android:id="@+id/Radiogroup"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.3" app:layout_constraintVertical_bias="0.228"
@@ -125,14 +125,17 @@
             android:id="@+id/register"
             android:layout_width="190dp"
             android:layout_height="48dp"
-            android:background="@drawable/background"
+            android:background="@color/cardview_light_background"
             tools:ignore="MissingConstraints"
             android:text="Register"
             android:textSize="15dp"
             android:textAllCaps="true"
-            android:layout_below="@id/SignUpEmail" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_below="@id/SignUpEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.833"/>
 
     <Button

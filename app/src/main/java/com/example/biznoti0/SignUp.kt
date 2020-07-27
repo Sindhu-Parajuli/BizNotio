@@ -3,6 +3,8 @@ package com.example.biznoti0
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.*
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,10 +17,20 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 class SignUp : AppCompatActivity() {
     private lateinit var mFireAuth: FirebaseAuth
     private lateinit var userreference: DatabaseReference
+    lateinit var acType: String
+    lateinit var radioGroup: RadioGroup
+    lateinit var rb_investee: RadioButton
+    lateinit var rb_investor: RadioButton
+    lateinit var registerButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        radioGroup = findViewById(R.id.Radiogroup) as RadioGroup
+        rb_investee = findViewById(R.id.AT_investee) as RadioButton
+        rb_investor = findViewById(R.id.AT_investor) as RadioButton
+        registerButton = findViewById(R.id.register) as Button
 
         signUpIn.setOnClickListener {
             startActivity(Intent(this, SignInActivity::class.java))
@@ -27,20 +39,25 @@ class SignUp : AppCompatActivity() {
 
         mFireAuth = FirebaseAuth.getInstance()
 
-        register.setOnClickListener {
+        registerButton.setOnClickListener(View.OnClickListener {
+            if (radioGroup.checkedRadioButtonId != -1){
+                if (rb_investee.isChecked)
+                    acType = "Investee"
+                if (rb_investor.isChecked)
+                    acType = "Investor"
+            } else {
+                Toast.makeText(this, "Account Type selection is required", Toast.LENGTH_LONG).show()
+            }
             Registration()
-        }
+        })
+
+        /*register.setOnClickListener {
+            Registration()
+        }*/
 
     }
 
     private fun Registration() {
-        var acType: String = ""
-        RadioGroup.OnCheckedChangeListener { group, checkedId ->
-            if (checkedId == R.id.AT_investor)
-                acType = "Investor"
-            if (checkedId == R.id.AT_investee)
-                acType = "Investee"
-        }
         val Fnames = SignUpFName.text.toString()
         val Lnames = SignUpLName.text.toString()
         val Mnames = SignUpMName.text.toString()
@@ -64,10 +81,10 @@ class SignUp : AppCompatActivity() {
             mFireAuth.createUserWithEmailAndPassword(emails, passwords).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         if (Mnames == "") {
-                            store(Fnames, "N/A", Lnames, emails, progressDialog, acType)
+                            store(Fnames, "", Lnames, emails, progressDialog)
                         }
                         else {
-                            store(Fnames, Mnames, Lnames, emails, progressDialog, acType)
+                            store(Fnames, Mnames, Lnames, emails, progressDialog)
                         }
                     } else {
                         Toast.makeText(this, "Sign up failed", Toast.LENGTH_LONG).show();
@@ -79,7 +96,7 @@ class SignUp : AppCompatActivity() {
 
     }
 
-    private fun store(Fnames: String, Mnames: String, Lnames: String, emails: String, progressDialog: ProgressDialog, acType: String) {
+    private fun store(Fnames: String, Mnames: String, Lnames: String, emails: String, progressDialog: ProgressDialog) {
 
         var curruserId = mFireAuth.currentUser!!.uid
         userreference = FirebaseDatabase.getInstance().reference.child("usersID").child(curruserId)
@@ -92,7 +109,7 @@ class SignUp : AppCompatActivity() {
         currUserHashMap["MName"] = Mnames
         currUserHashMap["LName"] = Lnames
         currUserHashMap["Email"] = emails
-        currUserHashMap["Image"] = "ts://bitnoti0.appspot.com/user Info/profile.png"
+        currUserHashMap["Image"] = "gs://bitnoti0.appspot.com/user Info/profile.png"
         userreference.updateChildren(currUserHashMap)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
