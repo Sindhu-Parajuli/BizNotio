@@ -7,7 +7,8 @@
 
         android:layout_height="match_parent"
         android:background="@android:color/darker_gray"
-        tools:context=".SignInActivity" android:id="@+id/relativeLayout2">
+        tools:context=".SignInActivity"
+        android:id="@+id/relativeLayout2">
 
 
     <ImageView
@@ -72,7 +73,8 @@
     <Button
             android:text="Forgot Password?"
             android:layout_width="227dp"
-            android:layout_height="wrap_content" android:id="@+id/resetBut"
+            android:layout_height="wrap_content"
+            android:id="@+id/resetBut"
             android:visibility="visible"
             style="@style/Widget.AppCompat.Button.Borderless"
             app:layout_constraintStart_toStartOf="parent"
