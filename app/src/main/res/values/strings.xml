@@ -12,6 +12,14 @@
     <string name="home_second">Home Second</string>
 
 
+    <!--  page titles  -->
+    <string name="home_title">Home</string>
+    <string name="title_create">Create Post</string>
+    <string name="title_notification">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_search">Search</string>
+
+    <!--  string templates for each page    -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="create_post">Create Post</string>
