@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val navView: BottomNavigationView = findViewById(R.id.bottom_nav_view)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         Hfragment = HomepageFragment()
         supportFragmentManager
