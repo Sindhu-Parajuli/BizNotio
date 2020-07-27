@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- this is the root node of the navigation graph -->
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@+id/navigation_home">
@@ -44,6 +44,16 @@
         android:name="com.example.biznoti0.SignUp"
         android:label="activity_sign_up"
         tools:layout="@layout/activity_sign_up" />
+  <activity
+      android:id="@+id/settingActivity"
+      android:name="com.example.biznoti0.SettingActivity"
+      android:label="activity_setting"
+      tools:layout="@layout/activity_setting" />
+  <activity
+      android:id="@+id/passwordResetActivity"
+      android:name="com.example.biznoti0.passwordResetActivity"
+      android:label="activity_password_reset"
+      tools:layout="@layout/activity_password_reset" />
 
 
 </navigation>
