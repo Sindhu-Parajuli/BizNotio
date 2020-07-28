@@ -32,19 +32,18 @@
                 android:id="@+id/AcTypetextView"
                 android:text="Account Type*:"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="29dp"
                 android:textStyle="bold" android:textSize="14sp"/>
         <RadioButton
                 android:text="Investor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/AT_investor"/>
+                android:layout_height="29dp"
+                android:id="@+id/AT_investor"/>
         <RadioButton
                 android:text="Investee"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/AT_investee"
-                tools:visibility="visible" android:textSize="14sp"
-                android:layout_gravity="fill_vertical"
-                android:textAlignment="viewStart"/>
+                android:layout_height="26dp"
+                android:id="@+id/AT_investee"/>
 
     </RadioGroup>
 
