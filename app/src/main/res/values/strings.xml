@@ -38,4 +38,49 @@
     <string name="search_page">Search</string>
     <string name="search_next">Search Next</string>
 
+
+    <string name="chats">
+    Chats
+    </string>
+
+    <string-array name="programming_languages">
+        <item>C++</item>
+        <item>C#</item>
+        <item>Java</item>
+        <item>Javascript</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>Ruby</item>
+        <item>Swift</item>
+        <item>TypeScript</item>
+        <item>VisualStudioCode</item>
+    </string-array>
+    
+    <string-array name="description">
+        <item>C++ is a cool language</item>
+        <item>C# is a cool language</item>
+        <item>Java is a cool language</item>
+        <item>Javascript is a cool language</item>
+        <item>Kotlin is a cool language</item>
+        <item>Python is a cool language</item>
+        <item>Ruby is a cool language</item>
+        <item>Swift is a cool language</item>
+        <item>TypeScript is a cool language</item>
+        <item>VisualStudioCode is a cool language</item>
+    </string-array>
+
+    <string name="must_go_tal">
+        Must go, talk to you later
+    </string>
+
+    <!-- strings.xml -->
+    <string name="some_id">
+        18:21
+    </string>
+
+    <!-- strings.xml -->
+    <string name="julia_semid">
+
+        Julia Semid
+    </string>
 </resources>
