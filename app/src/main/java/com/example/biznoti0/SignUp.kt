@@ -45,10 +45,10 @@ class SignUp : AppCompatActivity() {
                     acType = "Investee"
                 if (rb_investor.isChecked)
                     acType = "Investor"
+                Registration()
             } else {
                 Toast.makeText(this, "Account Type selection is required", Toast.LENGTH_LONG).show()
             }
-            Registration()
         })
 
         /*register.setOnClickListener {
