@@ -88,7 +88,7 @@ class SignUp : AppCompatActivity() {
                         }
                     } else {
                         Toast.makeText(this, "Sign up failed", Toast.LENGTH_LONG).show();
-                        finish()
+                        progressDialog.dismiss()
                     }
                 }
         }
