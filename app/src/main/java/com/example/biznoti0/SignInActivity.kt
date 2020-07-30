@@ -34,9 +34,9 @@ class SignInActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        if(FirebaseAuth.getInstance().currentUser!=null)
+        if(FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser!!.isEmailVerified)
         {
-            val intent = Intent(this@SignInActivity,MainActivity::class.java)
+            val intent = Intent(this@SignInActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -62,12 +62,18 @@ class SignInActivity : AppCompatActivity() {
             mfirebaseAuth.signInWithEmailAndPassword(emails, passwords)
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
-                        Toast.makeText(this, "Sign up failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss()
                     } else {
-                        val intent = Intent(this@SignInActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        if (mfirebaseAuth.currentUser!!.isEmailVerified) {
+                            val intent = Intent(this@SignInActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        else {
+                            Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss()
+                        }
                     }
                 }
         }

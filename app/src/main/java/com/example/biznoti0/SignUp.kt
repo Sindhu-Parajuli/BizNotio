@@ -45,15 +45,11 @@ class SignUp : AppCompatActivity() {
                     acType = "Investee"
                 if (rb_investor.isChecked)
                     acType = "Investor"
+                Registration()
             } else {
                 Toast.makeText(this, "Account Type selection is required", Toast.LENGTH_LONG).show()
             }
-            Registration()
         })
-
-        /*register.setOnClickListener {
-            Registration()
-        }*/
 
     }
 
@@ -80,14 +76,15 @@ class SignUp : AppCompatActivity() {
             progressDialog.show()
             mFireAuth.createUserWithEmailAndPassword(emails, passwords).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        if (Mnames == "") {
-                            store(Fnames, "", Lnames, emails, progressDialog)
-                        }
-                        else {
-                            store(Fnames, Mnames, Lnames, emails, progressDialog)
-                        }
+                        val currentUser = mFireAuth.currentUser
+                        currentUser!!.sendEmailVerification()
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    store(Fnames, Mnames, Lnames, emails, progressDialog)
+                                }
+                            }
                     } else {
-                        Toast.makeText(this, "Sign up failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show();
                         progressDialog.dismiss()
                     }
                 }
@@ -113,17 +110,15 @@ class SignUp : AppCompatActivity() {
         userreference.updateChildren(currUserHashMap)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Sign up Success", Toast.LENGTH_SHORT).show();
-                    val intent = Intent(this@SignUp, MainActivity::class.java)
-                    startActivity(intent)
+                    Toast.makeText(this, "Sign up Success. Check your email and verify it.", Toast.LENGTH_LONG).show();
+                    startActivity(Intent(this@SignUp, SignInActivity::class.java))
                     finish()
                 }
                 else
                 {
-                    Toast.makeText(this, "Sign up failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss()
                 }
-
-
             }
 
     }

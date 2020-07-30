@@ -1,6 +1,6 @@
 package Fragments
 
-import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
@@ -8,10 +8,13 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 
 import android.graphics.drawable.BitmapDrawable
 
+
+import com.example.biznoti0.SignInActivity
 import com.example.biznoti0.R
 import com.example.biznoti0.SettingActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -22,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 
 import java.util.*
+import kotlinx.coroutines.Dispatchers.Main
 
 /**
  * A simple [Fragment] subclass.
@@ -41,6 +45,18 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        imagelogoutbutton?.setOnClickListener {
+
+            val progressDialog = ProgressDialog(this@ProfileFragment.context)
+            progressDialog.setMessage("Logging out")
+            progressDialog.show()
+
+            FirebaseAuth.getInstance().signOut();
+
+            val intent = Intent (this@ProfileFragment.context, SignInActivity::class.java)
+            startActivity(intent)
+
+        }
 
         val profileButton = view.findViewById<ImageView>(R.id.profile_image_clickable)
 
@@ -125,4 +141,3 @@ class ProfileFragment : Fragment() {
     }
 
 }
-
