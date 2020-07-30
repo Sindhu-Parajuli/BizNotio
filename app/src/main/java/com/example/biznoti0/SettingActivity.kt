@@ -16,17 +16,7 @@ class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
-        logout.setOnClickListener {
-            val progressDialog = ProgressDialog(this@SettingActivity)
-            progressDialog.setMessage("Logging out")
-            progressDialog.setCanceledOnTouchOutside(false)
-            progressDialog.show()
 
-
-            FirebaseAuth.getInstance().signOut();
-            startActivity(Intent(this, SignInActivity::class.java))
-
-        }
 
         deletebutton.setOnClickListener {
             val user =  FirebaseAuth.getInstance().currentUser!!
