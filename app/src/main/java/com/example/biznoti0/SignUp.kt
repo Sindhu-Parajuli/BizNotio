@@ -51,7 +51,6 @@ class SignUp : AppCompatActivity() {
             }
         })
 
-
     }
 
     private fun Registration() {
@@ -113,7 +112,7 @@ class SignUp : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Sign up Success. Check your email and verify it.", Toast.LENGTH_LONG).show();
                     startActivity(Intent(this@SignUp, SignInActivity::class.java))
-                    progressDialog.dismiss()
+                    finish()
                 }
                 else
                 {
