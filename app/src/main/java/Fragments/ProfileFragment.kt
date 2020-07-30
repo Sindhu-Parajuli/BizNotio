@@ -1,17 +1,27 @@
 package Fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import com.example.biznoti0.MainActivity
+import android.widget.ImageView
+
+import android.graphics.drawable.BitmapDrawable
 
 import com.example.biznoti0.R
 import com.example.biznoti0.SettingActivity
-import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.android.synthetic.main.fragment_profile.*
+
+import android.net.Uri
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -32,7 +42,14 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        val profileButton = view.findViewById<ImageView>(R.id.profile_image_clickable)
 
+        profileButton?.setOnClickListener{
+            val intent = Intent (Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, 0)
+
+        }
         //using destination
         val button = view.findViewById<Button>(R.id.editbutton)
         button?.setOnClickListener {
@@ -43,6 +60,69 @@ class ProfileFragment : Fragment() {
 //            findNavController().navigate(R.id.settingActivity, null)
         }
 
-
     }
+
+    var selectedPhotoUri: Uri? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            // proceed and check what the selected image was
+
+            Log.d("ProfileFragment", "Photo was selected")
+
+            // where the image is stored on the machine
+            selectedPhotoUri = data.data
+
+//            val contentResolver = getActivity().getContentResolver()
+            val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, selectedPhotoUri)
+            val bitMapDrawable = BitmapDrawable(bitmap)
+
+            // set the background for the xml id element
+            profile_image_clickable.setBackgroundDrawable(bitMapDrawable)
+
+            uploadImageToFirebaseStorage()
+        }
+    }
+
+    private fun uploadImageToFirebaseStorage() {
+        if (selectedPhotoUri == null) return
+
+        // make a file name that is a random string, the name will be long
+        val filename = UUID.randomUUID().toString()
+
+        // get the location of your firebase storage by giving it the name of the directory you use
+        // in our case we use the "user Info"
+        val ref = FirebaseStorage.getInstance().getReference("/user%20Info/$filename")
+
+        ref.putFile(selectedPhotoUri!!)
+            .addOnSuccessListener {
+                Log.d("ProfileFragment", "Successfully uploaded image: ${it.metadata?.path}")
+
+                ref.downloadUrl.addOnSuccessListener {
+                    Log.d("ProfileFragment", "File Download URL Location: $it")
+
+                    saveImageToFirebaseDatabase(it.toString())
+                }
+            }
+            .addOnFailureListener {
+                Log.d("ProfileFragment", "Failed to upload image to storage: ${it.message}")
+            }
+    }
+
+    private fun saveImageToFirebaseDatabase(profileImageUrl: String) {
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
+
+        ref.child("profileImageUrl").setValue(profileImageUrl)
+            .addOnSuccessListener {
+                Log.d("ProfileFragment", "Finally we saved the profile image to Firebase Database")
+            }
+            .addOnFailureListener {
+                Log.d("ProfileFragment", "Failed to set value to database: ${it.message}")
+            }
+    }
+
 }
+
