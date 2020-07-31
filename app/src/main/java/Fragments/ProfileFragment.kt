@@ -47,6 +47,26 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Profile button
+        val profileButton = view.findViewById<ImageView>(R.id.imageView)
+
+        profileButton?.setOnClickListener{
+            val intent = Intent (Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, 0)
+
+        }
+
+
+
+        // Settings Button
+        val button = view.findViewById<Button>(R.id.editbutton)
+        button?.setOnClickListener {
+            val intent = Intent (this@ProfileFragment.context, SettingActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Logout Button
         imagelogoutbutton?.setOnClickListener {
 
             val progressDialog = ProgressDialog(this@ProfileFragment.context)
@@ -56,28 +76,10 @@ class ProfileFragment : Fragment() {
             FirebaseAuth.getInstance().signOut();
 
             val intent = Intent (this@ProfileFragment.context, SignInActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK).or(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
 
         }
-
-        val profileButton = view.findViewById<ImageView>(R.id.profile_image_clickable)
-
-        profileButton?.setOnClickListener{
-            val intent = Intent (Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, 0)
-
-        }
-        //using destination
-        val button = view.findViewById<Button>(R.id.editbutton)
-        button?.setOnClickListener {
-            val intent = Intent (this@ProfileFragment.context, SettingActivity::class.java)
-            startActivity(intent)
-//            val intent = Intent (getActivity(), Main::class.java)
-//            getActivity()?.startActivity(intent)
-//            findNavController().navigate(R.id.settingActivity, null)
-        }
-
     }
 
     var selectedPhotoUri: Uri? = null
@@ -100,7 +102,7 @@ class ProfileFragment : Fragment() {
             circle_image_profile.setImageBitmap(bitmap)
 
             // make the image show up on top
-            profile_image_clickable.alpha = 0f
+            imageView.alpha = 0f
             // set the background for the xml id element
             // val bitMapDrawable = BitmapDrawable(bitmap)
             // profile_image_clickable.setBackgroundDrawable(bitMapDrawable)
