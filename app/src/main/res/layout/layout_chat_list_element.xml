@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardElevation="10dp"
+
         app:cardCornerRadius="2dp"
         app:cardPreventCornerOverlap="false">
     <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/chat_list_p"
+        android:id="@+id/chat_list_p"
             android:layout_width="match_parent"
             android:layout_height="47dp"
             android:layout_alignParentStart="true"
@@ -18,19 +18,19 @@
             android:layout_marginTop="0dp">
 
         <ImageView
-                android:id="@+id/blog_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/ic_launcher_background"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/app_name"
-                android:scaleType="fitXY"/>
+            android:id="@+id/blog_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/profile"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
                 android:id="@+id/blog_title"
@@ -75,6 +75,16 @@
                 android:textAppearance="@style/some_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circle_image_view_user_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/blog_image"
+            app:layout_constraintEnd_toEndOf="@+id/blog_image"
+            app:layout_constraintStart_toStartOf="@+id/blog_image"
+            app:layout_constraintTop_toTopOf="@+id/blog_image" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

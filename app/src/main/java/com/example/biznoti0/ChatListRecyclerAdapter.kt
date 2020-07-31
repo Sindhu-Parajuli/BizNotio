@@ -47,15 +47,15 @@ class ChatListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         itemView: View
     ): RecyclerView.ViewHolder(itemView){
 
-        val blog_image = itemView.blog_image
+        val blog_image = itemView.circle_image_view_user_image
         val blog_title = itemView.blog_title
         val blog_author = itemView.blog_author
 
         fun bind(chatListElement: ChatListElement){
 
             val requestOptions = RequestOptions()
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
 
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)

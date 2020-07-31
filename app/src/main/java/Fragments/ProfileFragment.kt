@@ -1,5 +1,6 @@
 package Fragments
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -23,6 +24,7 @@ import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.layout_chat_list_element.*
 
 import java.util.*
 import kotlinx.coroutines.Dispatchers.Main
@@ -93,10 +95,15 @@ class ProfileFragment : Fragment() {
 
 //            val contentResolver = getActivity().getContentResolver()
             val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, selectedPhotoUri)
-            val bitMapDrawable = BitmapDrawable(bitmap)
 
+            // set the image to the circle viewholder
+            circle_image_profile.setImageBitmap(bitmap)
+
+            // make the image show up on top
+            profile_image_clickable.alpha = 0f
             // set the background for the xml id element
-            profile_image_clickable.setBackgroundDrawable(bitMapDrawable)
+            // val bitMapDrawable = BitmapDrawable(bitmap)
+            // profile_image_clickable.setBackgroundDrawable(bitMapDrawable)
 
             uploadImageToFirebaseStorage()
         }

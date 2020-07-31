@@ -84,5 +84,8 @@ dependencies {
 
     // attempt to fix error "cannot fit requested classes in a single dex file"
     implementation 'com.android.support:multidex:1.0.3'
+
+    // Circle image view crop dependency from another github
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
 apply plugin: 'com.google.gms.google-services'
