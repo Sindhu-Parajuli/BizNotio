@@ -101,7 +101,7 @@ class ProfileFragment : Fragment() {
             // set the image to the circle viewholder
             circle_image_profile.setImageBitmap(bitmap)
 
-            // make the image show up on top
+            // make the button invisible to the updated image (circle_image_profile) visible
             imageView.alpha = 0f
             // set the background for the xml id element
             // val bitMapDrawable = BitmapDrawable(bitmap)
