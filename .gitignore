@@ -12,6 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+.idea/
 
 # Created by https://www.toptal.com/developers/gitignore/api/intellij,kotlin,android
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij,kotlin,android
