@@ -62,4 +62,8 @@
         </item>
 
     </style>
+
+    <style name="chat_list_selector">
+
+    </style>
 </resources>

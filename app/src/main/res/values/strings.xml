@@ -39,9 +39,7 @@
     <string name="search_next">Search Next</string>
 
 
-    <string name="chats">
-    Chats
-    </string>
+    <string name="chats">Chats</string>
 
     <string-array name="programming_languages">
         <item>C++</item>
@@ -55,7 +53,7 @@
         <item>TypeScript</item>
         <item>VisualStudioCode</item>
     </string-array>
-    
+
     <string-array name="description">
         <item>C++ is a cool language</item>
         <item>C# is a cool language</item>
@@ -69,18 +67,11 @@
         <item>VisualStudioCode is a cool language</item>
     </string-array>
 
-    <string name="must_go_tal">
-        Must go, talk to you later
-    </string>
+    <string name="must_go_tal">Must go, talk to you later</string>
 
     <!-- strings.xml -->
-    <string name="some_id">
-        18:21
-    </string>
+    <string name="some_id">18:21</string>
 
     <!-- strings.xml -->
-    <string name="julia_semid">
-
-        Julia Semid
-    </string>
+    <string name="julia_semid">Julia Semid</string>
 </resources>
