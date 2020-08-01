@@ -24,7 +24,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="15dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="370dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="16dp" app:layout_constraintBottom_toTopOf="@+id/imageView"/>
+                android:layout_marginEnd="16dp" app:layout_constraintBottom_toTopOf="@+id/profile_image_clickable"/>
 
 
     </androidx.appcompat.widget.Toolbar>
