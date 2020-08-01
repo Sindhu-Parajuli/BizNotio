@@ -74,4 +74,10 @@
 
     <!-- strings.xml -->
     <string name="julia_semid">Julia Semid</string>
+
+    <string name="james_dullm">James Dullmo</string>
+    <string name="last_seen_2_hours_ago">last seen 2 hours ago</string>
+    <string name="text_placeholder">Aa</string>
+    <string name="none">none</string>
+
 </resources>

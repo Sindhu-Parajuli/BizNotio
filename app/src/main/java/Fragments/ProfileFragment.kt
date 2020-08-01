@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.graphics.drawable.BitmapDrawable
 
 
+
 import com.example.biznoti0.SignInActivity
 import com.example.biznoti0.R
 import com.example.biznoti0.SettingActivity
@@ -27,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.layout_chat_list_element.*
 
 import java.util.*
+
 import kotlinx.coroutines.Dispatchers.Main
 
 /**
@@ -73,7 +75,7 @@ class ProfileFragment : Fragment() {
             progressDialog.setMessage("Logging out")
             progressDialog.show()
 
-            FirebaseAuth.getInstance().signOut();
+            FirebaseAuth.getInstance().signOut()
 
             val intent = Intent (this@ProfileFragment.context, SignInActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK).or(Intent.FLAG_ACTIVITY_CLEAR_TOP)

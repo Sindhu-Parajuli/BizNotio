@@ -12,11 +12,8 @@
         android:layout_height="36dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="211dp"
-        app:layout_constraintEnd_toStartOf="@+id/nav_icons_s"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/chats"
@@ -37,7 +34,7 @@
 
 
     <RelativeLayout
-        android:id="@+id/nav_icons_s"
+        android:id="@+id/text_field_microphone_button"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_alignParentTop="true"

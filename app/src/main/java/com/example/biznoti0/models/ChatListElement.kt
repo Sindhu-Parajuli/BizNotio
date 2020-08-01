@@ -2,7 +2,7 @@ package com.example.biznoti0.models
 
 data class ChatListElement(
 
-    var title: String,
+    var message_preview: String,
 
     var body: String,
 
@@ -14,7 +14,7 @@ data class ChatListElement(
 ) {
 
     override fun toString(): String {
-        return "BlogPost(title='$title', image='$image', username='$username')"
+        return "BlogPost(title='$message_preview', image='$image', username='$username')"
     }
 
 

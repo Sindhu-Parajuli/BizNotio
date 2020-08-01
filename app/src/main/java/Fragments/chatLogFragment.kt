@@ -35,7 +35,7 @@ class chatHistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat_history, container, false)
+        return inflater.inflate(R.layout.fragment_chat_log, container, false)
     }
 
     companion object {

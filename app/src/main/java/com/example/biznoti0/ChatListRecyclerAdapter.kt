@@ -14,12 +14,10 @@ import kotlin.collections.ArrayList
 class ChatListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
 
-    private val TAG: String = "AppDebug"
-
     private var items: List<ChatListElement> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return BlogViewHolder(
+        return ChatListElementViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.layout_chat_list_element, parent, false)
         )
     }
@@ -27,7 +25,7 @@ class ChatListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
 
-            is BlogViewHolder -> {
+            is ChatListElementViewHolder -> {
                 holder.bind(items.get(position))
             }
 
@@ -42,14 +40,14 @@ class ChatListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         items = blogList
     }
 
-    class BlogViewHolder
+    class ChatListElementViewHolder
     constructor(
         itemView: View
     ): RecyclerView.ViewHolder(itemView){
 
-        val blog_image = itemView.circle_image_view_user_image
-        val blog_title = itemView.blog_title
-        val blog_author = itemView.blog_author
+        val profile_image = itemView.chat_list_element_image_circle
+        val message_preview = itemView.chat_list_element_message_preview
+        val user_name = itemView.chat_list_element_user_name
 
         fun bind(chatListElement: ChatListElement){
 
@@ -60,9 +58,9 @@ class ChatListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)
                 .load(chatListElement.image)
-                .into(blog_image)
-            blog_title.setText(chatListElement.title)
-            blog_author.setText(chatListElement.username)
+                .into(profile_image)
+            message_preview.setText(chatListElement.message_preview)
+            user_name.setText(chatListElement.username)
 
         }
 
