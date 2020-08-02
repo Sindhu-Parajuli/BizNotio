@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 
 import com.example.biznoti0.R
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_create_post.*
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -71,19 +73,49 @@ class CreatePost : Fragment() {
         sendPost?.setOnClickListener {
             saveProposalToFirebaseDatabase("proposal")
         }
+
+        val proposalNameField = view.findViewById<EditText>(R.id.ProposalName)
+
+        proposalNameField?.setOnClickListener {
+
+        }
+
+
+
+
     }
 
     private fun saveProposalToFirebaseDatabase(temp: String) {
-        val proposalName = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/proposals/$proposalName")
+        val proposalId = UUID.randomUUID().toString()
+        val ref = FirebaseDatabase.getInstance().getReference("/proposals/$proposalId")
 
 
-        ref.child("proposalName").setValue(proposalName)
-            .addOnSuccessListener {
-                Log.d("CreatePost", "Finally we saved the profile image to Firebase Database")
-            }
-            .addOnFailureListener {
-                Log.d("CreatePost", "Failed to set value to database: ${it.message}")
-            }
+        val proposalName: String = ProposalName.text.toString()
+        val proposalType: String = ProposalType.text.toString()
+        val proposalDescription: String = ProposalDescription.text.toString()
+        val minimumCase: String = MinimumCase.text.toString()
+        val link: String = Link.text.toString()
+
+        val proposal = Proposal(proposalId, proposalName, proposalType, proposalDescription, minimumCase, link)
+
+
+        ref.setValue(proposal)
+        .addOnSuccessListener {
+            Log.d("CreatePost", "Finally we saved the proposal to Firebase Database")
+        }
+        .addOnFailureListener {
+            Log.d("CreatePost", "Failed to set value to database: ${it.message}")
+        }
+//        ref.child("proposalName").setValue(proposalName)
+//            .addOnSuccessListener {
+//                Log.d("CreatePost", "Finally we saved the profile image to Firebase Database")
+//            }
+//            .addOnFailureListener {
+//                Log.d("CreatePost", "Failed to set value to database: ${it.message}")
+//            }
     }
+
+
+
+    class Proposal(val proposalId: String, val proposalName: String, val proposalType: String, val proposalDescription: String, val minimumCase: String, val link: String)
 }
