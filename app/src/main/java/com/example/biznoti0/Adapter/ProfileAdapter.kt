@@ -20,9 +20,9 @@ class ProfileAdapter (private var usercontext: Context,
 
 {
     //View holder to return views on the layout created
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(usercontext).inflate(R.layout.result_layout,parent,false)
-        return ProfileAdapter.ViewHolder(view)
+        return ViewHolder(view)
 
         TODO("Not yet implemented")
     }
@@ -33,7 +33,7 @@ class ProfileAdapter (private var usercontext: Context,
         TODO("Not yet implemented")
     }
  //Displays the data obtained from search
-    override fun onBindViewHolder(holder: ProfileAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       val userobtainer = userlist[position]
      holder.Name.text = userobtainer.getFNAME() //+ userobtainer.getLName()
      Picasso.get().load(userobtainer.getImage()).placeholder(R.drawable.profile).into(holder.ProfilePicture)

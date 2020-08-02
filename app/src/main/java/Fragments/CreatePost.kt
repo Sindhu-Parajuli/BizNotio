@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_create_post.*
 import java.util.*
 import com.example.biznoti0.SettingActivity
 import java.util.*
-
+import com.example.biznoti0.Model.Proposal
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -121,7 +121,4 @@ class CreatePost : Fragment() {
 //            }
     }
 
-
-
-    class Proposal(val owner: String, val proposalId: String, val proposalName: String, val proposalType: String, val proposalDescription: String, val minimumCase: String, val link: String)
 }
