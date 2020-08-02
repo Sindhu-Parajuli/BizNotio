@@ -21,24 +21,26 @@ class SignInActivity : AppCompatActivity() {
 
         }
 
-
         login.setOnClickListener {
             SignIn();
         }
+
+        resetBut.setOnClickListener {
+            startActivity(Intent(this, passwordResetActivity::class.java))
+        }
+
     }
 
     override fun onStart() {
         super.onStart()
 
-        if(FirebaseAuth.getInstance().currentUser!=null)
+        if(FirebaseAuth.getInstance().currentUser != null && FirebaseAuth.getInstance().currentUser!!.isEmailVerified)
         {
-            val intent = Intent(this@SignInActivity,MainActivity::class.java)
+            val intent = Intent(this@SignInActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
-
-
 
     private fun SignIn() {
         val mfirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -46,12 +48,10 @@ class SignInActivity : AppCompatActivity() {
         val passwords = Password.text.toString()
 
         if (emails.isEmpty()) {
-            Toast.makeText(this, "Email is must", Toast.LENGTH_LONG)
+            Toast.makeText(this, "Email is must", Toast.LENGTH_LONG).show()
         } else if (passwords.isEmpty()) {
-            Toast.makeText(this, "Password is must", Toast.LENGTH_LONG)
+            Toast.makeText(this, "Password is must", Toast.LENGTH_LONG).show()
         } else {
-
-
 
             val progressDialog = ProgressDialog(this@SignInActivity)
             progressDialog.setTitle("Logging In")
@@ -59,72 +59,24 @@ class SignInActivity : AppCompatActivity() {
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
 
-
             mfirebaseAuth.signInWithEmailAndPassword(emails, passwords)
-                    .addOnCompleteListener { task ->
-                        if (!task.isSuccessful) {
-                            Toast.makeText(this, "Sign up failed", Toast.LENGTH_SHORT).show();
-
-
-                            progressDialog.dismiss()
-                        } else {
-
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss()
+                    } else {
+                        if (mfirebaseAuth.currentUser!!.isEmailVerified) {
                             val intent = Intent(this@SignInActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()
-
                         }
-
-
+                        else {
+                            Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss()
+                        }
                     }
+                }
         }
-
-
     }
 
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
