@@ -26,7 +26,7 @@
 
     <EditText
         android:id="@+id/ProposalDescription"
-        android:layout_width="344dp"
+        android:layout_width="0dp"
         android:layout_height="216dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="15dp"
@@ -58,8 +58,8 @@
 
     <EditText
         android:id="@+id/Link"
-        android:layout_width="344dp"
-        android:layout_height="41dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"
@@ -88,8 +88,8 @@
 
     <EditText
         android:id="@+id/MinimumCase"
-        android:layout_width="344dp"
-        android:layout_height="205dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"

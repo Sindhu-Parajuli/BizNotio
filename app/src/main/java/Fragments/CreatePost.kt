@@ -89,14 +89,16 @@ class CreatePost : Fragment() {
         val proposalId = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/proposals/$proposalId")
 
+        val uid = FirebaseAuth.getInstance().uid ?: ""
 
         val proposalName: String = ProposalName.text.toString()
         val proposalType: String = ProposalType.text.toString()
         val proposalDescription: String = ProposalDescription.text.toString()
         val minimumCase: String = MinimumCase.text.toString()
         val link: String = Link.text.toString()
+        val owner: String = uid
 
-        val proposal = Proposal(proposalId, proposalName, proposalType, proposalDescription, minimumCase, link)
+        val proposal = Proposal(owner, proposalId, proposalName, proposalType, proposalDescription, minimumCase, link)
 
 
         ref.setValue(proposal)
@@ -117,5 +119,5 @@ class CreatePost : Fragment() {
 
 
 
-    class Proposal(val proposalId: String, val proposalName: String, val proposalType: String, val proposalDescription: String, val minimumCase: String, val link: String)
+    class Proposal(val owner: String, val proposalId: String, val proposalName: String, val proposalType: String, val proposalDescription: String, val minimumCase: String, val link: String)
 }
