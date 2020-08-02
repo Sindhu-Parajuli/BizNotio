@@ -14,7 +14,9 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="46dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="39dp"
         android:background="@drawable/ic_back"
+        app:layout_constraintBottom_toTopOf="@+id/chat_log_recycler_view"
         app:layout_constraintEnd_toStartOf="@+id/chat_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,6 +30,8 @@
         android:layout_marginStart="68dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="98dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/chat_log_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -41,10 +45,10 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="19dp"
             android:layout_marginBottom="3dp"
+            android:alpha=".5"
             android:fontFamily="@font/space_mono"
             android:lines="1"
             android:text="@string/last_seen_2_hours_ago"
-            android:alpha=".5"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -97,25 +101,23 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Frame -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_log_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="101dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/text_field"
+        app:layout_constraintBottom_toTopOf="@+id/text_field_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Type text field -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/text_field"
+        android:id="@+id/text_field_layout"
         android:layout_width="304dp"
         android:layout_height="46dp"
 
@@ -126,30 +128,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat_log_recycler_view">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
 
         <!-- Nav Icons / Attachment -->
         <EditText
-            android:id="@+id/text_field_placeholder"
+            android:id="@+id/text_field_text_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="12dp"
             android:background="@android:color/transparent"
             android:ems="10"
+            android:hint="@string/none"
+            android:importantForAutofill="no"
             android:inputType="text"
             android:text="@string/text_placeholder"
             android:textColor="#4D000000"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/nav_icons_s"
-            app:layout_constraintStart_toEndOf="@+id/nav_icons_a"
-            app:layout_constraintTop_toTopOf="parent"
-            android:importantForAutofill="no"
-            android:hint="@string/none"/>
+            app:layout_constraintEnd_toStartOf="@+id/text_field_sticker_button"
+            app:layout_constraintStart_toEndOf="@+id/text_field_attachment_button"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
-            android:id="@+id/nav_icons_a"
+            android:id="@+id/text_field_attachment_button"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_alignParentStart="true"
@@ -166,7 +169,7 @@
 
         <!-- Nav Icons / Stickers -->
         <RelativeLayout
-            android:id="@+id/nav_icons_s"
+            android:id="@+id/text_field_sticker_button"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_alignParentEnd="true"

@@ -71,8 +71,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Card View
-    def cardview_version = "1.0.0"
-    implementation "androidx.cardview:cardview:$cardview_version"
+    def card_view_version = "1.0.0"
+    implementation "androidx.cardview:cardview:$card_view_version"
 
     // Recyclerview
     def recyclerview_version = "1.0.0"
@@ -88,5 +88,12 @@ dependencies {
 
     // Circle image view crop dependency from another github
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // groupie recycler view helper dependency used for logical placement of items in recycler view
+    def groupie_version = "2.8.1"
+    implementation "com.xwray:groupie:$groupie_version"
+
+    def picasso_version = "2.71828"
+    implementation "com.squareup.picasso:picasso:$picasso_version"
 }
 apply plugin: 'com.google.gms.google-services'

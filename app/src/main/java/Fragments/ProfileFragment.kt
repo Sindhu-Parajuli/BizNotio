@@ -28,7 +28,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 import java.util.*
@@ -55,19 +59,11 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // load the current image from firebase to imageview
-
-        var currentProfileImage = loadImageFromFirebaseDatabase()
-
+        setCurrentProfilePicture(view)
 
 
-            Glide.with(view)
-                .load(currentProfileImage)
-                .into(view.circle_image_profile)
 
-            imageView.alpha = 0f
-
-
-        // Profile button
+        // Profile button extracted from the layout file
         val profileButton = view.findViewById<ImageView>(R.id.imageView)
 
         profileButton?.setOnClickListener{
@@ -80,14 +76,14 @@ class ProfileFragment : Fragment() {
 
 
 
-        // Settings Button
+        // Settings Button extracted from the layout file
         val button = view.findViewById<Button>(R.id.editbutton)
         button?.setOnClickListener {
             val intent = Intent (this@ProfileFragment.context, SettingActivity::class.java)
             startActivity(intent)
         }
 
-        // Logout Button
+        // Logout Button extracted from the layout file
         imagelogoutbutton?.setOnClickListener {
 
             val progressDialog = ProgressDialog(this@ProfileFragment.context)
@@ -116,7 +112,7 @@ class ProfileFragment : Fragment() {
             // where the image is stored on the machine
             selectedPhotoUri = data.data
 
-//            val contentResolver = getActivity().getContentResolver()
+           // val contentResolver = getActivity().getContentResolver()
             val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, selectedPhotoUri)
 
             // set the image to the circle viewholder
@@ -124,12 +120,7 @@ class ProfileFragment : Fragment() {
 
             // make the button invisible to the updated image (circle_image_profile) visible
             imageView.alpha = 0f
-            // set the background for the xml id element
-            // val bitMapDrawable = BitmapDrawable(bitmap)
-            // profile_image_clickable.setBackgroundDrawable(bitMapDrawable)
-
-
-
+            uploadImageToFirebaseStorage()
         }
     }
 
@@ -158,11 +149,11 @@ class ProfileFragment : Fragment() {
             }
     }
 
-    private fun saveImageToFirebaseDatabase(proposalName: String) {
+    private fun saveImageToFirebaseDatabase(imageUrl: String) {
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
 
-        ref.child("profileImageUrl").setValue(proposalName)
+        ref.child("profileImageUrl").setValue(imageUrl)
             .addOnSuccessListener {
                 Log.d("ProfileFragment", "Finally we saved the profile image to Firebase Database")
             }
@@ -171,11 +162,11 @@ class ProfileFragment : Fragment() {
             }
     }
 
-    private fun loadImageFromFirebaseDatabase(): String? {
+    private fun setCurrentProfilePicture(view: View){
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
 
-        var profileImageUrl: String? = null
+        var profileImageUrl: String
 
         ref.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
@@ -185,10 +176,20 @@ class ProfileFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 profileImageUrl = snapshot.child("profileImageUrl").value.toString()
 
+                val requestOptions = RequestOptions()
+                    .placeholder(R.drawable.profile)
+                    .error(R.drawable.profile)
+
+                // So the tutorial was using picasso but I found better loading times with glide
+                Glide.with(view.context)
+                    .applyDefaultRequestOptions(requestOptions)
+                    .load(profileImageUrl)
+                    .into(view.findViewById<CircleImageView>(R.id.circle_image_profile))
+
+                imageView.alpha = 0f
                 Log.d("ProfileFragment", "currently set to: $profileImageUrl")
             }
         })
-        return profileImageUrl
     }
 
 }

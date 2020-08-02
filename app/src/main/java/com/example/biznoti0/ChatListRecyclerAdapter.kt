@@ -41,10 +41,7 @@ class ChatListRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     }
 
     class ChatListElementViewHolder
-    constructor(
-        itemView: View
-    ): RecyclerView.ViewHolder(itemView){
-
+    constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
         val profile_image = itemView.chat_list_element_image_circle
         val message_preview = itemView.chat_list_element_message_preview
         val user_name = itemView.chat_list_element_user_name
