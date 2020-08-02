@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 
 import android.graphics.drawable.BitmapDrawable
@@ -25,7 +24,6 @@ import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.layout_chat_list_element.*
 
 import java.util.*
 
@@ -138,11 +136,11 @@ class ProfileFragment : Fragment() {
             }
     }
 
-    private fun saveImageToFirebaseDatabase(profileImageUrl: String) {
+    private fun saveImageToFirebaseDatabase(proposalName: String) {
         val uid = FirebaseAuth.getInstance().uid ?: ""
-        val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/proposals/$uid")
 
-        ref.child("profileImageUrl").setValue(profileImageUrl)
+        ref.child("profileImageUrl").setValue(proposalName)
             .addOnSuccessListener {
                 Log.d("ProfileFragment", "Finally we saved the profile image to Firebase Database")
             }

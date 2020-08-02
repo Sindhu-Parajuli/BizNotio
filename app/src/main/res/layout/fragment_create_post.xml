@@ -1,30 +1,65 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="Fragments.CreatePost">
-
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/create_post"
-        android:textAlignment="center"
-        android:textSize="52sp"
+    android:layout_height="match_parent" android:id="@+id/Proposal"
+    android:background="#AAAAAA">
+    <EditText
+        android:layout_width="374dp"
+        android:layout_height="44dp"
+        android:inputType="textPersonName"
+        android:ems="10"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/ProposalName" app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
+        app:layout_constraintVertical_bias="0.09" android:hint="Proposal Name"
+        android:background="#FFFFFF"/>
+    <EditText
+        android:layout_width="366dp"
+        android:layout_height="220dp"
+        android:inputType="textMultiLine"
+        android:gravity="start|top"
+        android:ems="10"
+        android:id="@+id/ProposalDescription" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ProposalName" android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.027" android:hint="Proposal Description"
+        android:background="#FFFFFF" app:layout_constraintHorizontal_bias="0.492"/>
     <Button
-        android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/create_post_next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text" />
+        android:text="Post"
+        android:layout_width="138dp"
+        android:layout_height="51dp" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" android:id="@+id/CreatePost"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent" android:background="#00B0FF"/>
+    <EditText
+        android:layout_width="381dp"
+        android:layout_height="45dp"
+        android:inputType="textPersonName"
+        android:ems="10"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/Link"
+        android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/CreatePost"
+        android:hint="Link" android:background="#FFFFFF"/>
+    <TextView
+        android:text="Create Proposal"
+        android:layout_width="164dp"
+        android:layout_height="33dp" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" android:id="@+id/Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <EditText
+        android:layout_width="353dp"
+        android:layout_height="205dp"
+        android:inputType="textMultiLine"
+        android:gravity="start|top"
+        android:ems="10"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/MinimumCase" android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ProposalDescription" android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/Link"
+        android:hint="Minimum Business Case: goals, costs, schedule, restrictions, assumptions, etc."
+        android:background="#FFFFFF"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

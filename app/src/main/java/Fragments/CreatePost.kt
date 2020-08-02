@@ -1,12 +1,20 @@
 package Fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 
 import com.example.biznoti0.R
+import com.example.biznoti0.SettingActivity
+import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,6 +64,31 @@ class CreatePost : Fragment() {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
+            }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val sendPost = view.findViewById<MaterialButton>(R.id.CreatePost)
+        sendPost?.setOnClickListener {
+
+        }
+
+    }
+
+    private fun saveProposalToFirebaseDatabase(temp: String) {
+
+        val proposalName = UUID.randomUUID().toString()
+
+        val ref = FirebaseDatabase.getInstance().getReference("/usersID/$proposalName")
+
+        ref.child("proposalName").setValue(proposalName)
+            .addOnSuccessListener {
+                Log.d("CreatePost", "Finally we saved the profile image to Firebase Database")
+            }
+            .addOnFailureListener {
+                Log.d("CreatePost", "Failed to set value to database: ${it.message}")
             }
     }
 }
