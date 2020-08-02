@@ -21,11 +21,18 @@ import com.example.biznoti0.SettingActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 import android.net.Uri
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 import java.util.*
+
 
 import kotlinx.coroutines.Dispatchers.Main
 
@@ -47,6 +54,19 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // load the current image from firebase to imageview
+
+        var currentProfileImage = loadImageFromFirebaseDatabase()
+
+
+
+            Glide.with(view)
+                .load(currentProfileImage)
+                .into(view.circle_image_profile)
+
+            imageView.alpha = 0f
+
+
         // Profile button
         val profileButton = view.findViewById<ImageView>(R.id.imageView)
 
@@ -54,6 +74,7 @@ class ProfileFragment : Fragment() {
             val intent = Intent (Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, 0)
+
 
         }
 
@@ -107,7 +128,8 @@ class ProfileFragment : Fragment() {
             // val bitMapDrawable = BitmapDrawable(bitmap)
             // profile_image_clickable.setBackgroundDrawable(bitMapDrawable)
 
-            uploadImageToFirebaseStorage()
+
+
         }
     }
 
@@ -138,7 +160,7 @@ class ProfileFragment : Fragment() {
 
     private fun saveImageToFirebaseDatabase(proposalName: String) {
         val uid = FirebaseAuth.getInstance().uid ?: ""
-        val ref = FirebaseDatabase.getInstance().getReference("/proposals/$uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
 
         ref.child("profileImageUrl").setValue(proposalName)
             .addOnSuccessListener {
@@ -147,6 +169,26 @@ class ProfileFragment : Fragment() {
             .addOnFailureListener {
                 Log.d("ProfileFragment", "Failed to set value to database: ${it.message}")
             }
+    }
+
+    private fun loadImageFromFirebaseDatabase(): String? {
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
+
+        var profileImageUrl: String? = null
+
+        ref.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                profileImageUrl = snapshot.child("profileImageUrl").value.toString()
+
+                Log.d("ProfileFragment", "currently set to: $profileImageUrl")
+            }
+        })
+        return profileImageUrl
     }
 
 }
