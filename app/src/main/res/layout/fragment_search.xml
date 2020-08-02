@@ -8,7 +8,6 @@
                                                    tools:context="Fragments.SearchFragment">
 
 
-
     <androidx.appcompat.widget.Toolbar android:layout_width="371dp"
                                        android:layout_height="42dp"
                                        android:background="@color/colorPrimary"
@@ -29,6 +28,9 @@
 
 
     </androidx.appcompat.widget.Toolbar>
+
+
+
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

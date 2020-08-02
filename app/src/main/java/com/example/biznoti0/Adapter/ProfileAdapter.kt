@@ -38,6 +38,14 @@ class ProfileAdapter (private var usercontext: Context,
      holder.Name.text = userobtainer.getFNAME() + "  "+ userobtainer.getLName()
      holder.AccountType.text = userobtainer.getACType()
      Picasso.get().load(userobtainer.getImage()).placeholder(R.drawable.profile).into(holder.ProfilePicture)
+      holder.itemView.setOnClickListener(View.OnClickListener {
+          val preference = usercontext.getSharedPreferences("Preference", Context.MODE_PRIVATE).edit()
+          preference.putString("ID",userobtainer.getusersID())
+              preference.apply()
+
+
+
+      })
 
 
 
