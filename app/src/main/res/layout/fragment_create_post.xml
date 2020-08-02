@@ -46,13 +46,15 @@
         android:id="@+id/CreatePost"
         android:layout_width="138dp"
         android:layout_height="51dp"
+        android:layout_marginTop="1dp"
         android:layout_marginBottom="32dp"
         android:background="#00B0FF"
         android:text="Post"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Link" />
 
     <EditText
         android:id="@+id/Link"
@@ -76,8 +78,10 @@
         android:layout_width="164dp"
         android:layout_height="33dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="1dp"
         android:text="Create Proposal"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/ProposalName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
