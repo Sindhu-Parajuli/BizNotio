@@ -119,7 +119,7 @@ class ProfileFragment : Fragment() {
 
         // get the location of your firebase storage by giving it the name of the directory you use
         // in our case we use the "user Info"
-        val ref = FirebaseStorage.getInstance().getReference("/user%20Info/$filename")
+        val ref = FirebaseStorage.getInstance().getReference("/userStorage/$filename")
 
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
