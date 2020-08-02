@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.frame_layout) as NavHostFragment? ?: return
 
-        // Set up Action Bar
+        // Set up Action Bars
         val navController = host.navController
 
         appBarConfiguration = AppBarConfiguration(navController.graph)

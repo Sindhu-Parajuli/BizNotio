@@ -1,42 +1,40 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:andriod="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="Fragments.SearchFragment">
+                                                   xmlns:andriod="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/constraintLayout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context="Fragments.SearchFragment">
+
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        andriod:layout_constraintBottom_toBottomOf="parent"
-        andriod:layout_constraintStart_toStartOf="parent"
-        andriod:layout_constraintTop_toBottomOf="@+id/searchView" />
+            android:id="@+id/recyclerviewid"
+            android:layout_width="388dp"
+            android:layout_height="641dp"
+            andriod:layout_constraintBottom_toBottomOf="parent" andriod:layout_constraintTop_toTopOf="parent"
+            andriod:layout_constraintStart_toStartOf="parent" andriod:layout_constraintEnd_toEndOf="parent"
+            andriod:layout_constraintHorizontal_bias="0.304" andriod:layout_constraintVertical_bias="0.822"/>
+    <androidx.appcompat.widget.Toolbar android:layout_width="404dp"
+                                       android:layout_height="45dp"
+                                       android:background="@color/colorPrimary"
+                                       andriod:layout_constraintBottom_toBottomOf="parent"
+                                       andriod:layout_constraintTop_toTopOf="parent"
+                                       andriod:layout_constraintEnd_toEndOf="parent"
+                                       andriod:layout_constraintStart_toStartOf="parent"
+                                       andriod:layout_constraintHorizontal_bias="0.533"
+                                       andriod:layout_constraintVertical_bias="0.005" android:id="@+id/toolbar">
 
-    <ImageButton
-        android:id="@+id/chat_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:contentDescription="Direct Message"
-        android:src="@drawable/chat_ui_icon"
-        andriod:layout_constraintEnd_toEndOf="parent"
-        andriod:layout_constraintTop_toTopOf="parent" />
+        <ImageView android:layout_width="30dp" android:layout_height="30dp"
+                   android:id="@+id/iconforimage" android:src="@drawable/search"/>
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="60dp"
-        android:iconifiedByDefault="false"
-        android:queryHint="Search here...."
-        andriod:layout_constraintEnd_toEndOf="parent"
-        andriod:layout_constraintTop_toTopOf="parent">
+        <EditText android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/searchView"
+                  android:hint="Search for users or projects.."/>
 
-    </SearchView>
+
+    </androidx.appcompat.widget.Toolbar>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
