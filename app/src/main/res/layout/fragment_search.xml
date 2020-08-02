@@ -8,15 +8,9 @@
                                                    tools:context="Fragments.SearchFragment">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerviewid"
-            android:layout_width="388dp"
-            android:layout_height="641dp"
-            andriod:layout_constraintBottom_toBottomOf="parent" andriod:layout_constraintTop_toTopOf="parent"
-            andriod:layout_constraintStart_toStartOf="parent" andriod:layout_constraintEnd_toEndOf="parent"
-            andriod:layout_constraintHorizontal_bias="0.304" andriod:layout_constraintVertical_bias="0.822"/>
-    <androidx.appcompat.widget.Toolbar android:layout_width="404dp"
-                                       android:layout_height="45dp"
+
+    <androidx.appcompat.widget.Toolbar android:layout_width="371dp"
+                                       android:layout_height="42dp"
                                        android:background="@color/colorPrimary"
                                        andriod:layout_constraintBottom_toBottomOf="parent"
                                        andriod:layout_constraintTop_toTopOf="parent"
@@ -35,6 +29,13 @@
 
 
     </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            andriod:layout_constraintBottom_toBottomOf="parent" tools:ignore="MissingConstraints"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

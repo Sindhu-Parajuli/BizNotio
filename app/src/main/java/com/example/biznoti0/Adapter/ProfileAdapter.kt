@@ -24,27 +24,29 @@ class ProfileAdapter (private var usercontext: Context,
         val view = LayoutInflater.from(usercontext).inflate(R.layout.result_layout,parent,false)
         return ProfileAdapter.ViewHolder(view)
 
-        TODO("Not yet implemented")
+
     }
 
     //gets the total item of searches obtained from the database
     override fun getItemCount(): Int {
         return userlist.size
-        TODO("Not yet implemented")
+
     }
  //Displays the data obtained from search
     override fun onBindViewHolder(holder: ProfileAdapter.ViewHolder, position: Int) {
       val userobtainer = userlist[position]
-     holder.Name.text = userobtainer.getFNAME() //+ userobtainer.getLName()
+     holder.Name.text = userobtainer.getFNAME() + "  "+ userobtainer.getLName()
+     holder.AccountType.text = userobtainer.getACType()
      Picasso.get().load(userobtainer.getImage()).placeholder(R.drawable.profile).into(holder.ProfilePicture)
 
 
-        TODO("Not yet implemented")
+
     }
 
 class ViewHolder (@NonNull itemView: View): RecyclerView.ViewHolder(itemView)
 {
 val Name:TextView = itemView.findViewById(R.id.layoutuser)
+    val AccountType:TextView = itemView.findViewById(R.id.accounttype)
     val ProfilePicture:ImageView = itemView.findViewById(R.id.picture)
 
 
