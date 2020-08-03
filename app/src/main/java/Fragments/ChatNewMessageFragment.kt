@@ -87,6 +87,8 @@ class ChatNewMessageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val adapter = GroupAdapter<GroupieViewHolder>()
+        recyclerview_newmessage.adapter = adapter
         fetchUsers()
     }
 

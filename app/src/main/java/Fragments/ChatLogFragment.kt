@@ -16,6 +16,7 @@ import com.example.biznoti0.R
 import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationMenu
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.FirebaseDatabase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
@@ -109,8 +110,17 @@ class ChatLogFragment : Fragment() {
 
     }
 
+    class ChatMessage(val text: String)
     private fun performSendMessage() {
+        val text = text_field_text_view.text.toString()
 
+        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
+
+        val chatMessage = ChatMessage(text)
+        reference.setValue(chatMessage)
+            .addOnSuccessListener {
+                Log.d("ChatLogFragment", "Message has been saved to firebase: ${reference.key}")
+            }
     }
 
     private fun setupDummyData() {
