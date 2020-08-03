@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 import java.util.*
 
@@ -44,34 +45,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val preference = context?.getSharedPreferences("Preferences",Context.MODE_PRIVATE)
-        if(preference!=null)
-        {
-            this.IDforprofile = preference.getString("IDforprofile","none").toString()
 
-        }
-
-
-        //Comparing online user and firebase current user if they are the same;ie own profile page.
-        //if not same user, means re-directing from search to user's profile page
-
-        firebaseuser = FirebaseAuth.getInstance().currentUser!!
-
-
-        if (IDforprofile == firebaseuser.uid)
-        {
-
-             //edit_button.text = "Edit Profile"
-        }
-
-       else if(IDforprofile!=firebaseuser.uid)
-        {
-            //connect()
-        }
-
-        //getconnected()
-
-        storeuserData()
 
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_profile, container, false)
@@ -83,6 +57,7 @@ class ProfileFragment : Fragment() {
 
         // Profile button
         val profileButton = view.findViewById<ImageView>(R.id.imageView)
+
 
         profileButton?.setOnClickListener{
             val intent = Intent (Intent.ACTION_PICK)
@@ -114,8 +89,38 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
 
         }
+        val preference = context?.getSharedPreferences("Preferences",Context.MODE_PRIVATE)
+        if(preference!=null) {
+            this.IDforprofile = preference.getString("IDforprofile", "none")!!
+        }
+
+        //Comparing online user and firebase current user if they are the same;ie own profile page.
+        //if not same user, means re-directing from search to user's profile page
+
+        firebaseuser = FirebaseAuth.getInstance().currentUser!!
+
+
+        if (IDforprofile == firebaseuser.uid)
+        {
+
+             view.edit_button.text = "Edit Profile"
+        }
+
+
+
+        else if(IDforprofile != firebaseuser.uid)
+        {
+            connect()
+        }
+
+        getconnected()
+
+        storeuserData()
+
+
+
     }
-/*
+
     private fun connect()
     {
         firebaseuser?.uid.let {
@@ -170,7 +175,7 @@ class ProfileFragment : Fragment() {
             }
 
 
-*/
+
 
 
     var selectedPhotoUri: Uri? = null
@@ -240,6 +245,7 @@ class ProfileFragment : Fragment() {
             }
     }
 
+
     private fun storeuserData()
     {
         val userdata = FirebaseDatabase.getInstance().getReference().child("usersID").child(IDforprofile)
@@ -251,17 +257,17 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-
+/*
                 if(context!=null)
                 {
                     return
                 }
-
+*/
                 if(snapshot.exists())
                 {
                     val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
                     Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(circle_image_profile)
-                    textView.text = newuser.getFNAME() + " " + newuser.getLName()
+                        view?.textView?.text = newuser!!.getFNAME() // + " " + newuser.getLName()
 
 
                 }
@@ -273,5 +279,44 @@ class ProfileFragment : Fragment() {
 
         )
     }
+
+
+    override fun onStop() {
+        super.onStop()
+
+        val preference = context?.getSharedPreferences("Preferences", Context.MODE_PRIVATE)?.edit()
+        preference?.putString("IDforprofile", firebaseuser.uid)
+        preference?.apply()
+    }
+
+
+
+    override fun onPause() {
+        super.onPause()
+
+        val preference = context?.getSharedPreferences("Preferences", Context.MODE_PRIVATE)?.edit()
+        preference?.putString("IDforprofile", firebaseuser.uid)
+        preference?.apply()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val preference = context?.getSharedPreferences("Preferences", Context.MODE_PRIVATE)?.edit()
+        preference?.putString("IDforprofile", firebaseuser.uid)
+        preference?.apply()
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

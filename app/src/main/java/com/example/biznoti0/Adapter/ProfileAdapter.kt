@@ -60,7 +60,7 @@ class ViewHolder (@NonNull itemView: View): RecyclerView.ViewHolder(itemView)
 {
 val Name:TextView = itemView.findViewById(R.id.layoutuser)
     val AccountType:TextView = itemView.findViewById(R.id.accounttype)
-    //val ProfilePicture:ImageView = itemView.findViewById(R.id.picture)
+    val ProfilePicture:ImageView = itemView.findViewById(R.id.picture)
 
 
 }
