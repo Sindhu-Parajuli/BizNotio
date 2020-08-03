@@ -106,6 +106,12 @@ class SignUp : AppCompatActivity() {
         currUserHashMap["MName"] = Mnames.toLowerCase()
         currUserHashMap["LName"] = Lnames.toLowerCase()
         currUserHashMap["Email"] = emails
+        currUserHashMap["Profession"] = "Full-time BizNotio User"
+        currUserHashMap["Education"] = "World University"
+        currUserHashMap["BizNotioGoals"] = "Serve the world"
+        currUserHashMap["Interests"] = "Learning"
+
+
         currUserHashMap["Image"] = "gs://bitnoti0.appspot.com/user Info/profile.png"
         userreference.updateChildren(currUserHashMap)
             .addOnCompleteListener { task ->

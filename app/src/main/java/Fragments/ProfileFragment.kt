@@ -267,7 +267,11 @@ class ProfileFragment : Fragment() {
                 {
                     val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
                     Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(circle_image_profile)
-                        view?.textView?.text = newuser!!.getFNAME() // + " " + newuser.getLName()
+                        view?.textView?.text = newuser!!.getFNAME()  + " " + newuser.getLName()
+                    view?.Education?.text=newuser!!.getEducation()
+                    view?.Goals?.text=newuser!!.getBizNotioGoals()
+                    view?.Interests?.text=newuser!!.getInterests()
+                    view?.profession?.text=newuser!!.getProfession()
 
 
                 }
