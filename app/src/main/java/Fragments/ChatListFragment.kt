@@ -92,12 +92,39 @@ class ChatListFragment : Fragment() {
     class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
             viewHolder.itemView.chat_list_element_message_preview.text = chatMessage.text
+
+            val chatPartnerId: String
+            if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
+                chatPartnerId = chatMessage.toId
+            } else {
+                chatPartnerId = chatMessage.fromId
+            }
+
+            val ref = FirebaseDatabase.getInstance().getReference("/usersID/$chatPartnerId")
+            ref.addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.getValue(User::class.java)
+                    viewHolder.itemView.chat_list_element_user_name.text = "${user?.FName} ${user?.LName} "
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+
         }
 
         override fun getLayout(): Int {
             return R.layout.layout_chat_list_element
         }
 
+    }
+
+    val latestMessagesMap = HashMap<String, ChatMessage>()
+
+    fun refreshRecyclerViewMessages() {
+        adapter.clear()
+        latestMessagesMap.values.forEach {
+            adapter.add(LatestMessageRow(it))
+        }
     }
 
     private fun listenForLatestMessages() {
@@ -107,11 +134,16 @@ class ChatListFragment : Fragment() {
         ref.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
-                adapter.add(LatestMessageRow(chatMessage))
+
+                latestMessagesMap[snapshot.key!!] = chatMessage
+                refreshRecyclerViewMessages()
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
 
+                latestMessagesMap[snapshot.key!!] = chatMessage
+                refreshRecyclerViewMessages()
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
