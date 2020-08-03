@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.biznoti0.Model.User
 import com.example.biznoti0.R
 import com.example.biznoti0.ViewModels.ChatViewModel
@@ -40,7 +41,7 @@ class ChatLogFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var adapter = GroupAdapter<GroupieViewHolder>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -60,15 +61,6 @@ class ChatLogFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment chatHistoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ChatLogFragment().apply {
@@ -80,13 +72,18 @@ class ChatLogFragment : Fragment() {
     }
 
     private val model: ChatViewModel by activityViewModels()
-    private var toId: String = "default"
+    private var toId: String? = null
+    private var userObject: User = User()
+    private var adapter = GroupAdapter<GroupieViewHolder>()
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         chat_log_recycler_view.adapter = adapter
         model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
             chat_header_user_text.text = item.FName
             toId = item.usersID
+            userObject = item
         })
 
 //        setupDummyData()
@@ -121,69 +118,82 @@ class ChatLogFragment : Fragment() {
     }
 
     private fun listenForMessages() {
-        val ref = FirebaseDatabase.getInstance().getReference("/messages")
 
-        ref.addChildEventListener(object: ChildEventListener{
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val chatMessage = snapshot.getValue<ChatMessage>()
-                if (chatMessage != null) {
-                    Log.d("ChatLogFragment", chatMessage.text)
+        model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
+            chat_header_user_text.text = item.FName
+            toId = item.usersID
+            userObject = item
+            val fromId = FirebaseAuth.getInstance().uid
+            val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
-                    adapter.add(ChatFromItem(chatMessage.text))
+            ref.addChildEventListener(object: ChildEventListener{
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    val chatMessage = snapshot.getValue(ChatMessage::class.java)
+                    if (chatMessage != null) {
+                        Log.d("ChatLogFragment", chatMessage.text)
+
+                        if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
+                            val currentUser = ChatListFragment.currentUser ?: return
+                            adapter.add(ChatFromItem(chatMessage.text, currentUser))
+                        } else {
+                            adapter.add(ChatToItem(chatMessage.text, userObject))
+                        }
+                    }
+
                 }
 
-            }
+                override fun onCancelled(error: DatabaseError) {
+                }
 
-            override fun onCancelled(error: DatabaseError) {
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                }
 
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                }
 
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-
-
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-
-
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-
-
-            }
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                }
+            })
         })
+
+
     }
 
 
 
     private fun performSendMessage() {
-        val text = text_field_text_view.text.toString()
-        val fromId = FirebaseAuth.getInstance().uid
+        model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
+            chat_header_user_text.text = item.FName
+            toId = item.usersID
+            userObject = item
+            val text = text_field_text_view.text.toString()
+            val fromId = FirebaseAuth.getInstance().uid
 
-        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
+            val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
 
-        val chatMessage = ChatMessage(reference.key!!, text, fromId!!, toId, System.currentTimeMillis())
-        reference.setValue(chatMessage)
-            .addOnSuccessListener {
-                Log.d("ChatLogFragment", "Message has been saved to firebase: ${reference.key}")
-            }
-    }
+            val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
 
-    private fun setupDummyData() {
-        val adapter = GroupAdapter<GroupieViewHolder>()
+            val chatMessage = ChatMessage(reference.key!!, text, fromId!!, toId!!, System.currentTimeMillis())
+            reference.setValue(chatMessage)
+                    .addOnSuccessListener {
+                        Log.d("ChatLogFragment", "Message has been saved to firebase: ${reference.key}")
+                        text_field_text_view.text.clear()
+                        chat_log_recycler_view.scrollToPosition(adapter.itemCount - 1)
+                    }
+            toReference.setValue(chatMessage)
+        })
 
-        adapter.add(ChatFromItem("From message test"))
-        adapter.add(ChatToItem("To message test"))
-        chat_log_recycler_view.adapter = adapter
     }
 }
 
 
-class ChatFromItem(val text: String): Item<GroupieViewHolder>() {
+class ChatFromItem(val text: String, val user: User): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.textview_from_row.text = text
+        val profileImageUrl = user.profileImageUrl
+        val targetImageView = viewHolder.itemView.imageview_from_row
+
+        Glide.with(viewHolder.itemView).load(profileImageUrl).into(targetImageView)
     }
 
     override fun getLayout(): Int {
@@ -191,9 +201,13 @@ class ChatFromItem(val text: String): Item<GroupieViewHolder>() {
     }
 }
 
-class ChatToItem(val text: String): Item<GroupieViewHolder>() {
+class ChatToItem(val text: String, val user: User): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.textview_to_row.text = text
+        val profileImageUrl = user.profileImageUrl
+        val targetImageView = viewHolder.itemView.imageview_to_row
+
+        Glide.with(viewHolder.itemView).load(profileImageUrl).into(targetImageView)
     }
 
     override fun getLayout(): Int {

@@ -1,6 +1,7 @@
 package Fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.biznoti0.ChatListRecyclerAdapter
 import com.example.biznoti0.ChatListSource
 import com.example.biznoti0.ChatListDecoration
+import com.example.biznoti0.Model.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 
 import kotlinx.android.synthetic.main.fragment_chat_list.*
 
@@ -52,11 +60,14 @@ class ChatListFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+
+        var currentUser: User? = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fetchCurrentUser()
         // Recycler view node initialized here
 
         initRecyclerView()
@@ -68,6 +79,21 @@ class ChatListFragment : Fragment() {
             findNavController().navigate(R.id.chatNewMessageFragment, null)
         }
 
+    }
+
+    private fun fetchCurrentUser() {
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+//                currentUser = snapshot.getValue<User>()
+                currentUser = snapshot.getValue(User::class.java)
+                Log.d("ChatListFragment", "Current user: ${currentUser?.usersID}")
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
     }
 
     private fun addDataSet(){
