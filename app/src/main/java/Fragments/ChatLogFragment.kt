@@ -67,6 +67,16 @@ class ChatLogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
+            chat_header_user_text.text = item.FName
+        })
+
+        setupDummyData()
+    }
+
+
+    private fun setupDummyData() {
         val adapter = GroupAdapter<GroupieViewHolder>()
 
         adapter.add(ChatFromItem())
@@ -77,36 +87,29 @@ class ChatLogFragment : Fragment() {
         adapter.add(ChatToItem())
         adapter.add(ChatFromItem())
         adapter.add(ChatToItem())
-
-
-        model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
-            chat_header_user_text.text = item.FName
-        })
-
         chat_log_recycler_view.adapter = adapter
     }
+}
 
-    class ChatFromItem: Item<GroupieViewHolder>() {
-        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
-        }
+class ChatFromItem: Item<GroupieViewHolder>() {
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
-        override fun getLayout(): Int {
-            return R.layout.layout_chat_log_from_row
-        }
     }
 
-    class ChatToItem: Item<GroupieViewHolder>() {
-        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+    override fun getLayout(): Int {
+        return R.layout.layout_chat_log_from_row
+    }
+}
 
-        }
+class ChatToItem: Item<GroupieViewHolder>() {
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
-        override fun getLayout(): Int {
-            return R.layout.layout_chat_log_to_row
-        }
     }
 
-
+    override fun getLayout(): Int {
+        return R.layout.layout_chat_log_to_row
+    }
 }
 
 
