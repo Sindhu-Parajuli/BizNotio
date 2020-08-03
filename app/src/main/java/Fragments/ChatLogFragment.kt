@@ -16,6 +16,10 @@ import com.example.biznoti0.R
 import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationMenu
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -24,6 +28,8 @@ import kotlinx.android.synthetic.main.fragment_chat_log.*
 import kotlinx.android.synthetic.main.layout_chat_log_from_row.view.*
 import kotlinx.android.synthetic.main.layout_chat_log_to_row.view.*
 import org.w3c.dom.Text
+import com.example.biznoti0.Model.ChatMessage
+import com.google.firebase.database.ktx.getValue
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,13 +40,15 @@ class ChatLogFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var adapter = GroupAdapter<GroupieViewHolder>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(
@@ -72,15 +80,17 @@ class ChatLogFragment : Fragment() {
     }
 
     private val model: ChatViewModel by activityViewModels()
-
+    private var toId: String = "default"
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        chat_log_recycler_view.adapter = adapter
         model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
             chat_header_user_text.text = item.FName
+            toId = item.usersID
         })
 
-        setupDummyData()
+//        setupDummyData()
+        listenForMessages()
         text_field_text_view.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
 
@@ -110,13 +120,51 @@ class ChatLogFragment : Fragment() {
 
     }
 
-    class ChatMessage(val text: String)
+    private fun listenForMessages() {
+        val ref = FirebaseDatabase.getInstance().getReference("/messages")
+
+        ref.addChildEventListener(object: ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val chatMessage = snapshot.getValue<ChatMessage>()
+                if (chatMessage != null) {
+                    Log.d("ChatLogFragment", chatMessage.text)
+
+                    adapter.add(ChatFromItem(chatMessage.text))
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+
+
+            }
+        })
+    }
+
+
+
     private fun performSendMessage() {
         val text = text_field_text_view.text.toString()
+        val fromId = FirebaseAuth.getInstance().uid
 
         val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
 
-        val chatMessage = ChatMessage(text)
+        val chatMessage = ChatMessage(reference.key!!, text, fromId!!, toId, System.currentTimeMillis())
         reference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d("ChatLogFragment", "Message has been saved to firebase: ${reference.key}")
