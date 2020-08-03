@@ -44,7 +44,8 @@
         android:alpha="0.9"
         android:background="@drawable/chat_ui_search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"/>
 
 
     <RelativeLayout

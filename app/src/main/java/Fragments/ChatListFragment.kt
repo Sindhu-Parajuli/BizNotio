@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
+import androidx.navigation.fragment.findNavController
 
 import com.example.biznoti0.R
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,6 +61,13 @@ class ChatListFragment : Fragment() {
 
         initRecyclerView()
         addDataSet()
+
+        // search button will trigger the new message fragment
+        val searchButton = view.findViewById<RelativeLayout>(R.id.search_button)
+        searchButton?.setOnClickListener {
+            findNavController().navigate(R.id.chatNewMessageFragment, null)
+        }
+
     }
 
     private fun addDataSet(){

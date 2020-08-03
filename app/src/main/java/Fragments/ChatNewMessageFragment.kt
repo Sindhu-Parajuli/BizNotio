@@ -1,0 +1,188 @@
+package Fragments
+
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.biznoti0.Model.User
+
+
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+
+
+
+import com.squareup.picasso.Picasso
+
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
+import com.xwray.groupie.GroupieViewHolder
+
+import com.example.biznoti0.R
+import com.google.firebase.database.ktx.getValue
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_chat_new_message.*
+import kotlinx.android.synthetic.main.layout_chat_new_message_user_row.view.*
+
+
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [ChatNewMessageFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class ChatNewMessageFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_chat_new_message, container, false)
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment ChatNewMessageFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            ChatNewMessageFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fetchUsers()
+    }
+
+    private fun fetchUsers() {
+        val ref = FirebaseDatabase.getInstance().getReference("/usersID")
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val adapter = GroupAdapter<GroupieViewHolder>()
+
+                p0.children.forEach {
+                    Log.d("ChatNewMessageFragment", it.toString())
+//                    val user = it.getValue(ProfileUser::class.java)
+                    var user = it.getValue<User>()
+//                    Log.d("ChatNewMessageFragment", user_ktx.toString())
+                    if (user != null) {
+                        adapter.add(UserItem(user))
+                    }
+                }
+
+                recyclerview_newmessage.adapter = adapter
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
+    }
+
+    class UserItem(val user: User): Item<GroupieViewHolder>() {
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+//            viewHolder.itemView.username_textview_new_message.text = user.getFNAME()
+            viewHolder.itemView.username_textview_new_message.text = user.FName
+            val requestOptions = RequestOptions()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+
+            // So the tutorial was using picasso but I found better loading times with glide
+            Glide.with(viewHolder.itemView)
+                .applyDefaultRequestOptions(requestOptions)
+                .load(user.profileImageUrl)
+                .into(viewHolder.itemView.imageview_new_message)
+
+
+//            if (user.getProfileImage().isEmpty()) {
+//
+//            } else {
+//                Picasso.get().load(user.getProfileImage()).into(viewHolder.itemView.imageview_new_message)
+//            }
+
+        }
+
+        override fun getLayout(): Int {
+            return R.layout.layout_chat_new_message_user_row
+        }
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
