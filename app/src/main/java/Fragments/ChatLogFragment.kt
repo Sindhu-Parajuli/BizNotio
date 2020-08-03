@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.layout_chat_log_to_row.view.*
 import org.w3c.dom.Text
 import com.example.biznoti0.Model.ChatMessage
 import com.google.firebase.database.ktx.getValue
+import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -140,6 +141,13 @@ class ChatLogFragment : Fragment() {
                             adapter.add(ChatToItem(chatMessage.text, userObject))
                         }
                     }
+//                    val currentCount = adapter.itemCount
+                    try {
+                        chat_log_recycler_view.scrollToPosition(adapter.itemCount - 1)
+                    } catch (e: Exception) {
+                        Log.d("ChatLogFragment", "Avoided fatal crash")
+                    }
+
 
                 }
 

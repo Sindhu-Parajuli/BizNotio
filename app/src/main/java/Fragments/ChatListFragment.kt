@@ -7,15 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 
 import com.example.biznoti0.R
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.biznoti0.ChatListRecyclerAdapter
 import com.example.biznoti0.ChatListSource
 import com.example.biznoti0.ChatListDecoration
 import com.example.biznoti0.Model.ChatMessage
 import com.example.biznoti0.Model.User
+import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
@@ -69,10 +73,19 @@ class ChatListFragment : Fragment() {
 
     val adapter = GroupAdapter<GroupieViewHolder>()
 
+    private val model: ChatViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         chat_list_recycler_view.adapter = adapter
+        chat_list_recycler_view.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
+        adapter.setOnItemClickListener {item, view ->
+            Log.d("ChatListFragment", "123")
+            val row = item as LatestMessageRow
+
+            model.select(row.user!!)
+            findNavController().navigate(R.id.chatLogFragment, null)
+        }
 //        setupDummyRows()
         listenForLatestMessages()
         fetchCurrentUser()
@@ -90,6 +103,7 @@ class ChatListFragment : Fragment() {
     }
 
     class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>() {
+        var user: User? = null
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
             viewHolder.itemView.chat_list_element_message_preview.text = chatMessage.text
 
@@ -103,8 +117,12 @@ class ChatListFragment : Fragment() {
             val ref = FirebaseDatabase.getInstance().getReference("/usersID/$chatPartnerId")
             ref.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(User::class.java)
+                    user = snapshot.getValue(User::class.java)
                     viewHolder.itemView.chat_list_element_user_name.text = "${user?.FName} ${user?.LName} "
+
+                    Glide.with(viewHolder.itemView).load(user?.profileImageUrl).into(viewHolder.itemView.chat_list_element_image_circle)
+                    viewHolder.itemView.chat_list_element_image.alpha = 0f
+
                 }
                 override fun onCancelled(error: DatabaseError) {
                 }
