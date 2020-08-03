@@ -3,6 +3,7 @@ package Fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -101,10 +102,16 @@ class ChatLogFragment : Fragment() {
             }
         })
 
-
+        text_field_send_button.setOnClickListener {
+            Log.d("ChatLogFragment", "Attempt to send message...")
+            performSendMessage()
+        }
 
     }
 
+    private fun performSendMessage() {
+
+    }
 
     private fun setupDummyData() {
         val adapter = GroupAdapter<GroupieViewHolder>()
