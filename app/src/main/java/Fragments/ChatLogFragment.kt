@@ -16,6 +16,8 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.fragment_chat_log.*
+import kotlinx.android.synthetic.main.layout_chat_log_from_row.view.*
+import kotlinx.android.synthetic.main.layout_chat_log_to_row.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,22 +81,16 @@ class ChatLogFragment : Fragment() {
     private fun setupDummyData() {
         val adapter = GroupAdapter<GroupieViewHolder>()
 
-        adapter.add(ChatFromItem())
-        adapter.add(ChatToItem())
-        adapter.add(ChatFromItem())
-        adapter.add(ChatToItem())
-        adapter.add(ChatFromItem())
-        adapter.add(ChatToItem())
-        adapter.add(ChatFromItem())
-        adapter.add(ChatToItem())
+        adapter.add(ChatFromItem("From message test"))
+        adapter.add(ChatToItem("To message test"))
         chat_log_recycler_view.adapter = adapter
     }
 }
 
 
-class ChatFromItem: Item<GroupieViewHolder>() {
+class ChatFromItem(val text: String): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-
+        viewHolder.itemView.textview_from_row.text = text
     }
 
     override fun getLayout(): Int {
@@ -102,9 +98,9 @@ class ChatFromItem: Item<GroupieViewHolder>() {
     }
 }
 
-class ChatToItem: Item<GroupieViewHolder>() {
+class ChatToItem(val text: String): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-
+        viewHolder.itemView.textview_to_row.text = text
     }
 
     override fun getLayout(): Int {
