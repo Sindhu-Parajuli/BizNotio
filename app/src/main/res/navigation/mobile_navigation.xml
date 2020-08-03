@@ -66,4 +66,10 @@
           android:label="fragment_chat_new_message"
           tools:layout="@layout/fragment_chat_new_message" />
 
+  <fragment
+          android:id="@+id/chatLogFragment"
+          android:name="Fragments.ChatLogFragment"
+          android:label="fragment"
+          tools:layout="@layout/fragment_chat_log" />
+
 </navigation>
