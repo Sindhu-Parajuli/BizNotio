@@ -14,18 +14,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.biznoti0.ChatListRecyclerAdapter
 import com.example.biznoti0.ChatListSource
 import com.example.biznoti0.ChatListDecoration
+import com.example.biznoti0.Model.ChatMessage
 import com.example.biznoti0.Model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 
 import kotlinx.android.synthetic.main.fragment_chat_list.*
+import kotlinx.android.synthetic.main.layout_chat_list_element.view.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -67,11 +67,14 @@ class ChatListFragment : Fragment() {
         var currentUser: User? = null
     }
 
+    val adapter = GroupAdapter<GroupieViewHolder>()
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupDummyRows()
-
+        chat_list_recycler_view.adapter = adapter
+//        setupDummyRows()
+        listenForLatestMessages()
         fetchCurrentUser()
         // Recycler view node initialized here
 
@@ -86,9 +89,9 @@ class ChatListFragment : Fragment() {
 
     }
 
-    class LatestMessageRow: Item<GroupieViewHolder>() {
+    class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-
+            viewHolder.itemView.chat_list_element_message_preview.text = chatMessage.text
         }
 
         override fun getLayout(): Int {
@@ -97,16 +100,38 @@ class ChatListFragment : Fragment() {
 
     }
 
-    private fun setupDummyRows() {
-        val adapter = GroupAdapter<GroupieViewHolder>()
+    private fun listenForLatestMessages() {
+        val fromId = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
 
-        adapter.add(LatestMessageRow())
-        adapter.add(LatestMessageRow())
-        adapter.add(LatestMessageRow())
+        ref.addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
+                adapter.add(LatestMessageRow(chatMessage))
+            }
 
-        chat_list_recycler_view.adapter = adapter
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+
+            }
+        })
     }
+
+
+
+
 
 
 
