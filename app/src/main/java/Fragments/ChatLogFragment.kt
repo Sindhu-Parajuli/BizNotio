@@ -79,6 +79,7 @@ class ChatLogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        text_field_send_button.visibility = View.GONE
         chat_log_recycler_view.adapter = adapter
         model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
             chat_header_user_text.text = item.FName
