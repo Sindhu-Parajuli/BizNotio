@@ -1,10 +1,13 @@
 package Fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.biznoti0.Model.User
@@ -18,6 +21,7 @@ import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.fragment_chat_log.*
 import kotlinx.android.synthetic.main.layout_chat_log_from_row.view.*
 import kotlinx.android.synthetic.main.layout_chat_log_to_row.view.*
+import org.w3c.dom.Text
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,6 +79,30 @@ class ChatLogFragment : Fragment() {
         })
 
         setupDummyData()
+        text_field_text_view.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                text_field_microphone_button.visibility = View.GONE
+
+                text_field_send_button.alpha = 1f
+                text_field_send_button.visibility = View.VISIBLE
+
+                if (count == 0) {
+                    text_field_microphone_button.visibility = View.VISIBLE
+                    text_field_send_button.visibility = View.GONE
+                }
+            }
+        })
+
+
+
     }
 
 

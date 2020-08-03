@@ -188,7 +188,8 @@
             android:id="@+id/text_field_microphone_button"
             android:layout_width="16dp"
             android:layout_height="24dp"
-            android:alpha="1"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="@+id/text_field_layout"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/ic_sound_message" app:layout_constraintStart_toEndOf="@+id/text_field_layout"
@@ -199,6 +200,7 @@
 
     <ImageButton
             android:id="@+id/text_field_send_button"
+            android:clickable="true"
             android:alpha="0"
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -208,7 +210,8 @@
             app:layout_constraintStart_toEndOf="@+id/text_field_layout"
             android:layout_marginStart="22dp"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toTopOf="@+id/text_field_layout">
+            app:layout_constraintTop_toTopOf="@+id/text_field_layout"
+            android:focusable="true">
 
     </ImageButton>
 
