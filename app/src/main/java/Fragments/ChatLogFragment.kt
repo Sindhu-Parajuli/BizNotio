@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import com.example.biznoti0.Model.User
 import com.example.biznoti0.R
 import com.example.biznoti0.ViewModels.ChatViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationMenu
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
@@ -76,12 +78,12 @@ class ChatLogFragment : Fragment() {
         adapter.add(ChatFromItem())
         adapter.add(ChatToItem())
 
-        chat_log_recycler_view.adapter = adapter
+
         model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
             chat_header_user_text.text = item.FName
         })
 
-
+        chat_log_recycler_view.adapter = adapter
     }
 
     class ChatFromItem: Item<GroupieViewHolder>() {
