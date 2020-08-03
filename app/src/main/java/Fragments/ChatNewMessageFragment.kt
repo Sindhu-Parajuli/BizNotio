@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.biznoti0.Model.User
@@ -25,6 +27,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.GroupieViewHolder
 
 import com.example.biznoti0.R
+import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.firebase.database.ktx.getValue
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_chat_new_message.*
@@ -87,6 +90,8 @@ class ChatNewMessageFragment : Fragment() {
         fetchUsers()
     }
 
+    private val model: ChatViewModel by activityViewModels()
+
     private fun fetchUsers() {
         val ref = FirebaseDatabase.getInstance().getReference("/usersID")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -102,10 +107,16 @@ class ChatNewMessageFragment : Fragment() {
                     if (user != null) {
                         adapter.add(UserItem(user))
                     }
-                }
 
+                }
+                adapter.setOnItemClickListener {item, view ->
+                    val userItem = item as UserItem
+                    model.select(userItem.user)
+                    findNavController().navigate(R.id.chatLogFragment, null)
+                }
                 recyclerview_newmessage.adapter = adapter
             }
+
 
             override fun onCancelled(p0: DatabaseError) {
 

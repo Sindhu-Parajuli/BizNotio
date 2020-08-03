@@ -5,19 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.example.biznoti0.Model.User
 import com.example.biznoti0.R
+import com.example.biznoti0.ViewModels.ChatViewModel
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.fragment_chat_log.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [chatHistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class chatHistoryFragment : Fragment() {
+class ChatLogFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -50,11 +53,60 @@ class chatHistoryFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            chatHistoryFragment().apply {
+            ChatLogFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
     }
+
+    private val model: ChatViewModel by activityViewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val adapter = GroupAdapter<GroupieViewHolder>()
+
+        adapter.add(ChatFromItem())
+        adapter.add(ChatToItem())
+        adapter.add(ChatFromItem())
+        adapter.add(ChatToItem())
+        adapter.add(ChatFromItem())
+        adapter.add(ChatToItem())
+        adapter.add(ChatFromItem())
+        adapter.add(ChatToItem())
+
+        chat_log_recycler_view.adapter = adapter
+        model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
+            chat_header_user_text.text = item.FName
+        })
+
+
+    }
+
+    class ChatFromItem: Item<GroupieViewHolder>() {
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+
+        }
+
+        override fun getLayout(): Int {
+            return R.layout.layout_chat_log_from_row
+        }
+    }
+
+    class ChatToItem: Item<GroupieViewHolder>() {
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+
+        }
+
+        override fun getLayout(): Int {
+            return R.layout.layout_chat_log_to_row
+        }
+    }
+
+
 }
+
+
+
+
