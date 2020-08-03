@@ -21,6 +21,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Item
 
 import kotlinx.android.synthetic.main.fragment_chat_list.*
 
@@ -67,11 +70,13 @@ class ChatListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupDummyRows()
+
         fetchCurrentUser()
         // Recycler view node initialized here
 
-        initRecyclerView()
-        addDataSet()
+//        initRecyclerView()
+//        addDataSet()
 
         // search button will trigger the new message fragment
         val searchButton = view.findViewById<RelativeLayout>(R.id.search_button)
@@ -80,6 +85,31 @@ class ChatListFragment : Fragment() {
         }
 
     }
+
+    class LatestMessageRow: Item<GroupieViewHolder>() {
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+
+        }
+
+        override fun getLayout(): Int {
+            return R.layout.layout_chat_list_element
+        }
+
+    }
+
+    private fun setupDummyRows() {
+        val adapter = GroupAdapter<GroupieViewHolder>()
+
+        adapter.add(LatestMessageRow())
+        adapter.add(LatestMessageRow())
+        adapter.add(LatestMessageRow())
+
+        chat_list_recycler_view.adapter = adapter
+
+    }
+
+
+
 
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
