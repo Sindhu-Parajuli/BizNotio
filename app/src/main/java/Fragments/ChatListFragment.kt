@@ -2,44 +2,33 @@ package Fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-
-import com.example.biznoti0.R
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.biznoti0.ChatListRecyclerAdapter
-import com.example.biznoti0.ChatListSource
-import com.example.biznoti0.ChatListDecoration
 import com.example.biznoti0.Model.ChatMessage
 import com.example.biznoti0.Model.User
+import com.example.biznoti0.R
 import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
-
 import kotlinx.android.synthetic.main.fragment_chat_list.*
 import kotlinx.android.synthetic.main.layout_chat_list_element.view.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private lateinit var linearLayoutManager: LinearLayoutManager
 
 class ChatListFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-
-    private lateinit var chatListAdapter: ChatListRecyclerAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,19 +48,11 @@ class ChatListFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChatListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
 
         var currentUser: User? = null
     }
 
-    val adapter = GroupAdapter<GroupieViewHolder>()
+    private val adapter = GroupAdapter<GroupieViewHolder>()
 
     private val model: ChatViewModel by activityViewModels()
 
@@ -79,7 +60,7 @@ class ChatListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         chat_list_recycler_view.adapter = adapter
         chat_list_recycler_view.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
-        adapter.setOnItemClickListener {item, view ->
+        adapter.setOnItemClickListener {item, _ ->
             Log.d("ChatListFragment", "123")
             val row = item as LatestMessageRow
 
@@ -102,16 +83,15 @@ class ChatListFragment : Fragment() {
 
     }
 
-    class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>() {
+    class LatestMessageRow(private val chatMessage: ChatMessage): Item<GroupieViewHolder>() {
         var user: User? = null
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
             viewHolder.itemView.chat_list_element_message_preview.text = chatMessage.text
 
-            val chatPartnerId: String
-            if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                chatPartnerId = chatMessage.toId
+            val chatPartnerId: String = if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
+                chatMessage.toId
             } else {
-                chatPartnerId = chatMessage.fromId
+                chatMessage.fromId
             }
 
             val ref = FirebaseDatabase.getInstance().getReference("/usersID/$chatPartnerId")
@@ -201,18 +181,4 @@ class ChatListFragment : Fragment() {
         })
     }
 
-    private fun addDataSet(){
-        val data = ChatListSource.createDataSet()
-        chatListAdapter.submitList(data)
-    }
-
-    private fun initRecyclerView(){
-        chat_list_recycler_view.apply {
-            layoutManager = LinearLayoutManager(activity)
-//            val chatListDecoration = ChatListDecoration(30)
-//            addItemDecoration(chatListDecoration)
-            chatListAdapter = ChatListRecyclerAdapter()
-            adapter = chatListAdapter
-        }
-    }
 }
