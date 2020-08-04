@@ -4,19 +4,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.example.biznoti0.Model.ChatMessage
 import com.example.biznoti0.Model.User
 import com.example.biznoti0.R
 import com.example.biznoti0.ViewModels.ChatViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationMenu
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -28,10 +26,6 @@ import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.fragment_chat_log.*
 import kotlinx.android.synthetic.main.layout_chat_log_from_row.view.*
 import kotlinx.android.synthetic.main.layout_chat_log_to_row.view.*
-import org.w3c.dom.Text
-import com.example.biznoti0.Model.ChatMessage
-import com.google.firebase.database.ktx.getValue
-import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,14 +56,6 @@ class ChatLogFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChatLogFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 
     private val model: ChatViewModel by activityViewModels()

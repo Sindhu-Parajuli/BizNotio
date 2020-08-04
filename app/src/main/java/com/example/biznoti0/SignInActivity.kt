@@ -30,7 +30,14 @@ class SignInActivity : AppCompatActivity() {
         }
 
     }
+    private var progressDialog: ProgressDialog? = null
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (progressDialog != null && progressDialog!!.isShowing) {
+            progressDialog!!.cancel()
+        }
+    }
     override fun onStart() {
         super.onStart()
 
@@ -53,17 +60,17 @@ class SignInActivity : AppCompatActivity() {
             Toast.makeText(this, "Password is must", Toast.LENGTH_LONG).show()
         } else {
 
-            val progressDialog = ProgressDialog(this@SignInActivity)
-            progressDialog.setTitle("Logging In")
-            progressDialog.setMessage("Logging-in In progress")
-            progressDialog.setCanceledOnTouchOutside(false)
-            progressDialog.show()
+            progressDialog = ProgressDialog(this@SignInActivity)
+            progressDialog!!.setTitle("Logging In")
+            progressDialog!!.setMessage("Logging-in In progress")
+            progressDialog!!.setCanceledOnTouchOutside(false)
+            progressDialog!!.show()
 
             mfirebaseAuth.signInWithEmailAndPassword(emails, passwords)
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss()
+                        progressDialog!!.dismiss()
                     } else {
                         if (mfirebaseAuth.currentUser!!.isEmailVerified) {
                             val intent = Intent(this@SignInActivity, MainActivity::class.java)
@@ -72,7 +79,7 @@ class SignInActivity : AppCompatActivity() {
                         }
                         else {
                             Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss()
+                            progressDialog!!.dismiss()
                         }
                     }
                 }

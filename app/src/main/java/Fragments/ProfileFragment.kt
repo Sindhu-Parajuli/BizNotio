@@ -54,6 +54,15 @@ class ProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (progressDialog != null && progressDialog!!.isShowing()) {
+            progressDialog!!.dismiss()
+        }
+    }
+
+    private var progressDialog: ProgressDialog? = null
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -86,9 +95,9 @@ class ProfileFragment : Fragment() {
         // Logout Button extracted from the layout file
         imagelogoutbutton?.setOnClickListener {
 
-            val progressDialog = ProgressDialog(this@ProfileFragment.context)
-            progressDialog.setMessage("Logging out")
-            progressDialog.show()
+            progressDialog = ProgressDialog(this@ProfileFragment.context)
+            progressDialog!!.setMessage("Logging out")
+            progressDialog!!.show()
 
             FirebaseAuth.getInstance().signOut()
 

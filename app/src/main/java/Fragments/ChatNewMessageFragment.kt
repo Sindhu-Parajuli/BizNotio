@@ -1,35 +1,27 @@
 package Fragments
 
+
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.biznoti0.Model.User
-
-
+import com.example.biznoti0.R
+import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
-
-
-import com.squareup.picasso.Picasso
-
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
-import com.xwray.groupie.GroupieViewHolder
-
-import com.example.biznoti0.R
-import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.firebase.database.ktx.getValue
-import de.hdodenhof.circleimageview.CircleImageView
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.fragment_chat_new_message.*
 import kotlinx.android.synthetic.main.layout_chat_new_message_user_row.view.*
 
@@ -95,14 +87,14 @@ class ChatNewMessageFragment : Fragment() {
                 p0.children.forEach {
                     Log.d("ChatNewMessageFragment", it.toString())
 //                    val user = it.getValue(ProfileUser::class.java)
-                    var user = it.getValue<User>()
+                    val user = it.getValue<User>()
 //                    Log.d("ChatNewMessageFragment", user_ktx.toString())
                     if (user != null) {
                         adapter.add(UserItem(user))
                     }
 
                 }
-                adapter.setOnItemClickListener {item, view ->
+                adapter.setOnItemClickListener { item, _ ->
                     val userItem = item as UserItem
                     model.select(userItem.user)
                     findNavController().navigate(R.id.chatLogFragment, null)
