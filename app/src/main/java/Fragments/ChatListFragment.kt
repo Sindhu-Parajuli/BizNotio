@@ -77,8 +77,7 @@ class ChatListFragment : Fragment() {
 
         val appointmentButton = view.findViewById<RelativeLayout>(R.id.appointment_button)
         appointmentButton?.setOnClickListener {
-            val intent = Intent(activity, AppointmentSelectUser::class.java)
-            activity?.startActivity(intent)
+            findNavController().navigate(R.id.appointmentSelectUser, null)
         }
 
     }
