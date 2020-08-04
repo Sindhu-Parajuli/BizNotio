@@ -2,6 +2,7 @@ package com.example.biznoti0.Adapter
 
 import Fragments.ProfileFragment
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.biznoti0.MainActivity
 import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.R
 import com.squareup.picasso.Picasso
@@ -49,6 +51,8 @@ class ProfileAdapter (private var usercontext: Context,
               (usercontext as FragmentActivity).supportFragmentManager.beginTransaction()
                   .replace(R.id.nav_host_fragment_container, ProfileFragment()).commit()
           }
+
+
 
       })
 

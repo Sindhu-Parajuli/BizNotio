@@ -71,8 +71,42 @@ class ProfileFragment : Fragment() {
         // Settings Button
         val button = view.findViewById<Button>(R.id.edit_button)
         button?.setOnClickListener {
-            val intent = Intent (this@ProfileFragment.context, SettingActivity::class.java)
-            startActivity(intent)
+           val buttoninfo = view.edit_button.text.toString()
+
+            if(buttoninfo=="Edit Profile") {
+                val intent = Intent (this@ProfileFragment.context, SettingActivity::class.java)
+                startActivity(intent)
+
+
+            }
+
+            else if(buttoninfo=="Connect")
+            {
+                firebaseuser?.uid.let { lambda ->
+                    FirebaseDatabase.getInstance().reference
+                        .child("Connect").child(lambda.toString())
+                        .child("Connected").child(IDforprofile).setValue(true)
+                }
+            }
+
+            else
+            {
+               val follow = firebaseuser?.uid.let { lambda ->
+                    FirebaseDatabase.getInstance().reference
+                        .child("Connect").child(lambda.toString())
+                        .child("Connected").child(IDforprofile).removeValue()
+                }
+
+
+
+
+
+
+
+
+            }
+
+
         }
 
         // Logout Button
@@ -92,6 +126,7 @@ class ProfileFragment : Fragment() {
         val preference = context?.getSharedPreferences("Preferences",Context.MODE_PRIVATE)
         if(preference!=null) {
             this.IDforprofile = preference.getString("IDforprofile", "none")!!
+
         }
 
         //Comparing online user and firebase current user if they are the same;ie own profile page.
@@ -115,6 +150,8 @@ class ProfileFragment : Fragment() {
 
         getconnected()
 
+
+
         storeuserData()
 
 
@@ -123,21 +160,25 @@ class ProfileFragment : Fragment() {
 
     private fun connect()
     {
-        firebaseuser?.uid.let {
+        val connection = firebaseuser?.uid.let { lambda ->
             FirebaseDatabase.getInstance().reference
-                .child("Connect").child(it.toString())
+                .child("Connect").child(lambda.toString())
                 .child("Connected")
-        }.addValueEventListener(object : ValueEventListener {
+        }
+
+
+
+        connection.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
 
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                if(snapshot.exists()) {
-                    edit_button.text = "Connected"
+                if(snapshot.child(IDforprofile).exists()) {
+                    view?.edit_button?.text = "Connected"
                 } else {
-                    edit_button.text = "Connect"
+                    view?.edit_button?.text = "Connect"
                 }
 
             }
@@ -162,7 +203,7 @@ class ProfileFragment : Fragment() {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     if (snapshot.exists()) {
-                        connectbutton.text = snapshot.childrenCount.toString()
+                        view?.numberofconnections?.text = snapshot.childrenCount.toString()
                     }
 
                 }
@@ -173,8 +214,6 @@ class ProfileFragment : Fragment() {
 
 
             }
-
-
 
 
 
