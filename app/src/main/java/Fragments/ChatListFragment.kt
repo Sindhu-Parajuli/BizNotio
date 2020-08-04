@@ -8,12 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.navigation.fragment.findNavController
-
-import com.example.biznoti0.R
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.biznoti0.ChatListRecyclerAdapter
-import com.example.biznoti0.ChatListSource
-import com.example.biznoti0.ChatListDecoration
+import com.example.biznoti0.*
 import com.example.biznoti0.Model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -21,8 +17,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-
 import kotlinx.android.synthetic.main.fragment_chat_list.*
+import android.content.Intent
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -77,6 +73,12 @@ class ChatListFragment : Fragment() {
         val searchButton = view.findViewById<RelativeLayout>(R.id.search_button)
         searchButton?.setOnClickListener {
             findNavController().navigate(R.id.chatNewMessageFragment, null)
+        }
+
+        val appointmentButton = view.findViewById<RelativeLayout>(R.id.appointment_button)
+        appointmentButton?.setOnClickListener {
+            val intent = Intent(activity, AppointmentSelectUser::class.java)
+            activity?.startActivity(intent)
         }
 
     }
