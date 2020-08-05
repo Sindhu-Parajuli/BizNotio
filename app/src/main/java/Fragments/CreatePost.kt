@@ -1,13 +1,25 @@
 package Fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Button
+import android.widget.EditText
 
 import com.example.biznoti0.R
-
+import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_create_post.*
+import java.util.*
+import com.example.biznoti0.SettingActivity
+import java.util.*
+import com.example.biznoti0.Model.Proposal
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -58,4 +70,55 @@ class CreatePost : Fragment() {
                 }
             }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val sendPost = view.findViewById<MaterialButton>(R.id.CreatePost)
+        sendPost?.setOnClickListener {
+            saveProposalToFirebaseDatabase("proposal")
+        }
+
+        val proposalNameField = view.findViewById<EditText>(R.id.ProposalName)
+
+        proposalNameField?.setOnClickListener {
+
+        }
+
+
+
+
+    }
+
+    private fun saveProposalToFirebaseDatabase(temp: String) {
+        val proposalId = UUID.randomUUID().toString()
+        val ref = FirebaseDatabase.getInstance().getReference("/proposals/$proposalId")
+
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+
+        val proposalName: String = ProposalName.text.toString()
+        val proposalType: String = ProposalType.text.toString()
+        val proposalDescription: String = ProposalDescription.text.toString()
+        val minimumCase: String = MinimumCase.text.toString()
+        val link: String = Link.text.toString()
+        val owner: String = uid
+
+        val proposal = Proposal(owner, proposalId, proposalName, proposalType, proposalDescription, minimumCase, link)
+
+
+        ref.setValue(proposal)
+        .addOnSuccessListener {
+            Log.d("CreatePost", "Finally we saved the proposal to Firebase Database")
+        }
+        .addOnFailureListener {
+            Log.d("CreatePost", "Failed to set value to database: ${it.message}")
+        }
+//        ref.child("proposalName").setValue(proposalName)
+//            .addOnSuccessListener {
+//                Log.d("CreatePost", "Finally we saved the profile image to Firebase Database")
+//            }
+//            .addOnFailureListener {
+//                Log.d("CreatePost", "Failed to set value to database: ${it.message}")
+//            }
+    }
+
 }

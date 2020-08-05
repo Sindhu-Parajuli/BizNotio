@@ -1,8 +1,8 @@
 package com.example.biznoti0
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -10,8 +10,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,16 +36,19 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val dest: String = try {
-                resources.getResourceName(destination.id)
-            } catch (e: Resources.NotFoundException) {
-                Integer.toString(destination.id)
+            when(destination.id) {
+                R.id.chatLogFragment -> hideBottomNav()
+                else -> showBottomNav()
             }
-        // Use this to debug what screen you are navigating to...
-        // Toast.makeText(this@MainActivity, "Navigated to $dest",
-        // Toast.LENGTH_SHORT).show()
-        // Log.d("NavigationActivity", "Navigated to $dest")
         }
+    }
+
+    private fun hideBottomNav() {
+        bottom_nav_view.visibility = View.GONE
+    }
+
+    private fun showBottomNav() {
+        bottom_nav_view.visibility = View.VISIBLE
     }
 
     private fun setupBottomNavMenu(navController: NavController) {

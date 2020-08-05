@@ -13,12 +13,15 @@ import android.widget.Button
 import android.widget.ImageView
 
 
+
 import com.example.biznoti0.SignInActivity
 import com.example.biznoti0.R
 import com.example.biznoti0.SettingActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 import android.net.Uri
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.biznoti0.Model.ProfileUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -27,10 +30,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import de.hdodenhof.circleimageview.CircleImageView
 
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 import java.util.*
+
+
+import kotlinx.coroutines.Dispatchers.Main
 
 /**
  * A simple [Fragment] subclass.
@@ -51,11 +58,18 @@ class ProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
+    private var progressDialog: ProgressDialog? = null
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Profile button
+        // load the current image from firebase to imageview
+        setCurrentProfilePicture(view)
+
+
+
+        // Profile button extracted from the layout file
         val profileButton = view.findViewById<ImageView>(R.id.imageView)
 
 
@@ -63,6 +77,7 @@ class ProfileFragment : Fragment() {
             val intent = Intent (Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, 0)
+
 
         }
 
@@ -109,14 +124,14 @@ class ProfileFragment : Fragment() {
 
         }
 
-        // Logout Button
+        // Logout Button extracted from the layout file
         imagelogoutbutton?.setOnClickListener {
 
-            val progressDialog = ProgressDialog(this@ProfileFragment.context)
-            progressDialog.setMessage("Logging out")
-            progressDialog.show()
+            progressDialog = ProgressDialog(this@ProfileFragment.context)
+            progressDialog!!.setMessage("Logging out")
+            progressDialog!!.show()
 
-            FirebaseAuth.getInstance().signOut();
+            FirebaseAuth.getInstance().signOut()
 
             val intent = Intent (this@ProfileFragment.context, SignInActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK).or(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -230,7 +245,7 @@ class ProfileFragment : Fragment() {
             // where the image is stored on the machine
             selectedPhotoUri = data.data
 
-//            val contentResolver = getActivity().getContentResolver()
+           // val contentResolver = getActivity().getContentResolver()
             val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, selectedPhotoUri)
 
             // set the image to the circle viewholder
@@ -254,7 +269,7 @@ class ProfileFragment : Fragment() {
 
         // get the location of your firebase storage by giving it the name of the directory you use
         // in our case we use the "user Info"
-        val ref = FirebaseStorage.getInstance().getReference("/user%20Info/$filename")
+        val ref = FirebaseStorage.getInstance().getReference("/userStorage/$filename")
 
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
@@ -344,7 +359,9 @@ class ProfileFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-
+        if (progressDialog != null && progressDialog!!.isShowing()) {
+            progressDialog!!.dismiss()
+        }
         val preference = context?.getSharedPreferences("Preferences", Context.MODE_PRIVATE)?.edit()
         preference?.putString("IDforprofile", firebaseuser.uid)
         preference?.apply()
@@ -361,5 +378,40 @@ class ProfileFragment : Fragment() {
 
 
 
+
+    private fun setCurrentProfilePicture(view: View){
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
+
+        var profileImageUrl: String
+
+        ref.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                profileImageUrl = snapshot.child("profileImageUrl").value.toString()
+
+                val requestOptions = RequestOptions()
+                    .placeholder(R.drawable.profile)
+                    .error(R.drawable.profile)
+
+                // So the tutorial was using picasso but I found better loading times with glide
+                Glide.with(view.context)
+                    .applyDefaultRequestOptions(requestOptions)
+                    .load(profileImageUrl)
+                    .into(view.findViewById<CircleImageView>(R.id.circle_image_profile))
+                try {
+                    imageView.alpha = 0f
+                }
+                catch (e: Exception) {
+                    Log.d("ProfileFragment", "Prevented fatal crash, imageView is null...")
+                }
+
+                Log.d("ProfileFragment", "currently set to: $profileImageUrl")
+            }
+        })
+    }
 
 }

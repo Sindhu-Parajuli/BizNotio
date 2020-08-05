@@ -16,6 +16,7 @@ import com.example.biznoti0.Adapter.ProfileAdapter
 import com.example.biznoti0.Model.ProfileUser
 
 import com.example.biznoti0.R
+import kotlinx.android.synthetic.main.fragment_search.view.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
