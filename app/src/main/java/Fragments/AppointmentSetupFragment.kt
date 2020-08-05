@@ -1,13 +1,16 @@
 package Fragments
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.TimePicker
 import com.example.biznoti0.R
+import java.text.SimpleDateFormat
 import kotlinx.android.synthetic.main.fragment_appointment_setup.*
 import java.util.*
 
@@ -65,16 +68,34 @@ class AppointmentSetupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val calendarDate = Calendar.getInstance()
+        val year = calendarDate.get(Calendar.YEAR)
+        val month = calendarDate.get(Calendar.MONTH)
+        val day = calendarDate.get(Calendar.DAY_OF_MONTH)
 
         pickDateBtn.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view , mYear :Int, mMonth :Int, mDay :Int ->
+            val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { viewIt :DatePicker , mYear :Int, mMonth :Int, mDay :Int ->
                 dateTextView.text = "$mDay/$mMonth/$mYear"
             }, year, month, day)
             datePickerDialog.show()
         }
+
+        pickTimeBtn.setOnClickListener {
+            val calenderTime = Calendar.getInstance()
+            val timePickerDialog = TimePickerDialog.OnTimeSetListener { timePicker :TimePicker, hour :Int, minute :Int ->
+                calenderTime.set(Calendar.HOUR_OF_DAY, hour)
+                calenderTime.set(Calendar.MINUTE, minute)
+                timeTextView.text = SimpleDateFormat("HH:MM").format(calenderTime.time)
+            }
+            TimePickerDialog(requireContext(), timePickerDialog, calenderTime.get(Calendar.HOUR_OF_DAY), calenderTime.get(Calendar.MINUTE), true).show()
+        }
     }
 }
+
+/**
+ * appointment title plain text id is "appointment_title"
+ * detail box id is "appointment_detail"
+ * date textView id is "dateTextView"
+ * time textView id is "timeTextView"
+ * submission button id is "requestAppointment"
+ */
