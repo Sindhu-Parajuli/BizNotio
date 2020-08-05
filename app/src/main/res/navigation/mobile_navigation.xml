@@ -77,4 +77,10 @@
           android:label="fragment"
           tools:layout="@layout/fragment_chat_log" />
 
+  <fragment
+          android:id="@+id/appointmentSetup"
+          android:name="Fragments.AppointmentSetupFragment"
+          android:label="fragment_appointSetup"
+          tools:layout="@layout/fragment_appointment_setup" />
+
 </navigation>

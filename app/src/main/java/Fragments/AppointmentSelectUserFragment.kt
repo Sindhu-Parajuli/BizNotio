@@ -102,14 +102,13 @@ class AppointmentSelectUserFragment : Fragment() {
                     }
                 }
                 adapter.setOnItemClickListener {item, view ->
-                    val userItem = item as ChatNewMessageFragment.UserItem
+                    //val userItem = item as ChatNewMessageFragment.UserItem
                     //model.select(userItem.user)
-                    findNavController().navigate(R.id.chatLogFragment, null)
+                    findNavController().navigate(R.id.appointmentSetup, null)
                 }
                 recyclerView_selectUser.adapter = adapter
 
             }
-
 
             override fun onCancelled(p0: DatabaseError) {
 
