@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
+import android.view.KeyEvent.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.biznoti0.Model.ChatMessage
 import com.example.biznoti0.Model.User
@@ -66,6 +70,14 @@ class ChatLogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // back button
+        val backButton =  view.findViewById<ConstraintLayout>(R.id.chat_log_back_button)
+        backButton.setOnClickListener {
+            Log.d("ChatLogFragment", "Back button pressed")
+            findNavController().navigate(R.id.chatListFragment, null)
+        }
+
         text_field_send_button.visibility = View.GONE
         chat_log_recycler_view.adapter = adapter
         model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
