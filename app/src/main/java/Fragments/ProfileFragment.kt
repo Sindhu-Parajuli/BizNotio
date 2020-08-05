@@ -194,8 +194,13 @@ class ProfileFragment : Fragment() {
                     .applyDefaultRequestOptions(requestOptions)
                     .load(profileImageUrl)
                     .into(view.findViewById<CircleImageView>(R.id.circle_image_profile))
+                try {
+                    imageView.alpha = 0f
+                }
+                catch (e: Exception) {
+                    Log.d("ProfileFragment", "Prevented fatal crash, imageView is null...")
+                }
 
-                imageView.alpha = 0f
                 Log.d("ProfileFragment", "currently set to: $profileImageUrl")
             }
         })
