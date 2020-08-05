@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.example.biznoti0.MainActivity
 
 import com.example.biznoti0.R
 import com.google.android.material.button.MaterialButton
@@ -20,6 +23,8 @@ import java.util.*
 import com.example.biznoti0.SettingActivity
 import java.util.*
 import com.example.biznoti0.Model.Proposal
+import com.example.biznoti0.SignInActivity
+
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -105,12 +110,34 @@ class CreatePost : Fragment() {
         val proposal = Proposal(owner, proposalId, proposalName, proposalType, proposalDescription, minimumCase, link)
 
 
-        ref.setValue(proposal)
-        .addOnSuccessListener {
-            Log.d("CreatePost", "Finally we saved the proposal to Firebase Database")
+
+        if (proposalName.isBlank()) {
+            Toast.makeText(requireContext(), "Proposal Name is must", Toast.LENGTH_LONG).show()
         }
-        .addOnFailureListener {
-            Log.d("CreatePost", "Failed to set value to database: ${it.message}")
+
+        else if (proposalType.isBlank()) {
+            Toast.makeText(requireContext(), "Proposal Type is must", Toast.LENGTH_LONG).show()
+        }
+
+        else if (proposalDescription.isBlank()) {
+            Toast.makeText(requireContext(), "Proposal Description is must", Toast.LENGTH_LONG).show()
+        }
+        else if (minimumCase.isBlank()) {
+            Toast.makeText(requireContext(), "minimumCase is must", Toast.LENGTH_LONG).show()
+        }
+
+        else {
+
+
+            ref.setValue(proposal)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Proposal has been Posted", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.navigation_home)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Proposal cannot be Posted: ERROR", Toast.LENGTH_LONG).show()
+
+                }
         }
 //        ref.child("proposalName").setValue(proposalName)
 //            .addOnSuccessListener {
