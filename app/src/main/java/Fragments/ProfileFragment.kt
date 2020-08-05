@@ -27,7 +27,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.squareup.picasso.Picasso
+
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 import java.util.*
@@ -305,7 +305,7 @@ class ProfileFragment : Fragment() {
                 if(snapshot.exists())
                 {
                     val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
-                    Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(view?.circle_image_profile)
+                    //Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(view?.circle_image_profile)
                         view?.textView?.text = newuser!!.getFNAME()  + " " + newuser.getLName()
                     view?.Education?.text=newuser!!.getEducation()
                     view?.Goals?.text=newuser!!.getBizNotioGoals()
