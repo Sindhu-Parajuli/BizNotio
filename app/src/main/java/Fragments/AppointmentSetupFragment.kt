@@ -19,7 +19,9 @@ import java.text.SimpleDateFormat
 import kotlinx.android.synthetic.main.fragment_appointment_setup.*
 import java.util.*
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.biznoti0.Model.ChatMessage
+import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_chat_log.*
@@ -114,7 +116,7 @@ class AppointmentSetupFragment : Fragment() {
 
 
     }
-
+    private val chatModel: ChatViewModel by activityViewModels()
     private fun sendAppointmentToFirebase() {
         val fromUser = ChatListFragment.currentUser
         val text = "Hello, ${fromUser?.FName + " " + fromUser?.LName} has requested you to an appointment " +
@@ -135,6 +137,10 @@ class AppointmentSetupFragment : Fragment() {
             .addOnSuccessListener {
                 Log.d("AppointmentSetupFragment", "Message has been saved to firebase: ${reference.key}")
                 Toast.makeText(requireContext(), "Appointment Request Message has been sent", Toast.LENGTH_LONG).show()
+                if (fromUser != null) {
+                    chatModel.select(currentUser)
+                }
+                findNavController().navigate(R.id.chatLogFragment)
             }
         toReference.setValue(chatMessage)
 
