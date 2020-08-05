@@ -37,6 +37,24 @@
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/appointment_title"
             app:layout_constraintHorizontal_bias="0.08" app:layout_constraintVertical_bias="0.033"/>
+    <Button
+            android:text="PICK DATE"
+            android:layout_width="136dp"
+            android:layout_height="48dp" android:id="@+id/pickDateBtn"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="@+id/appointment_title"
+            app:layout_constraintHorizontal_bias="0.026" app:layout_constraintVertical_bias="0.327"/>
+    <TextView
+            android:text="Date"
+            android:layout_width="167dp"
+            android:layout_height="35dp" android:id="@+id/dateTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.398"
+            android:textSize="18sp" android:textStyle="bold"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.121"
+            app:layout_constraintStart_toEndOf="@+id/pickDateBtn"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
