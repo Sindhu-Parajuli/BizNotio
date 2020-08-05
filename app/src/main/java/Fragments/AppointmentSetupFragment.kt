@@ -85,7 +85,7 @@ class AppointmentSetupFragment : Fragment() {
             val timePickerDialog = TimePickerDialog.OnTimeSetListener { timePicker :TimePicker, hour :Int, minute :Int ->
                 calenderTime.set(Calendar.HOUR_OF_DAY, hour)
                 calenderTime.set(Calendar.MINUTE, minute)
-                timeTextView.text = SimpleDateFormat("HH:MM").format(calenderTime.time)
+                timeTextView.text = SimpleDateFormat("HH:mm").format(calenderTime.time)
             }
             TimePickerDialog(requireContext(), timePickerDialog, calenderTime.get(Calendar.HOUR_OF_DAY), calenderTime.get(Calendar.MINUTE), true).show()
         }
