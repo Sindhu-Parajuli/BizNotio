@@ -101,11 +101,17 @@ class SignUp : AppCompatActivity() {
         val currUserHashMap = HashMap<String, Any>()
 
         currUserHashMap["usersID"] = curruserId
-        currUserHashMap["ACType"] = acType
-        currUserHashMap["FName"] = Fnames
-        currUserHashMap["MName"] = Mnames
-        currUserHashMap["LName"] = Lnames
+        currUserHashMap["ACType"] = acType.toLowerCase()
+        currUserHashMap["FName"] = Fnames.toLowerCase()
+        currUserHashMap["MName"] = Mnames.toLowerCase()
+        currUserHashMap["LName"] = Lnames.toLowerCase()
         currUserHashMap["Email"] = emails
+        currUserHashMap["Profession"] = "Full-time BizNotio User"
+        currUserHashMap["Education"] = "World University"
+        currUserHashMap["BizNotioGoals"] = "Serve the world"
+        currUserHashMap["Interests"] = "Learning"
+
+
         currUserHashMap["Image"] = "gs://bitnoti0.appspot.com/user Info/profile.png"
         userreference.updateChildren(currUserHashMap)
             .addOnCompleteListener { task ->

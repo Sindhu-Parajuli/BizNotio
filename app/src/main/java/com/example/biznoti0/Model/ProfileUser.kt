@@ -3,7 +3,7 @@ package com.example.biznoti0.Model
 
 class ProfileUser {
 
-    private var ACType:String = ""
+private var ACType:String = ""
 
     private var FName:String = ""
 
@@ -13,30 +13,48 @@ class ProfileUser {
 
     private var Image:String = ""
 
-    private var profileImageUrl: String = ""
+    private var Profession: String = ""
 
-    private var Email: String = ""
+    private var Education: String = ""
 
-    private var MName: String = ""
+    private var BizNotioGoals: String = ""
 
-
+    private var Interests: String = ""
 
     constructor()
 
-    constructor(ACType:String, FName:String, LName:String, usersID:String, Image:String, profileImageUrl: String, Email: String, MName: String)
+    constructor(ACType:String, FName:String, LName:String, usersID:String, Image:String, Profession:String, Education:String, BizNotioGoals:String, Interests:String)
     {
         this.ACType = ACType
         this.FName = FName
         this.LName= LName
         this.usersID=usersID
         this.Image=Image
-        this.profileImageUrl = profileImageUrl
-        this.Email = Email
-        this.MName = MName
+        this.BizNotioGoals=BizNotioGoals
+        this.Education = Education
+        this.Interests=Interests
+        this.Profession= Profession
+
     }
 
     fun getACType():String {
         return ACType
+    }
+
+    fun getProfession():String {
+        return Profession
+    }
+
+    fun getEducation():String {
+        return Education
+    }
+
+    fun getInterests():String {
+        return Interests
+    }
+
+    fun getBizNotioGoals():String {
+        return BizNotioGoals
     }
 
 
@@ -56,20 +74,27 @@ class ProfileUser {
         return Image
     }
 
-    fun getProfileImage(): String {
-        return profileImageUrl.toString()
-    }
 
-    fun getMName(): String {
-        return MName
-    }
-
-    fun getEmail(): String {
-        return Email
-    }
 
     fun setACType(ACType: String) {
         this.ACType = ACType
+    }
+
+    fun setProfession(Profession: String) {
+        this.Profession = Profession
+    }
+
+    fun setBizNotioGoals(BizNotioGoals: String) {
+        this.BizNotioGoals = BizNotioGoals
+    }
+
+    fun setEducation(Education: String) {
+        this.Education = Education
+
+    }
+
+    fun setInterests(Interests: String) {
+        this.Interests = Interests
     }
 
     fun setFName(FName: String) {
@@ -87,22 +112,6 @@ class ProfileUser {
     fun setImage(Image: String) {
         this.Image = Image
     }
-
-    fun setProfileImage(profileImageUrl: String) {
-        this.profileImageUrl = profileImageUrl
-    }
-
-    fun setEmail(email: String) {
-        this.Email = email
-    }
-    fun setMName(mName: String) {
-        this.MName = mName
-    }
-
-    override fun toString(): String{
-        return "Email=$Email, LName=$LName, usersID=$usersID, MName=$MName, Image=$Image, profileImageUrl=$profileImageUrl, FName=$FName, ACType=$ACType"
-    }
-
 
 
 }
