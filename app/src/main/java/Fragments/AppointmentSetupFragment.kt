@@ -1,11 +1,15 @@
 package Fragments
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import com.example.biznoti0.R
+import kotlinx.android.synthetic.main.fragment_appointment_setup.*
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,5 +60,21 @@ class AppointmentSetupFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        pickDateBtn.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view , mYear :Int, mMonth :Int, mDay :Int ->
+                dateTextView.text = "$mDay/$mMonth/$mYear"
+            }, year, month, day)
+            datePickerDialog.show()
+        }
     }
 }
