@@ -20,6 +20,8 @@ import com.example.biznoti0.SettingActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 import android.net.Uri
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.biznoti0.Model.ProfileUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -28,6 +30,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import de.hdodenhof.circleimageview.CircleImageView
 
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
@@ -53,13 +56,6 @@ class ProfileFragment : Fragment() {
 
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (progressDialog != null && progressDialog!!.isShowing()) {
-            progressDialog!!.dismiss()
-        }
     }
 
     private var progressDialog: ProgressDialog? = null
