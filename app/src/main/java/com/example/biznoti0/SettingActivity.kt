@@ -97,7 +97,7 @@ class SettingActivity : AppCompatActivity() {
                     if(snapshot.exists())
                     {
                         val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
-                        //Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(profile_image_clickable)
+                        Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(profile_image_clickable)
 
                         EnterEducation?.setText(newuser!!.getEducation())
                         EnterBizNotioGoals?.setText(newuser!!.getBizNotioGoals())
