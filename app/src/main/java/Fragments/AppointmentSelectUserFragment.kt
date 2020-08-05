@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.layout_chat_new_message_user_row.view.*
 
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.biznoti0.ViewModels.AppointmentViewModel
 
 import com.squareup.picasso.Picasso
 import com.example.biznoti0.ViewModels.ChatViewModel
@@ -77,6 +78,8 @@ class AppointmentSelectUserFragment : Fragment() {
         //var
     }
 
+    private val model: AppointmentViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,7 +88,6 @@ class AppointmentSelectUserFragment : Fragment() {
         fetchUsers()
     }
 
-    //private val model: Chat
 
     private fun fetchUsers() {
         val ref = FirebaseDatabase.getInstance().getReference("/usersID")
@@ -102,8 +104,9 @@ class AppointmentSelectUserFragment : Fragment() {
                     }
                 }
                 adapter.setOnItemClickListener {item, view ->
-                    //val userItem = item as ChatNewMessageFragment.UserItem
-                    //model.select(userItem.user)
+                    // type casting to the appropriate class we use for our recycler view
+                    val userItem = item as UserItem
+                    model.select(userItem.user!!)
                     findNavController().navigate(R.id.appointmentSetup, null)
                 }
                 recyclerView_selectUser.adapter = adapter
@@ -117,6 +120,7 @@ class AppointmentSelectUserFragment : Fragment() {
     }
 }
 
+// this is the class we use to represent items for our recycler view and it communicates with the GroupieAdapter
 class UserItem(val user: User): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.username_textview_new_message.text = user.FName

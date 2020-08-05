@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.biznoti0.Model.User
 
 
-class ChatViewModel : ViewModel() {
+class AppointmentViewModel : ViewModel() {
     val selectedUser: MutableLiveData<User> = MutableLiveData<User>()
 
     // when we do selectedUser.value we will get the User object that was passed in
