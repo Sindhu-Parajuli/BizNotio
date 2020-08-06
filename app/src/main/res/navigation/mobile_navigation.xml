@@ -88,5 +88,11 @@
           android:name="Fragments.AppointmentSetupFragment"
           android:label="fragment_appointSetup"
           tools:layout="@layout/fragment_appointment_setup" />
+  <fragment
+          android:id="@+id/addpost"
+          android:name="Fragments.Addpost"
+          android:label="fragment_addpost"
+          tools:layout="@layout/fragment_addpost" />
+
 
 </navigation>
