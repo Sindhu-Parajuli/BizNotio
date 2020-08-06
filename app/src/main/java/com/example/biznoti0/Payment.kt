@@ -136,7 +136,7 @@ class Payment : AppCompatActivity() {
     }
 
     private val transactionInfo = JSONObject().apply {
-        put("totalPrice", "123.45")
+        put("totalPrice", "1.00")
         put("totalPriceStatus", "FINAL")
         put("currencyCode", "USD")
     }
