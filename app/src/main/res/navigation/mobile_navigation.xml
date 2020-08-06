@@ -54,6 +54,12 @@
       android:name="com.example.biznoti0.passwordResetActivity"
       android:label="activity_password_reset"
       tools:layout="@layout/activity_password_reset" />
+
+  <activity
+          android:id="@+id/Payment"
+          android:name="com.example.biznoti0.Payment"
+          android:label="activity_payment"
+          tools:layout="@layout/activity_payment" />
   <fragment
       android:id="@+id/chatListFragment"
       android:name="Fragments.ChatListFragment"

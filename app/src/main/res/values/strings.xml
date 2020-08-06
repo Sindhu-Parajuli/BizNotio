@@ -9,6 +9,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+
     <string name="home_second">Home Second</string>
 
 
@@ -37,6 +38,7 @@
 
     <string name="search_page">Search</string>
     <string name="search_next">Search Next</string>
+
 
 
     <string name="chats">Chats</string>
@@ -79,5 +81,7 @@
     <string name="last_seen_2_hours_ago">last seen 2 hours ago</string>
     <string name="text_placeholder">Aa</string>
     <string name="none">none</string>
+    <string name="payments_show_name" translatable="false">Successful</string>
+
 
 </resources>

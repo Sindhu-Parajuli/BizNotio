@@ -78,6 +78,18 @@ class ChatLogFragment : Fragment() {
             findNavController().navigate(R.id.chatListFragment, null)
         }
 
+        //val paybutton = view.findViewById(R.id.text_field_pay_button)
+        text_field_pay_button.setOnClickListener {
+            Log.d("ChatLogFragment", "Pay Button Pressed")
+            findNavController().navigate(R.id.Payment, null)
+            //findNavController().navigate(R.id.navigation_home)
+        }
+
+
+
+
+
+
         text_field_send_button.visibility = View.GONE
         chat_log_recycler_view.adapter = adapter
         model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
