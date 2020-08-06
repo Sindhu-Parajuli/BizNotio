@@ -5,7 +5,7 @@
                                                    android:id="@+id/Proposal"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   android:background="#AAAAAA">
+                                                   android:background="#3F90B5">
 
     <EditText
             android:id="@+id/ProposalName"
@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toTopOf="@+id/ProposalType"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
             android:id="@+id/ProposalDescription"
@@ -40,7 +40,7 @@
             app:layout_constraintBottom_toTopOf="@+id/MinimumCase"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ProposalType" />
+            app:layout_constraintTop_toBottomOf="@+id/ProposalType"/>
 
     <Button
             android:id="@+id/CreatePost"
@@ -54,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Link" />
+            app:layout_constraintTop_toBottomOf="@+id/Link"/>
 
     <EditText
             android:id="@+id/Link"
@@ -71,7 +71,7 @@
             app:layout_constraintBottom_toTopOf="@+id/CreatePost"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/MinimumCase" />
+            app:layout_constraintTop_toBottomOf="@+id/MinimumCase"/>
 
     <TextView
             android:id="@+id/Title"
@@ -84,7 +84,7 @@
             app:layout_constraintBottom_toTopOf="@+id/ProposalName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
             android:id="@+id/MinimumCase"
@@ -102,7 +102,7 @@
             app:layout_constraintBottom_toTopOf="@+id/Link"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ProposalDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/ProposalDescription"/>
 
     <EditText
             android:id="@+id/ProposalType"
@@ -119,5 +119,5 @@
             app:layout_constraintBottom_toTopOf="@+id/ProposalDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ProposalName" />
+            app:layout_constraintTop_toBottomOf="@+id/ProposalName"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
