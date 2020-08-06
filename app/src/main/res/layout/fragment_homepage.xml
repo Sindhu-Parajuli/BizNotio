@@ -12,22 +12,23 @@
             android:layout_height="50dp"
 
             android:background="#3F51B5"
-            tools:ignore="MissingConstraints" tools:layout_editor_absoluteY="16dp"
-            tools:layout_editor_absoluteX="0dp" tools:background="#3F51B5">
+            tools:ignore="MissingConstraints"
+            tools:background="#3F51B5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.0">
 
-
-        <ImageButton
-                android:id="@+id/messenger"
-
-                android:layout_weight="2"
-                android:layout_width="25dp" android:layout_height="29dp"
-                android:src="@drawable/chat_ui_icon" tools:ignore="MissingConstraints"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="15dp" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="370dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="16dp" app:layout_constraintBottom_toTopOf="@+id/profile_image_clickable"/>
-
-
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="match_parent">
+            <ImageButton
+                    android:id="@+id/messenger"
+                    android:layout_weight="2"
+                    android:layout_width="43dp" android:layout_height="40dp"
+                    android:src="@drawable/chat_ui_icon" tools:ignore="MissingConstraints"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.954"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
