@@ -76,6 +76,7 @@ class CreatePost : Fragment() {
             }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val sendPost = view.findViewById<MaterialButton>(R.id.CreatePost)
@@ -87,6 +88,10 @@ class CreatePost : Fragment() {
 
         proposalNameField?.setOnClickListener {
 
+        }
+
+        select.setOnClickListener {
+            findNavController().navigate(R.id.addpost, null)
         }
 
 
