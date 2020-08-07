@@ -107,7 +107,7 @@ class CreatePost : Fragment() {
         val link: String = Link.text.toString()
         val owner: String = uid
 
-        val proposal = Proposal(owner, proposalId, proposalName, proposalType, proposalDescription, minimumCase, link)
+        val proposal = Proposal(owner, proposalId, proposalName, proposalType, proposalDescription, minimumCase, link, System.currentTimeMillis())
 
 
 
