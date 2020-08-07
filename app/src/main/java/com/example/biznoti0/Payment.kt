@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import android.widget.Toast.makeText
+import androidx.navigation.findNavController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import kotlinx.android.synthetic.main.activity_payment.*
@@ -105,9 +106,21 @@ class Payment : AppCompatActivity() {
     }
 
     private fun requestPayment() {
-        val paymentDataRequest =
-            PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
 
+        val context = this
+        val transactionInfoTemp = JSONObject().apply {
+            put("totalPrice", "${context.Amount.text}.00")
+            put("totalPriceStatus", "FINAL")
+            put("currencyCode", "USD")
+        }
+
+        val paymentDataRequestJsonTemp = JSONObject(googlePayBaseConfiguration.toString()).apply {
+            put("allowedPaymentMethods", JSONArray().put(cardPaymentMethod))
+            put("transactionInfo", transactionInfoTemp)
+            put("merchantInfo", merchantInfo)
+        }
+
+        var paymentDataRequest = PaymentDataRequest.fromJson(paymentDataRequestJsonTemp.toString())
         AutoResolveHelper.resolveTask(
             paymentsClient.loadPaymentData(paymentDataRequest),
             this, LOAD_PAYMENT_DATA_REQUEST_CODE)
@@ -170,13 +183,6 @@ class Payment : AppCompatActivity() {
                     .getJSONObject("tokenizationData")
                     .getString("token") == "examplePaymentMethodToken") {
 
-//                AlertDialog.Builder(this)
-//                    .setTitle("Warning")
-//                    .setMessage("Gateway name set to \"example\" - please modify " +
-//                            "Constants.java and replace it with your own gateway.")
-//                    .setPositiveButton("OK", null)
-//                    .create()
-//                    .show()
             }
 
             val billingName = paymentMethodData.getJSONObject("info")
@@ -185,10 +191,13 @@ class Payment : AppCompatActivity() {
 
             makeText(this, "Payment successful! You have paid $${Amount.text} 5% of your amount goes for BizNotio!", Toast.LENGTH_LONG).show()
 
+            Log.d("GooglePaymentToken", paymentMethodData.toString())
             // Logging token string.
             Log.d("GooglePaymentToken", paymentMethodData
                 .getJSONObject("tokenizationData")
                 .getString("token"))
+            startActivity(Intent(this@Payment, MainActivity::class.java))
+            finish()
 
         } catch (e: JSONException) {
             Log.e("handlePaymentSuccess", "Error: " + e.toString())
