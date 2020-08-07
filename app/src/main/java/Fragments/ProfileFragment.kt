@@ -20,6 +20,7 @@ import com.example.biznoti0.SettingActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 import android.net.Uri
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.biznoti0.Model.ProfileUser
@@ -81,6 +82,15 @@ class ProfileFragment : Fragment() {
 
         }
 
+        //Rating button
+
+        //val ratingbutton = view.findViewById<Button>(R.id.Rating)
+        Rating.setOnClickListener {
+            findNavController().navigate(R.id.Rating, null)
+            //val intent = Intent (this@ProfileFragment.context, Rating::class.java)
+            //startActivity(intent)
+
+        }
 
 
         // Settings Button

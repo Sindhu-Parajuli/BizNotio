@@ -94,5 +94,11 @@
           android:label="activity_addpost"
           tools:layout="@layout/activity_add_post"  />
 
+  <activity
+          android:id="@+id/Rating"
+          android:name="com.example.biznoti0.Rating"
+          android:label="activity_rating"
+          tools:layout="@layout/activity_rating"  />
+
 
 </navigation>
