@@ -88,11 +88,11 @@
           android:name="Fragments.AppointmentSetupFragment"
           android:label="fragment_appointSetup"
           tools:layout="@layout/fragment_appointment_setup" />
-  <fragment
-          android:id="@+id/addpost"
-          android:name="Fragments.Addpost"
-          android:label="fragment_addpost"
-          tools:layout="@layout/fragment_addpost" />
+  <activity
+          android:id="@+id/Addpost"
+          android:name="com.example.biznoti0.AddPost"
+          android:label="activity_addpost"
+          tools:layout="@layout/activity_add_post"  />
 
 
 </navigation>

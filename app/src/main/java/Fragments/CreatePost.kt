@@ -91,7 +91,7 @@ class CreatePost : Fragment() {
         }
 
         select.setOnClickListener {
-            findNavController().navigate(R.id.addpost, null)
+            findNavController().navigate(R.id.Addpost, null)
         }
 
 
