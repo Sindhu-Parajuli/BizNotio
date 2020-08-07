@@ -170,20 +170,20 @@ class Payment : AppCompatActivity() {
                     .getJSONObject("tokenizationData")
                     .getString("token") == "examplePaymentMethodToken") {
 
-                AlertDialog.Builder(this)
-                    .setTitle("Warning")
-                    .setMessage("Gateway name set to \"example\" - please modify " +
-                            "Constants.java and replace it with your own gateway.")
-                    .setPositiveButton("OK", null)
-                    .create()
-                    .show()
+//                AlertDialog.Builder(this)
+//                    .setTitle("Warning")
+//                    .setMessage("Gateway name set to \"example\" - please modify " +
+//                            "Constants.java and replace it with your own gateway.")
+//                    .setPositiveButton("OK", null)
+//                    .create()
+//                    .show()
             }
 
             val billingName = paymentMethodData.getJSONObject("info")
                 .getJSONObject("billingAddress").getString("name")
             Log.d("BillingName", billingName)
 
-            makeText(this, "Payment successful! 5% of your amount goes for BizNotio!", Toast.LENGTH_LONG).show()
+            makeText(this, "Payment successful! You have paid $${Amount.text} 5% of your amount goes for BizNotio!", Toast.LENGTH_LONG).show()
 
             // Logging token string.
             Log.d("GooglePaymentToken", paymentMethodData
