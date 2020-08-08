@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.Glide.init
 import com.example.biznoti0.Model.Proposal
 import com.example.biznoti0.Model.User
 import com.example.biznoti0.R
@@ -46,12 +45,12 @@ class ProposalsAdapter(val context_adapter: Context, private val proposals: List
             var Description: TextView
 
 
-              userName = itemView.findViewById(R.id.tVName)
-              time = itemView.findViewById(R.id.tVRelativeTime)
-             // body = itemView.findViewById(R.id.imageViewPostImg)
-              Description = itemView.findViewById(R.id.tVDescription)
-              Title = itemView.findViewById(R.id.tVProposalTitle)
-              Type = itemView.findViewById(R.id.tVProposalType)
+            userName = itemView.findViewById(R.id.tVName)
+            time = itemView.findViewById(R.id.tVRelativeTime)
+            body = itemView.findViewById(R.id.imageViewPostImg)
+            Description = itemView.findViewById(R.id.tVDescription)
+            Title = itemView.findViewById(R.id.tVProposalTitle)
+            Type = itemView.findViewById(R.id.tVProposalType)
 
 
 
@@ -73,7 +72,7 @@ class ProposalsAdapter(val context_adapter: Context, private val proposals: List
             itemView.tVProposalType.text = proposals.proposalType
             itemView.tVMinCase.text = proposals.minimumCase
             itemView.tVDescription.text = proposals.proposalDescription
-            //Glide.with(context_adapter).load(proposals.link).into(itemView.imageViewPostImg)
+            Glide.with(context_adapter).load(proposals.link).into(itemView.imageViewPostImg)
             itemView.tVRelativeTime.text = DateUtils.getRelativeTimeSpanString(proposals.timeCreated)
         }
     }
