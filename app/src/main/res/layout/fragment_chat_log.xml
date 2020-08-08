@@ -152,7 +152,7 @@
                 app:layout_constraintStart_toEndOf="@+id/text_field_attachment_button"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-        <RelativeLayout
+        <ImageButton
                 android:id="@+id/text_field_attachment_button"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
