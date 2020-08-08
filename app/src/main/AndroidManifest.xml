@@ -46,7 +46,8 @@
 
         <activity
                 android:name=".VideoActivity"
-                android:configChanges="orientation|screenSize" >
+                android:configChanges="orientation|screenSize"
+                android:theme="@style/Theme.AppCompat.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
