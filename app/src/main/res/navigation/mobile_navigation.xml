@@ -82,5 +82,15 @@
           android:name="Fragments.AppointmentSetupFragment"
           android:label="fragment_appointSetup"
           tools:layout="@layout/fragment_appointment_setup" />
+  <activity
+          android:id="@+id/videoCallActivity"
+          android:name="com.example.biznoti0.VideoActivity"
+          android:label="activity_password_reset"
+           />
+  <activity
+          android:id="@+id/videoSettingsActivity"
+          android:name="com.example.biznoti0.SettingsActivity"
+          android:label="activity_password_reset"
+          tools:layout="@layout/activity_video" />
 
 </navigation>
