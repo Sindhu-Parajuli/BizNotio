@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.layout_chat_list_element.view.*
 import kotlinx.android.synthetic.main.single_post.view.*
 
-class ProposalsAdapter(val context_adapter: Context, val proposals: List<Proposal>) :
+class ProposalsAdapter(val context_adapter: Context, private val proposals: List<Proposal>) :
     RecyclerView.Adapter<ProposalsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

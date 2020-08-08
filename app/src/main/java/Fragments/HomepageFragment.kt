@@ -13,6 +13,8 @@ import com.example.biznoti0.Adapter.ProposalsAdapter
 import com.example.biznoti0.Model.Proposal
 
 import com.example.biznoti0.R
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.FirebaseDatabase.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_homepage.*
@@ -22,9 +24,9 @@ import kotlinx.android.synthetic.main.fragment_homepage.*
  */
 class HomepageFragment : Fragment() {
 
-    private lateinit var firesDb: FirebaseFirestore
+    //private lateinit var firesDb: FirebaseDatabase
     private lateinit var proposals: MutableList<Proposal>
-    private lateinit var adapterP: ProposalsAdapter
+    private lateinit var adapter: ProposalsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,25 +44,26 @@ class HomepageFragment : Fragment() {
             findNavController().navigate(R.id.chatListFragment, null)
         }
 
-        proposals = mutableListOf()
-        adapterP = ProposalsAdapter(view.context, proposals)
-        recyclerViewFeed.adapter = adapterP
+        proposals = mutableListOf<Proposal>()
+        adapter = ProposalsAdapter(view.context, proposals)
+        recyclerViewFeed.adapter = adapter
         recyclerViewFeed.layoutManager = LinearLayoutManager(view.context)
 
-        firesDb = FirebaseFirestore.getInstance()
+        val firesDb = FirebaseDatabase.getInstance().reference
         val proposalsRef = firesDb
-            .collection("proposals")
-            .limit(20)
-            .orderBy("timeCreated", Query.Direction.DESCENDING)
-        proposalsRef.addSnapshotListener { snapshot, exception ->
+            .child("proposals")
+
+            //.limit(20)
+            //.orderBy("timeCreated", Query.Direction.DESCENDING)
+        /*proposalsRef.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
                 Log.e(TAG, "Exception thrown when querrying proposals", exception)
                 return@addSnapshotListener
-            }
+            }*/
             val proposalList = snapshot.toObjects(Proposal::class.java)
-            //proposals.clear()
+            proposals.clear()
             proposals.addAll(proposalList)
-            adapterP.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
             for (proposal in proposalList) {
                 Log.i(TAG, "View ${proposal}")
             }

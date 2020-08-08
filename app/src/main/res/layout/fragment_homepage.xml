@@ -39,5 +39,4 @@
             android:id="@+id/recyclerViewFeed"
             app:layout_constraintTop_toBottomOf="@+id/profile_toolbar"/>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,44 +12,51 @@
         android:name="Fragments.HomepageFragment"
         android:label="Home"
         tools:layout="@layout/fragment_homepage">
-
     </fragment>
+
     <fragment
         android:id="@+id/navigation_create"
         android:name="Fragments.CreatePost"
         android:label="fragment_create_post"
         tools:layout="@layout/fragment_create_post" />
+
     <fragment
         android:id="@+id/navigation_notification"
         android:name="Fragments.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+
     <fragment
         android:id="@+id/navigation_profile"
         android:name="Fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+
     <fragment
         android:id="@+id/navigation_search"
         android:name="Fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+
     <activity
         android:id="@+id/signInActivity"
         android:name="com.example.biznoti0.SignInActivity"
         android:label="activity_sign_in"
         tools:layout="@layout/activity_sign_in" />
+
     <activity
         android:id="@+id/signUp"
         android:name="com.example.biznoti0.SignUp"
         android:label="activity_sign_up"
         tools:layout="@layout/activity_sign_up" />
-  <activity
+
+    <activity
       android:id="@+id/settingActivity"
       android:name="com.example.biznoti0.SettingActivity"
       android:label="activity_setting"
       tools:layout="@layout/activity_setting" />
-  <activity
+
+    <activity
       android:id="@+id/passwordResetActivity"
       android:name="com.example.biznoti0.passwordResetActivity"
       android:label="activity_password_reset"
