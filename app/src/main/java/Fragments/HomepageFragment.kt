@@ -2,20 +2,16 @@ package Fragments
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.util.Log
-import android.view.*
-import androidx.fragment.app.Fragment
-import android.widget.Adapter
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.biznoti0.Adapter.ProposalsAdapter
 import com.example.biznoti0.Model.Proposal
-
 import com.example.biznoti0.R
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query

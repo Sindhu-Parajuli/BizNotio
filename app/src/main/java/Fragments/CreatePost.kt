@@ -8,21 +8,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.biznoti0.Model.Proposal
 import com.example.biznoti0.R
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_create_post.*
 import java.util.*
-import com.example.biznoti0.SettingActivity
-import java.util.*
-import com.example.biznoti0.Model.Proposal
-import com.example.biznoti0.SignInActivity
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import java.lang.Exception
 import kotlin.collections.HashMap
 
 // TODO: Rename parameter arguments, choose names that match
