@@ -133,6 +133,7 @@ class CreatePost : Fragment() {
                 proposalItem.put("timeCreated", System.currentTimeMillis())
                 dbRef.document(proposalId).set(proposalItem).addOnSuccessListener { void: Void? ->
                     Toast.makeText(requireContext(), "Proposal has been Posted", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.navigation_home, null)
                 }.addOnFailureListener {
                     exception: java.lang.Exception -> Toast.makeText(requireContext(), "Proposal has been Posted", Toast.LENGTH_LONG).show()
                 }

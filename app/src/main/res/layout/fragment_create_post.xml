@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:id="@+id/Proposal"
+                                                   xmlns:tools="http://schemas.android.com/tools" android:id="@+id/Proposal"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    android:background="#3F90B5">
 
     <EditText
             android:id="@+id/ProposalName"
-            android:layout_width="344dp"
-            android:layout_height="41dp"
+            android:layout_width="415dp"
+            android:layout_height="49dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="1dp"
             android:background="#FFFFFF"
             android:ems="10"
-            android:hint="Proposal Name"
+            android:hint="     Proposal Name"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/ProposalType"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.352"/>
     <EditText
             android:id="@+id/ProposalDescription"
-            android:layout_width="0dp"
-            android:layout_height="216dp"
+            android:layout_width="426dp"
+            android:layout_height="150dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="32dp"
@@ -34,13 +33,12 @@
             android:background="#FFFFFF"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Proposal Description"
+            android:hint="    Description"
             android:inputType="textMultiLine"
             app:layout_constraintBottom_toTopOf="@+id/MinimumCase"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ProposalType"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/ProposalType" app:layout_constraintHorizontal_bias="0.341"/>
     <Button
             android:id="@+id/CreatePost"
             android:layout_width="138dp"
@@ -51,26 +49,25 @@
             android:text="Post"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.386"
+            app:layout_constraintHorizontal_bias="0.216"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Link"/>
     <EditText
             android:id="@+id/Link"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="421dp"
+            android:layout_height="45dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="6dp"
             android:background="#FFFFFF"
             android:ems="10"
-            android:hint="Link"
+            android:hint="  Link"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/CreatePost"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/MinimumCase"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/MinimumCase" app:layout_constraintHorizontal_bias="0.324"/>
     <TextView
             android:id="@+id/Title"
             android:layout_width="164dp"
@@ -86,8 +83,8 @@
 
     <EditText
             android:id="@+id/MinimumCase"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="412dp"
+            android:layout_height="159dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="32dp"
@@ -95,34 +92,34 @@
             android:background="#FFFFFF"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Minimum Business Case: goals, costs, schedule, restrictions, assumptions, etc."
+            android:hint="   Minimum Business Case: goals, costs, schedule,   restrictions, assumptions, etc."
             android:inputType="textMultiLine"
             app:layout_constraintBottom_toTopOf="@+id/Link"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ProposalDescription"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/ProposalDescription"
+            app:layout_constraintHorizontal_bias="0.415"/>
     <EditText
             android:id="@+id/ProposalType"
-            android:layout_width="344dp"
-            android:layout_height="41dp"
+            android:layout_width="424dp"
+            android:layout_height="45dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="1dp"
             android:background="#FFFFFF"
             android:ems="10"
-            android:hint="Proposal Type"
+            android:hint="    Proposal Type"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/ProposalDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ProposalName"/>
+            app:layout_constraintTop_toBottomOf="@+id/ProposalName" app:layout_constraintHorizontal_bias="0.389"/>
     <Button
             android:text="Upload file"
             android:layout_width="134dp"
             android:layout_height="40dp" android:id="@+id/select"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.739" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.958"/>
+            app:layout_constraintHorizontal_bias="0.88" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.943"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,7 +56,7 @@ class ProposalsAdapter(val context_adapter: Context, val proposals: List<Proposa
             itemView.tVProposalType.text = proposals.proposalType
             itemView.tVMinCase.text = proposals.minimumCase
             itemView.tVDescription.text = proposals.proposalDescription
-            Glide.with(context_adapter).load(proposals.link).into(itemView.imageViewPostImg)
+            //Glide.with(context_adapter).load(proposals.link).into(itemView.imageViewPostImg)
             itemView.tVRelativeTime.text = DateUtils.getRelativeTimeSpanString(proposals.timeCreated)
         }
     }
