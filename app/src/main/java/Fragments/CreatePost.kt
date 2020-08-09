@@ -15,6 +15,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_create_post.*
 import java.util.*
+import com.example.biznoti0.SettingActivity
+import java.util.*
+import com.example.biznoti0.Model.Proposal
+import com.example.biznoti0.SignInActivity
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import java.lang.Exception
+import kotlin.collections.HashMap
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,12 +76,11 @@ class CreatePost : Fragment() {
             }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val sendPost = view.findViewById<MaterialButton>(R.id.CreatePost)
         sendPost?.setOnClickListener {
-            saveProposalToFirebaseDatabase("proposal")
+            saveProposalToFirebaseDatabase()
         }
 
         val proposalNameField = view.findViewById<EditText>(R.id.ProposalName)
@@ -90,9 +98,9 @@ class CreatePost : Fragment() {
 
     }
 
-    private fun saveProposalToFirebaseDatabase(temp: String) {
+    private fun saveProposalToFirebaseDatabase() {
         val proposalId = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/proposals/$proposalId")
+        val dbRef: CollectionReference = FirebaseFirestore.getInstance().collection("proposals")
 
         val uid = FirebaseAuth.getInstance().uid ?: ""
 
@@ -102,9 +110,6 @@ class CreatePost : Fragment() {
         val minimumCase: String = MinimumCase.text.toString()
         val link: String = Link.text.toString()
         val owner: String = uid
-
-        val proposal = Proposal(owner, proposalId, proposalName, proposalType, proposalDescription, minimumCase, link)
-
 
 
         if (proposalName.isBlank()) {
@@ -123,25 +128,26 @@ class CreatePost : Fragment() {
         }
 
         else {
-
-
-            ref.setValue(proposal)
-                .addOnSuccessListener {
+            try {
+                //val proposal = Proposal(owner, proposalId, proposalName, proposalType, proposalDescription, minimumCase, link, System.currentTimeMillis())
+                val proposalItem = HashMap<String, Any>()
+                proposalItem.put("owner", owner)
+                proposalItem.put("proposalId", proposalId)
+                proposalItem.put("proposalName", proposalName)
+                proposalItem.put("proposalType", proposalType)
+                proposalItem.put("proposalDescription", proposalDescription)
+                proposalItem.put("minimumCase", minimumCase)
+                proposalItem.put("link", link)
+                proposalItem.put("timeCreated", System.currentTimeMillis())
+                dbRef.document(proposalId).set(proposalItem).addOnSuccessListener { void: Void? ->
                     Toast.makeText(requireContext(), "Proposal has been Posted", Toast.LENGTH_LONG).show()
-                    findNavController().navigate(R.id.navigation_home)
+                }.addOnFailureListener {
+                    exception: java.lang.Exception -> Toast.makeText(requireContext(), "Proposal has been Posted", Toast.LENGTH_LONG).show()
                 }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Proposal cannot be Posted: ERROR", Toast.LENGTH_LONG).show()
-
-                }
+            }catch (e:Exception){
+                Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_LONG).show()
+            }
         }
-//        ref.child("proposalName").setValue(proposalName)
-//            .addOnSuccessListener {
-//                Log.d("CreatePost", "Finally we saved the profile image to Firebase Database")
-//            }
-//            .addOnFailureListener {
-//                Log.d("CreatePost", "Failed to set value to database: ${it.message}")
-//            }
     }
 
 }

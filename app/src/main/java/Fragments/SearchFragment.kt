@@ -125,16 +125,9 @@ class SearchFragment : Fragment() {
                         if (datauser != null) {
                             userlist?.add(datauser)
                         }
-
-
                     }
-
                     profileadapter?.notifyDataSetChanged()
-
-
                 }
-
-
             }
 
         }
