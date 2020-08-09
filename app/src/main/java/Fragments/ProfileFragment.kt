@@ -1,29 +1,27 @@
 package Fragments
 
+
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-
-
-
-import com.example.biznoti0.SignInActivity
-import com.example.biznoti0.R
-import com.example.biznoti0.SettingActivity
-import kotlinx.android.synthetic.main.fragment_profile.*
-
-import android.net.Uri
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.biznoti0.Model.ProfileUser
+import com.example.biznoti0.R
+import com.example.biznoti0.SettingActivity
+import com.example.biznoti0.SignInActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -32,13 +30,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
-
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
-
 import java.util.*
-
-
-import kotlinx.coroutines.Dispatchers.Main
 
 /**
  * A simple [Fragment] subclass.
@@ -376,18 +370,6 @@ class ProfileFragment : Fragment() {
         preference?.putString("IDforprofile", firebaseuser.uid)
         preference?.apply()
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     private fun setCurrentProfilePicture(view: View){
         val uid = FirebaseAuth.getInstance().uid ?: ""

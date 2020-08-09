@@ -1,38 +1,27 @@
 package Fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.biznoti0.R
-
-import android.util.Log
-
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.biznoti0.Model.User
+import com.example.biznoti0.R
+import com.example.biznoti0.ViewModels.AppointmentViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-import kotlinx.android.synthetic.main.fragment_chat_list.*
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.fragment_appointment_select_user.*
-import kotlinx.android.synthetic.main.layout_chat_new_message_user_row.view.*
-
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.biznoti0.ViewModels.AppointmentViewModel
-
-import com.squareup.picasso.Picasso
-import com.example.biznoti0.ViewModels.ChatViewModel
-import com.google.firebase.database.ktx.getValue
-import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.fragment_chat_new_message.*
 import kotlinx.android.synthetic.main.layout_chat_new_message_user_row.view.*
 
 

@@ -3,20 +3,15 @@ package Fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.SearchView
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.biznoti0.Adapter.ProfileAdapter
 import com.example.biznoti0.Model.ProfileUser
-
 import com.example.biznoti0.R
-import kotlinx.android.synthetic.main.fragment_search.view.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -73,7 +68,9 @@ class SearchFragment : Fragment() {
     }
 
 
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
     private fun results(enteredtext: String) {
         val query = FirebaseDatabase.getInstance().getReference()

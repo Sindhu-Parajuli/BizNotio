@@ -2,21 +2,16 @@ package com.example.biznoti0.Adapter
 
 import Fragments.ProfileFragment
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.biznoti0.MainActivity
 import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.R
-import com.squareup.picasso.Picasso
-import org.w3c.dom.DocumentFragment
 
 class ProfileAdapter (private var usercontext: Context,
                        private var userlist:List<ProfileUser>,

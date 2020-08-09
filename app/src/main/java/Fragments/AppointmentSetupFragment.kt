@@ -4,28 +4,26 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.biznoti0.Model.User
-import com.example.biznoti0.R
-import com.example.biznoti0.ViewModels.AppointmentViewModel
-import java.text.SimpleDateFormat
-import kotlinx.android.synthetic.main.fragment_appointment_setup.*
-import java.util.*
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.biznoti0.Model.ChatMessage
+import com.example.biznoti0.Model.User
+import com.example.biznoti0.R
+import com.example.biznoti0.ViewModels.AppointmentViewModel
 import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.fragment_chat_log.*
-import kotlinx.android.synthetic.main.fragment_create_post.*
+import kotlinx.android.synthetic.main.fragment_appointment_setup.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

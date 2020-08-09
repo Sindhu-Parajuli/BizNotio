@@ -1,15 +1,13 @@
 package com.example.biznoti0
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import android.widget.Toast.makeText
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import kotlinx.android.synthetic.main.activity_payment.*

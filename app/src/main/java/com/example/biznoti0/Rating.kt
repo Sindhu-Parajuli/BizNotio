@@ -1,10 +1,10 @@
 package com.example.biznoti0
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.RatingBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_rating.*
 
 class Rating : AppCompatActivity() {
