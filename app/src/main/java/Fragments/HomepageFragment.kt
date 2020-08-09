@@ -13,11 +13,6 @@ import com.example.biznoti0.Adapter.ProposalsAdapter
 import com.example.biznoti0.Model.Proposal
 
 import com.example.biznoti0.R
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.FirebaseDatabase.*
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_homepage.*
@@ -27,10 +22,9 @@ import kotlinx.android.synthetic.main.fragment_homepage.*
  */
 class HomepageFragment : Fragment() {
 
-    //private lateinit var firesDb: FirebaseDatabase
+    private lateinit var firesDb: FirebaseFirestore
     private lateinit var proposals: MutableList<Proposal>
-    //private var postList: MutableList<Proposal>? = null
-    private lateinit var adapter: ProposalsAdapter
+    private lateinit var adapterP: ProposalsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,53 +42,29 @@ class HomepageFragment : Fragment() {
             findNavController().navigate(R.id.chatListFragment, null)
         }
 
-        proposals = mutableListOf<Proposal>()
-        adapter = ProposalsAdapter(view.context, proposals)
-        recyclerViewFeed.adapter = adapter
+        proposals = mutableListOf()
+        adapterP = ProposalsAdapter(view.context, proposals)
+        recyclerViewFeed.adapter = adapterP
         recyclerViewFeed.layoutManager = LinearLayoutManager(view.context)
 
-        val firesDb = FirebaseDatabase.getInstance().reference.child("proposals")
-         firesDb.addValueEventListener(object : ValueEventListener
-         {
-             override fun onCancelled(error: DatabaseError) {
-                 //
-             }
-
-             override fun onDataChange(snapshot: DataSnapshot) {
-                 proposals?.clear()
-
-                 for (snapshots in snapshot.children) {
-                     val proposalList = snapshot.getValue(Proposal::class.java)
-                     if (proposalList != null) {
-                         proposals!!.add(proposalList)
-                     }
-
-                     adapter?.notifyDataSetChanged()
-                 }
-             }
-
-
-         }
-
-
-
-         )
-
-            //.limit(20)
-            //.orderBy("timeCreated", Query.Direction.DESCENDING)
-        /*proposalsRef.addSnapshotListener { snapshot, exception ->
+        firesDb = FirebaseFirestore.getInstance()
+        val proposalsRef = firesDb
+            .collection("proposals")
+            .limit(20)
+            .orderBy("timeCreated", Query.Direction.DESCENDING)
+        proposalsRef.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
                 Log.e(TAG, "Exception thrown when querrying proposals", exception)
                 return@addSnapshotListener
-            }*/
-            //val proposalList = snapshot.toObjects(Proposal::class.java)
-           // proposals.clear()
-           // proposals.addAll(proposalList)
-           // adapter.notifyDataSetChanged()
-            //for (proposal in proposalList) {
-                //Log.i(TAG, "View ${proposal}")
+            }
+            val proposalList = snapshot.toObjects(Proposal::class.java)
+            proposals.clear()
+            proposals.addAll(proposalList)
+            adapterP.notifyDataSetChanged()
+            for (proposal in proposalList) {
+                Log.i(TAG, "View ${proposal}")
             }
         }
+    }
 
-
-
+}

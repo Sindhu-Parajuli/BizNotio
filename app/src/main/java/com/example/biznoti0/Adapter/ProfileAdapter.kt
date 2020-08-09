@@ -27,8 +27,6 @@ class ProfileAdapter (private var usercontext: Context,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileAdapter.ViewHolder {
         val view = LayoutInflater.from(usercontext).inflate(R.layout.result_layout,parent,false)
         return ProfileAdapter.ViewHolder(view)
-
-
     }
 
     //gets the total item of searches obtained from the database
@@ -47,26 +45,18 @@ class ProfileAdapter (private var usercontext: Context,
               val preference = usercontext.getSharedPreferences("Preferences", Context.MODE_PRIVATE).edit()
               preference.putString("IDforprofile", userobtainer.getusersID())
               preference.apply()
-
               (usercontext as FragmentActivity).supportFragmentManager.beginTransaction()
                   .replace(R.id.nav_host_fragment_container, ProfileFragment()).commit()
           }
-
-
-
       })
-
-
-
     }
 
 class ViewHolder (@NonNull itemView: View): RecyclerView.ViewHolder(itemView)
-{
-val Name:TextView = itemView.findViewById(R.id.layoutuser)
-    val AccountType:TextView = itemView.findViewById(R.id.accounttype)
-    val ProfilePicture:ImageView = itemView.findViewById(R.id.picture)
+    {
+        val Name:TextView = itemView.findViewById(R.id.layoutuser)
+        val AccountType:TextView = itemView.findViewById(R.id.accounttype)
+        val ProfilePicture:ImageView = itemView.findViewById(R.id.picture)
 
-
-}
+    }
 
 }
