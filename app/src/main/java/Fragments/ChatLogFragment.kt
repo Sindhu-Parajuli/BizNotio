@@ -1,9 +1,6 @@
 package Fragments
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -14,6 +11,7 @@ import android.view.KeyEvent.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -24,6 +22,7 @@ import com.example.biznoti0.AddPost
 import com.example.biznoti0.Model.ChatMessage
 import com.example.biznoti0.Model.User
 import com.example.biznoti0.R
+import com.example.biznoti0.VideoActivity
 import com.example.biznoti0.ViewModels.ChatViewModel
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.OnCompleteListener
@@ -92,8 +91,16 @@ class ChatLogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // call button
+        val callButton = view.findViewById<ImageButton>(R.id.chat_log_call_button)
+        callButton.setOnClickListener {
+            Log.d("ChatLogFragment", "Call button pressed")
+            val intent = Intent(this@ChatLogFragment.context, VideoActivity::class.java)
+            startActivity(intent)
+        }
+
         // back button
-        val backButton = view.findViewById<ConstraintLayout>(R.id.chat_log_back_button)
+        val backButton =  view.findViewById<ConstraintLayout>(R.id.chat_log_back_button)
         backButton.setOnClickListener {
             Log.d("ChatLogFragment", "Back button pressed")
             findNavController().navigate(R.id.chatListFragment, null)
@@ -139,7 +146,7 @@ class ChatLogFragment : Fragment() {
 
 //        setupDummyData()
         listenForMessages()
-        text_field_text_view.addTextChangedListener(object : TextWatcher {
+        text_field_text_view.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
 
             }
@@ -168,7 +175,6 @@ class ChatLogFragment : Fragment() {
 
     }
 
-
     private fun listenForMessages() {
 
         model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
@@ -178,7 +184,7 @@ class ChatLogFragment : Fragment() {
             val fromId = FirebaseAuth.getInstance().uid
             val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
-            ref.addChildEventListener(object : ChildEventListener {
+            ref.addChildEventListener(object: ChildEventListener{
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                     val chatMessage = snapshot.getValue(ChatMessage::class.java)
                     if (chatMessage != null) {
@@ -219,6 +225,7 @@ class ChatLogFragment : Fragment() {
     }
 
 
+
     private fun performSendMessage() {
         model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
             chat_header_user_text.text = item.FName
@@ -233,11 +240,11 @@ class ChatLogFragment : Fragment() {
 
             val chatMessage = ChatMessage(reference.key!!, text, fromId!!, toId!!, System.currentTimeMillis())
             reference.setValue(chatMessage)
-                .addOnSuccessListener {
-                    Log.d("ChatLogFragment", "Message has been saved to firebase: ${reference.key}")
-                    text_field_text_view.text.clear()
-                    chat_log_recycler_view.scrollToPosition(adapter.itemCount - 1)
-                }
+                    .addOnSuccessListener {
+                        Log.d("ChatLogFragment", "Message has been saved to firebase: ${reference.key}")
+                        text_field_text_view.text.clear()
+                        chat_log_recycler_view.scrollToPosition(adapter.itemCount - 1)
+                    }
             toReference.setValue(chatMessage)
 
             val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
@@ -326,8 +333,8 @@ class ChatLogFragment : Fragment() {
 
                     }
                 })
-            }
-        }
+    }
+}
     }
 }
 
@@ -342,36 +349,33 @@ class ChatLogFragment : Fragment() {
 
 
 
-class ChatFromItem(val text: String, val user: User) : Item<GroupieViewHolder>() {
-        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-            viewHolder.itemView.textview_from_row.text = text
-            val profileImageUrl = user.profileImageUrl
-            val targetImageView = viewHolder.itemView.imageview_from_row
+class ChatFromItem(val text: String, val user: User): Item<GroupieViewHolder>() {
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        viewHolder.itemView.textview_from_row.text = text
+        val profileImageUrl = user.profileImageUrl
+        val targetImageView = viewHolder.itemView.imageview_from_row
 
-            Glide.with(viewHolder.itemView).load(profileImageUrl).into(targetImageView)
-        }
-
-        override fun getLayout(): Int {
-            return R.layout.layout_chat_log_from_row
-        }
+        Glide.with(viewHolder.itemView).load(profileImageUrl).into(targetImageView)
     }
 
-    class ChatToItem(val text: String, val user: User) : Item<GroupieViewHolder>() {
-        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-            viewHolder.itemView.textview_to_row.text = text
-            val profileImageUrl = user.profileImageUrl
-            val targetImageView = viewHolder.itemView.imageview_to_row
+    override fun getLayout(): Int {
+        return R.layout.layout_chat_log_from_row
+    }
+}
 
-            Glide.with(viewHolder.itemView).load(profileImageUrl).into(targetImageView)
-        }
+class ChatToItem(val text: String, val user: User): Item<GroupieViewHolder>() {
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        viewHolder.itemView.textview_to_row.text = text
+        val profileImageUrl = user.profileImageUrl
+        val targetImageView = viewHolder.itemView.imageview_to_row
 
-
-        override fun getLayout(): Int {
-            return R.layout.layout_chat_log_to_row
-        }
+        Glide.with(viewHolder.itemView).load(profileImageUrl).into(targetImageView)
     }
 
-
+    override fun getLayout(): Int {
+        return R.layout.layout_chat_log_to_row
+    }
+}
 
 
 

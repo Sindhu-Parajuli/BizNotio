@@ -100,5 +100,15 @@
           android:label="activity_rating"
           tools:layout="@layout/activity_rating"  />
 
+  <activity
+          android:id="@+id/videoCallActivity"
+          android:name="com.example.biznoti0.VideoActivity"
+          android:label="activity_password_reset"
+           />
+  <activity
+          android:id="@+id/videoSettingsActivity"
+          android:name="com.example.biznoti0.SettingsActivity"
+          android:label="activity_password_reset"
+          tools:layout="@layout/activity_video" />
 
 </navigation>

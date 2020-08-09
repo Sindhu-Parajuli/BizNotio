@@ -216,4 +216,17 @@
 
     </ImageButton>
 
+    <ImageButton
+            android:id="@+id/chat_log_call_button"
+            android:clickable="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_call_24px"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/chat_header"
+            app:layout_constraintTop_toTopOf="@+id/chat_header" app:layout_constraintStart_toEndOf="@+id/chat_header"
+            app:layout_constraintEnd_toEndOf="parent">
+
+    </ImageButton>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
