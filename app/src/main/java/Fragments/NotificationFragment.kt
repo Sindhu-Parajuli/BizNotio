@@ -75,11 +75,11 @@ class NotificationFragment : Fragment() {
     }
 
     private fun getNotifications() {
-        val notiRef = FirebaseDatabase.getInstance()
+        val ref = FirebaseDatabase.getInstance()
             .reference.child("Notifications")
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
 
-        notiRef.addValueEventListener(object : ValueEventListener {
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
 
             }

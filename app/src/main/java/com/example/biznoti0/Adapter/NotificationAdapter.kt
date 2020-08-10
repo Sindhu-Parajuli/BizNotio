@@ -11,6 +11,11 @@ import com.example.biznoti0.Model.Notification
 import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.Model.Proposal
 import com.example.biznoti0.R
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_sign_up.view.*
 
 class NotificationAdapter(val context_adapter: Context,
                           private var notificationlist:List<Notification>) :
@@ -51,7 +56,31 @@ class NotificationAdapter(val context_adapter: Context,
             text = itemView.findViewById(R.id.says)
         }
     }
+ private fun user(userName:TextView,IDforpfile:String)
+ {
+     val ref = FirebaseDatabase.getInstance().getReference().child("Notifications").child(IDforpfile)
+      ref.addValueEventListener(object:ValueEventListener
+      {
+          override fun onCancelled(error: DatabaseError) {
 
+          }
+
+          override fun onDataChange(snapshot: DataSnapshot) {
+              if(snapshot.exists())
+              {
+                  val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
+
+                  userName.text = newuser!!.getFNAME()
+
+              }
+          }
+
+      }
+
+      )
+
+
+ }
 
 
 

@@ -382,8 +382,6 @@ class ProfileFragment : Fragment() {
         val notiMap = HashMap<String, Any>()
         notiMap["userid"] = firebaseuser!!.uid
         notiMap["text"] = "added you as a connection"
-        notiMap["postid"] = ""
-        notiMap["ispost"] = false
 
         ref.push().setValue(notiMap)
     }
