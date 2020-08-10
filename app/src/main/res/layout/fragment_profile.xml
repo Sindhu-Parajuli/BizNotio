@@ -129,9 +129,12 @@
           app:layout_constraintHorizontal_bias="0.862" app:layout_constraintVertical_bias="0.328"/>
   <TextView
           android:text="0"
-          android:layout_width="16dp"
-          android:layout_height="24dp" android:id="@+id/textView3" tools:layout_editor_absoluteY="244dp"
-          tools:layout_editor_absoluteX="246dp" tools:ignore="MissingConstraints"/>
+          android:layout_width="34dp"
+          android:layout_height="28dp" android:id="@+id/number"
+          tools:ignore="MissingConstraints" app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.633"
+          app:layout_constraintVertical_bias="0.339"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

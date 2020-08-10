@@ -111,6 +111,7 @@ class SignUp : AppCompatActivity() {
         currUserHashMap["Education"] = "World University"
         currUserHashMap["BizNotioGoals"] = "Serve the world"
         currUserHashMap["Interests"] = "Learning"
+        currUserHashMap["Rating"]=0
 
 
         currUserHashMap["Image"] = "gs://bitnoti0.appspot.com/user Info/profile.png"
