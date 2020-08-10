@@ -1,5 +1,6 @@
 package Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,18 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.biznoti0.AddPost
 import com.example.biznoti0.R
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_create_post.*
+import kotlinx.android.synthetic.main.single_post.view.*
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -71,8 +78,9 @@ class CreatePost : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val sendPost = view.findViewById<MaterialButton>(R.id.CreatePost)
+        val proposalId = UUID.randomUUID().toString()
         sendPost?.setOnClickListener {
-            saveProposalToFirebaseDatabase()
+            saveProposalToFirebaseDatabase(proposalId)
         }
 
         val proposalNameField = view.findViewById<EditText>(R.id.ProposalName)
@@ -82,7 +90,10 @@ class CreatePost : Fragment() {
         }
 
         select.setOnClickListener {
-            findNavController().navigate(R.id.Addpost, null)
+            val intent = Intent(activity, AddPost::class.java)
+            intent.putExtra("ProposalId", proposalId)
+            startActivity(intent)
+            //findNavController().navigate(R.id.Addpost, null)
         }
 
 
@@ -90,8 +101,7 @@ class CreatePost : Fragment() {
 
     }
 
-    private fun saveProposalToFirebaseDatabase() {
-        val proposalId = UUID.randomUUID().toString()
+    private fun saveProposalToFirebaseDatabase(proposalId: String) {
         val dbRef: CollectionReference = FirebaseFirestore.getInstance().collection("proposals")
 
         val uid = FirebaseAuth.getInstance().uid ?: ""
@@ -100,7 +110,7 @@ class CreatePost : Fragment() {
         val proposalType: String = ProposalType.text.toString()
         val proposalDescription: String = ProposalDescription.text.toString()
         val minimumCase: String = MinimumCase.text.toString()
-        val link: String = Link.text.toString()
+        //val link: String = tvLink.text.toString()
         val owner: String = uid
 
 
@@ -121,15 +131,24 @@ class CreatePost : Fragment() {
 
         else {
             try {
-                //val proposal = Proposal(owner, proposalId, proposalName, proposalType, proposalDescription, minimumCase, link, System.currentTimeMillis())
                 val proposalItem = HashMap<String, Any>()
+                val getImgLink = FirebaseDatabase.getInstance().reference.child("ImagePosts").child(proposalId).child("postImage")
+                getImgLink.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val imgLink = snapshot.value.toString()
+                        proposalItem.put("link", imgLink)
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+
+                    }
+                })
                 proposalItem.put("owner", owner)
                 proposalItem.put("proposalId", proposalId)
                 proposalItem.put("proposalName", proposalName)
                 proposalItem.put("proposalType", proposalType)
                 proposalItem.put("proposalDescription", proposalDescription)
                 proposalItem.put("minimumCase", minimumCase)
-                proposalItem.put("link", link)
+                //proposalItem.put("link", link)
                 proposalItem.put("timeCreated", System.currentTimeMillis())
                 dbRef.document(proposalId).set(proposalItem).addOnSuccessListener { void: Void? ->
                     Toast.makeText(requireContext(), "Proposal has been Posted", Toast.LENGTH_LONG).show()

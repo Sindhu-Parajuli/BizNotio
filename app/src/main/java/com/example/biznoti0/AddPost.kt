@@ -31,6 +31,7 @@ class AddPost : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_post)
+        val proposalId = intent.getStringExtra("ProposalId")
         choose.setOnClickListener {
             //check runtime permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -51,7 +52,9 @@ class AddPost : AppCompatActivity() {
             }
         }
         image.setOnClickListener {
-            uploadImage()
+            if (proposalId != null) {
+                uploadImage(proposalId)
+            }
         }
 
     }
@@ -112,7 +115,7 @@ class AddPost : AppCompatActivity() {
     }
 
 
-    private fun uploadImage() {
+    private fun uploadImage(proposalId: String) {
         if (filePath == null) return
 
 
@@ -129,7 +132,7 @@ class AddPost : AppCompatActivity() {
                 ref.downloadUrl.addOnSuccessListener {
                     Log.d("ProfileFragment", "File Download URL Location: $it")
                     Toast.makeText(this, "File Uploaded successfully", Toast.LENGTH_LONG).show()
-                    uploadDatabase(it.toString())
+                    uploadDatabase(it.toString(), proposalId)
 
 
                 }
@@ -139,23 +142,24 @@ class AddPost : AppCompatActivity() {
             }
     }
 
-    private fun uploadDatabase(uri: String)
+    private fun uploadDatabase(uri: String, proposalId: String)
     {
-        val ImagePostId = UUID.randomUUID().toString()
+        //val ImagePostId = UUID.randomUUID().toString()
         //var curruserId = mFireAuth.currentUser!!.uid
         // userreference = FirebaseDatabase.getInstance().reference.child("usersID").child(curruserId)
         val uid = FirebaseAuth.getInstance().uid ?: ""
-        val ref = FirebaseDatabase.getInstance().getReference("/ImagePosts/$ImagePostId")
-        val postId = ref.push().key
+        val ref = FirebaseDatabase.getInstance().getReference("/ImagePosts/$proposalId")
+        //val postId = ref.push().key
         val postMap = HashMap<String, Any>()
-        postMap["postid"] = postId!!
+        //postMap["postid"] = postId!!
         postMap["publisher"] = FirebaseAuth.getInstance().currentUser!!.uid
         postMap["postimage"] = uri
 
         ref.setValue(postMap)
             .addOnSuccessListener {
-                Toast.makeText(this, "Image has been Posted", Toast.LENGTH_LONG).show()
-                startActivity(Intent(this@AddPost, MainActivity::class.java))
+                //Toast.makeText(this, "Image has been Posted", Toast.LENGTH_LONG).show()
+                finish()
+                //startActivity(Intent(this@AddPost, MainActivity::class.java))
                 //findNavController().navigate(R.id.navigation_home)
             }
             .addOnFailureListener {
