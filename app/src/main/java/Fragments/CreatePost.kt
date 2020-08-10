@@ -155,6 +155,7 @@ class CreatePost : Fragment() {
                     findNavController().navigate(R.id.navigation_home, null)
                 }.addOnFailureListener {
                     exception: java.lang.Exception -> Toast.makeText(requireContext(), "Proposal has been Posted", Toast.LENGTH_LONG).show()
+
                 }
             }catch (e:Exception){
                 Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_LONG).show()
