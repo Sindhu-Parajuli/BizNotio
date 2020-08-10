@@ -2,6 +2,7 @@ package com.example.biznoti0.Adapter
 
 import Fragments.ProfileFragment
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,10 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.biznoti0.MainActivity
 import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.R
+import com.squareup.picasso.Picasso
 
 class ProfileAdapter (private var usercontext: Context,
                        private var userlist:List<ProfileUser>,
@@ -34,7 +37,10 @@ class ProfileAdapter (private var usercontext: Context,
       val userobtainer = userlist[position]
      holder.Name.text = userobtainer.getFNAME() + "  "+ userobtainer.getLName()
      holder.AccountType.text = userobtainer.getACType()
-     //Picasso.get().load(userobtainer.getImage()).placeholder(R.drawable.profile).into(holder.ProfilePicture)
+     Picasso.get().load(userobtainer.getImage()).placeholder(R.drawable.profile).into(holder.ProfilePicture)
+
+
+
       holder.itemView.setOnClickListener(View.OnClickListener {
           if (Fragment) {
               val preference = usercontext.getSharedPreferences("Preferences", Context.MODE_PRIVATE).edit()
@@ -43,6 +49,19 @@ class ProfileAdapter (private var usercontext: Context,
               (usercontext as FragmentActivity).supportFragmentManager.beginTransaction()
                   .replace(R.id.nav_host_fragment_container, ProfileFragment()).commit()
           }
+          else
+          {
+              val preference = usercontext.getSharedPreferences("Preferences", Context.MODE_PRIVATE).edit()
+              preference.putString("IDforprofile", userobtainer.getusersID())
+              preference.apply()
+              (usercontext as FragmentActivity).supportFragmentManager.beginTransaction()
+                  .replace(R.id.nav_host_fragment_container, ProfileFragment()).commit()
+          }
+
+
+
+
+
       })
     }
 
