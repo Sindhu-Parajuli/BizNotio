@@ -56,7 +56,16 @@ class ProposalsAdapter(val context_adapter: Context, val proposals: List<Proposa
             itemView.tVProposalType.text = proposals.proposalType
             itemView.tVMinCase.text = proposals.minimumCase
             itemView.tVDescription.text = proposals.proposalDescription
-            //Glide.with(context_adapter).load(proposals.link).into(itemView.imageViewPostImg)
+            var imgLink: String = ""
+            FirebaseDatabase.getInstance().reference.child("ImagePosts").child(proposals.proposalId).child("postimage").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    imgLink = snapshot.value.toString()
+                    Glide.with(context_adapter).load(imgLink).into(itemView.iVPostImg)
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+            })
             itemView.tVRelativeTime.text = DateUtils.getRelativeTimeSpanString(proposals.timeCreated)
         }
     }

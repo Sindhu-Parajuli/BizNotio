@@ -23,30 +23,12 @@
     />
 
 
-
-    <Button
-            android:text="Upload pdf"
-            android:layout_width="128dp"
-            android:layout_height="49dp" android:id="@+id/button2"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.813" app:layout_constraintHorizontal_bias="0.515"/>
     <Button
             android:text="Upload Image"
             android:layout_width="158dp"
-            android:layout_height="45dp" android:id="@+id/image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.623" app:layout_constraintHorizontal_bias="0.505"/>
-    <Button
-            android:text="Upload videos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.723" app:layout_constraintHorizontal_bias="0.498"/>
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:id="@+id/image"/>
 
 
 </LinearLayout>
