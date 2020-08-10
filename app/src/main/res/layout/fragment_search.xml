@@ -23,7 +23,7 @@
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:id="@+id/searchView"
-                  android:hint="Search for users or projects.."/>
+                  android:hint="Search for users by account type.."/>
 
 
     </androidx.appcompat.widget.Toolbar>

@@ -1,6 +1,7 @@
 package com.example.biznoti0.Adapter
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -12,9 +13,32 @@ import com.example.biznoti0.Model.Proposal
 import com.example.biznoti0.R
 
 class NotificationAdapter(val context_adapter: Context,
-                          private var notifcationlist:List<Notification>) :
+                          private var notificationlist:List<Notification>) :
     RecyclerView.Adapter<NotificationAdapter.ViewHolder>()
 {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(context_adapter).inflate(R.layout.notification,parent,false)
+        return ViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return notificationlist.size
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val notification = notificationlist[position]
+        if (notification.text.equals("added you as a connection"))
+        {
+            holder.text.text = "added you as a connection"
+        }
+
+    }
+
+
+
+
+
+
     inner class ViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView)
     {
 
@@ -28,17 +52,15 @@ class NotificationAdapter(val context_adapter: Context,
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
-    }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
-    }
+
+
+
+
+
+
+
 
 
 }

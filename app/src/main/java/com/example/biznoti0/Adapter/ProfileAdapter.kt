@@ -42,6 +42,8 @@ class ProfileAdapter (private var usercontext: Context,
               preference.apply()
               (usercontext as FragmentActivity).supportFragmentManager.beginTransaction()
                   .replace(R.id.nav_host_fragment_container, ProfileFragment()).commit()
+
+
           }
       })
     }

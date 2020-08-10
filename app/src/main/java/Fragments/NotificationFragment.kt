@@ -5,7 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.biznoti0.Adapter.NotificationAdapter
+import com.example.biznoti0.Model.Notification
 import com.example.biznoti0.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +29,11 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class NotificationFragment : Fragment() {
+
+    private var notificationslist: List<Notification>? = null
+    private var notificationAdapter: NotificationAdapter? = null
+
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,8 +51,63 @@ class NotificationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false)
+        val view = inflater.inflate(R.layout.fragment_notification, container, false)
+
+        var recyclerView: RecyclerView
+        recyclerView = view.findViewById(R.id.recycler_view_notifications)
+        recyclerView?.setHasFixedSize(true)
+        recyclerView?.layoutManager = LinearLayoutManager(context)
+
+
+        notificationslist = ArrayList()
+
+
+        notificationAdapter = NotificationAdapter(context!!, notificationslist as ArrayList<Notification>)
+        recyclerView.adapter = notificationAdapter
+
+
+        getNotifications()
+
+
+
+
+        return view
     }
+
+    private fun getNotifications() {
+        val notiRef = FirebaseDatabase.getInstance()
+            .reference.child("Notifications")
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+
+        notiRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists())
+                {
+                    (notificationslist as ArrayList<Notification>).clear()
+
+                    for (snapshots in snapshot.children)
+                    {
+                        val notification = snapshot.getValue(Notification::class.java)
+
+                        (notificationslist as ArrayList<Notification>).add(notification!!)
+                    }
+
+                    Collections.reverse(notificationslist)
+                    notificationAdapter!!.notifyDataSetChanged()
+                }
+
+
+
+
+            }
+
+        })
+    }
+
 
     companion object {
         /**
@@ -58,3 +129,4 @@ class NotificationFragment : Fragment() {
             }
     }
 }
+

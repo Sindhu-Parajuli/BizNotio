@@ -106,6 +106,8 @@ class ProfileFragment : Fragment() {
                         .child("Connect").child(lambda.toString())
                         .child("Connected").child(IDforprofile).setValue(true)
                 }
+
+                Notification()
             }
 
             else
@@ -370,6 +372,24 @@ class ProfileFragment : Fragment() {
         preference?.putString("IDforprofile", firebaseuser.uid)
         preference?.apply()
     }
+
+    private fun Notification()
+    {
+        val ref = FirebaseDatabase.getInstance()
+            .reference.child("Notifications")
+            .child("IDforprofile")
+
+        val notiMap = HashMap<String, Any>()
+        notiMap["userid"] = firebaseuser!!.uid
+        notiMap["text"] = "added you as a connection"
+        notiMap["postid"] = ""
+        notiMap["ispost"] = false
+
+        ref.push().setValue(notiMap)
+    }
+
+
+
 
     private fun setCurrentProfilePicture(view: View){
         val uid = FirebaseAuth.getInstance().uid ?: ""

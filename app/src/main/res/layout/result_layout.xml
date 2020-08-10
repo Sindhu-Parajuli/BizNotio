@@ -4,7 +4,7 @@
 <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/nav_host_fragment_container"
+
         android:layout_height="match_parent"
         android:layout_width="match_parent">
     <!--you can put your existing views of your current xml here, so yes your entire xml is now inside this FrameLayout -->
@@ -13,9 +13,9 @@
     <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="349dp"
+            android:id="@+id/nav_host_fragment_container"
 
-
-            android:id="@+id/first" android:layout_marginTop="100dp"
+            android:layout_marginTop="100dp"
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp">
 

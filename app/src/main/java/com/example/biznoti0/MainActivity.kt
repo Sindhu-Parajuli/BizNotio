@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -69,6 +70,11 @@ class MainActivity : AppCompatActivity() {
         return item.onNavDestinationSelected(findNavController(R.id.frame_layout))
                 || super.onOptionsItemSelected(item)
     }
+
+
+
+
+
 
     }
 
