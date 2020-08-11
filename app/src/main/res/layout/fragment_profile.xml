@@ -34,7 +34,7 @@
           android:textColor="#0C0C0C"
           app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.266"
-          app:layout_constraintVertical_bias="0.283" android:textSize="24sp"/>
+          app:layout_constraintVertical_bias="0.283" android:textSize="14sp"/>
   <ImageButton
           android:id="@+id/imagelogoutbutton"
           android:background="#0B0A0A"
@@ -128,7 +128,7 @@
           android:layout_height="37dp" android:id="@+id/Rating"
           app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintHorizontal_bias="0.784" app:layout_constraintVertical_bias="0.30"/>
+          app:layout_constraintHorizontal_bias="0.798" app:layout_constraintVertical_bias="0.302"/>
   <TextView
           android:text="Profession:"
           android:layout_width="wrap_content"
