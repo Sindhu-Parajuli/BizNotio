@@ -3,15 +3,20 @@ package Fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.biznoti0.Adapter.ProfileAdapter
 import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.R
+import com.example.biznoti0.ViewModels.ChatViewModel
+import com.example.biznoti0.ViewModels.SearchViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -27,6 +32,7 @@ class SearchFragment : Fragment() {
     private var profileadapter: ProfileAdapter? = null
     private var userlist: MutableList<ProfileUser>? = null
 
+    private val model: SearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +44,8 @@ class SearchFragment : Fragment() {
         searchedView?.setHasFixedSize(true)
         searchedView?.layoutManager = LinearLayoutManager(context)
         userlist = ArrayList()
-        profileadapter = context?.let { ProfileAdapter(it, userlist as ArrayList<ProfileUser>, true) }
+
+        profileadapter = context?.let { ProfileAdapter(model, it, userlist as ArrayList<ProfileUser>, true) }
         searchedView?.adapter = profileadapter
         view.searchView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -88,16 +95,11 @@ class SearchFragment : Fragment() {
                 userlist?.clear()
                     for (snapshots in snapshot.children) {
                         val datauser = snapshots.getValue(ProfileUser::class.java)
+                        Log.d("SearchFragment", "${datauser.toString()}")
                         if (datauser != null) {
                             userlist?.add(datauser)
                         }
-
-
-
-
                     profileadapter?.notifyDataSetChanged()
-
-
                 }
 
 

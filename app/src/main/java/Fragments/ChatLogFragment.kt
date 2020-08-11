@@ -112,7 +112,7 @@ class ChatLogFragment : Fragment() {
 
         text_field_attachment_button.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
+            intent.type = "*/*"
             startActivityForResult(intent, 1000)
 
             //findNavController().navigate(R.id.Addpost, null)
@@ -281,6 +281,34 @@ class ChatLogFragment : Fragment() {
                     if (task.isSuccessful) {
                         val downloadUrl = task.result
                         val url = downloadUrl.toString()
+                        Log.d("ChatLogFragment", "$url")
+
+                        model.selectedUser.observe(viewLifecycleOwner, Observer<User> { item ->
+                            chat_header_user_text.text = item.FName
+                            toId = item.usersID
+                            userObject = item
+                            val text = "attachment file: $url"
+                            val fromId = FirebaseAuth.getInstance().uid
+
+                            val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+
+                            val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+
+                            val chatMessage = ChatMessage(reference.key!!, text, fromId!!, toId!!, System.currentTimeMillis())
+                            reference.setValue(chatMessage)
+                                .addOnSuccessListener {
+                                    Log.d("ChatLogFragment", "Message has been saved to firebase: ${reference.key}")
+                                    text_field_text_view.text.clear()
+                                    chat_log_recycler_view.scrollToPosition(adapter.itemCount - 1)
+                                }
+                            toReference.setValue(chatMessage)
+
+                            val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+                            latestMessageRef.setValue(chatMessage)
+
+                            val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
+                            latestMessageToRef.setValue(chatMessage)
+                        })
 
                         val postMap = HashMap<String, Any>()
                         postMap["postid"] = message!!

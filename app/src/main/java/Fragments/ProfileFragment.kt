@@ -15,6 +15,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -22,12 +24,11 @@ import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.R
 import com.example.biznoti0.SettingActivity
 import com.example.biznoti0.SignInActivity
+import com.example.biznoti0.ViewModels.SearchViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -41,31 +42,64 @@ import java.util.*
 class ProfileFragment : Fragment() {
     private lateinit var IDforprofile:String
     private lateinit var firebaseuser:FirebaseUser
+
+    private val model: SearchViewModel by activityViewModels()
+//    private lateinit var selectedUserRef: ProfileUser
+//    private lateinit var currentlyLoggedInUserRef: ProfileUser
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        model.currentlyLoggedInUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+            Log.d("ProfileFragment", "currentlyLoggedInUser: ${item.toString()}")
+            val currentlyLoggedInUser = item
+            model.selectedUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+                Log.d("ProfileFragment", "selectedUser: ${item.toString()}")
+                if (currentlyLoggedInUser.getusersID() != item.getusersID()) {
+                    val ref = FirebaseDatabase.getInstance().getReference("/Connect/${currentlyLoggedInUser.getusersID()}")
+                    ref.child("Connected").child(item.getusersID()).addValueEventListener(object: ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val value = snapshot.getValue<Boolean?>()
+                            if (edit_button != null) {
+                                if (value == null) {
+                                    edit_button.text = "Connect"
+                                }
+                                else if (value == true) {
+                                    edit_button.text = "Connected"
+                                }
+
+                                else if (value == false) {
+                                    edit_button.text = "Connect"
+                                }
+                            }
 
 
+                        }
 
+                        override fun onCancelled(error: DatabaseError) {
+
+                        }
+
+                    })
+
+
+                    edit_button.text = "Connect"
+                }
+            })
+
+        })
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
     private var progressDialog: ProgressDialog? = null
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // load the current image from firebase to imageview
-        setCurrentProfilePicture(view)
-
-
-
         // Profile button extracted from the layout file
         val profileButton = view.findViewById<ImageView>(R.id.imageView)
+
 
 
         profileButton?.setOnClickListener{
@@ -89,44 +123,41 @@ class ProfileFragment : Fragment() {
 
         // Settings Button
         val button = view.findViewById<Button>(R.id.edit_button)
-        button?.setOnClickListener {
-           val buttoninfo = view.edit_button.text.toString()
 
-            if(buttoninfo=="Edit Profile") {
-                val intent = Intent (this@ProfileFragment.context, SettingActivity::class.java)
-                startActivity(intent)
+        model.currentlyLoggedInUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+            Log.d("ProfileFragment", "currentlyLoggedInUser: ${item.toString()}")
+            val currentlyLoggedInUser = item
+            model.selectedUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+                button?.setOnClickListener {
+                    val buttoninfo = view.edit_button.text.toString()
+
+                    if(buttoninfo=="Edit Profile") {
+                        val intent = Intent (this@ProfileFragment.context, SettingActivity::class.java)
+                        startActivity(intent)
 
 
-            }
+                    }
 
-            else if(buttoninfo=="Connect")
-            {
-                firebaseuser?.uid.let { lambda ->
-                    FirebaseDatabase.getInstance().reference
-                        .child("Connect").child(lambda.toString())
-                        .child("Connected").child(IDforprofile).setValue(true)
+                    else if(buttoninfo=="Connect")
+                    {
+                        Log.d("ProfileFragment", "Pressed Connect button")
+                        val ref = FirebaseDatabase.getInstance().getReference("/Connect/${currentlyLoggedInUser.getusersID()}")
+                        ref.child("Connected").child(item.getusersID()).setValue(true)
+                        button.text = "Connected"
+                    }
+
+                    else if(buttoninfo == "Connected")
+                    {
+                        Log.d("ProfileFragment", "Pressed Connect when already connect button")
+                        val ref = FirebaseDatabase.getInstance().getReference("/Connect/${currentlyLoggedInUser.getusersID()}")
+                        ref.child("Connected").child(item.getusersID()).removeValue()
+                        button.text = "Connect"
+                    }
                 }
-            }
+            })
 
-            else
-            {
-               val follow = firebaseuser?.uid.let { lambda ->
-                    FirebaseDatabase.getInstance().reference
-                        .child("Connect").child(lambda.toString())
-                        .child("Connected").child(IDforprofile).removeValue()
-                }
+        })
 
-
-
-
-
-
-
-
-            }
-
-
-        }
 
         // Logout Button extracted from the layout file
         imagelogoutbutton?.setOnClickListener {
@@ -306,40 +337,67 @@ class ProfileFragment : Fragment() {
 
     private fun storeuserData()
     {
-        val userdata = FirebaseDatabase.getInstance().getReference().child("usersID").child(IDforprofile)
-        userdata.addValueEventListener(object : ValueEventListener
 
-        {
-            override fun onCancelled(error: DatabaseError) {
+//        model.currentlyLoggedInUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+//            currentlyLoggedInUserRef = item
+//        })
+        model.selectedUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+            view?.textView?.text = item!!.getFNAME()  + " " + item.getLName()
+            view?.Education?.text= item.getEducation()
+            view?.Goals?.text= item.getBizNotioGoals()
+            view?.Interests?.text= item.getInterests()
+            view?.profession?.text= item.getProfession()
+            val requestOptions = RequestOptions()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
 
+            // So the tutorial was using picasso but I found better loading times with glide
+            Glide.with(view?.context!!)
+                .applyDefaultRequestOptions(requestOptions)
+                .load(item.getProfileImageUrl())
+                .into(view?.findViewById<CircleImageView>(R.id.circle_image_profile)!!)
+            try {
+                imageView.alpha = 0f
+            }
+            catch (e: Exception) {
+                Log.d("ProfileFragment", "Prevented fatal crash, imageView is null...")
             }
 
-            override fun onDataChange(snapshot: DataSnapshot) {
-/*
-                if(context!=null)
-                {
-                    return
-                }
-*/
-                if(snapshot.exists())
-                {
-                    val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
-                    //Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(view?.circle_image_profile)
-                        view?.textView?.text = newuser!!.getFNAME()  + " " + newuser.getLName()
-                    view?.Education?.text=newuser!!.getEducation()
-                    view?.Goals?.text=newuser!!.getBizNotioGoals()
-                    view?.Interests?.text=newuser!!.getInterests()
-                    view?.profession?.text=newuser!!.getProfession()
-
-
-                }
-
-            }
-
-        }
-
-
-        )
+        })
+//        val userdata = FirebaseDatabase.getInstance().getReference().child("usersID").child(IDforprofile)
+//        userdata.addValueEventListener(object : ValueEventListener
+//
+//        {
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(snapshot: DataSnapshot) {
+///*
+//                if(context!=null)
+//                {
+//                    return
+//                }
+//*/
+//                if(snapshot.exists())
+//                {
+//                    val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
+//                    //Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(view?.circle_image_profile)
+//                        view?.textView?.text = newuser!!.getFNAME()  + " " + newuser.getLName()
+//                    view?.Education?.text=newuser!!.getEducation()
+//                    view?.Goals?.text=newuser!!.getBizNotioGoals()
+//                    view?.Interests?.text=newuser!!.getInterests()
+//                    view?.profession?.text=newuser!!.getProfession()
+//
+//
+//                }
+//
+//            }
+//
+//        }
+//
+//
+//        )
     }
 
 
