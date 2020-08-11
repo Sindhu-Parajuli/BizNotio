@@ -27,10 +27,8 @@ import com.example.biznoti0.SignInActivity
 import com.example.biznoti0.ViewModels.SearchViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -59,7 +57,34 @@ class ProfileFragment : Fragment() {
             model.selectedUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
                 Log.d("ProfileFragment", "selectedUser: ${item.toString()}")
                 if (currentlyLoggedInUser.getusersID() != item.getusersID()) {
-                    edit_button.visibility = View.GONE
+                    val ref = FirebaseDatabase.getInstance().getReference("/Connect/${currentlyLoggedInUser.getusersID()}")
+                    ref.child("Connected").child(item.getusersID()).addValueEventListener(object: ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val value = snapshot.getValue<Boolean?>()
+                            if (edit_button != null) {
+                                if (value == null) {
+                                    edit_button.text = "Connect"
+                                }
+                                else if (value == true) {
+                                    edit_button.text = "Connected"
+                                }
+
+                                else if (value == false) {
+                                    edit_button.text = "Connect"
+                                }
+                            }
+
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+                        }
+
+                    })
+
+
+                    edit_button.text = "Connect"
                 }
             })
 
@@ -72,14 +97,6 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        Log.d("ProfileFragment", "ref: ${selectedUserRef.toString()}")
-//        Log.d("ProfileFragment", "ref: ${currentlyLoggedInUserRef.toString()}")
-        // load the current image from firebase to imageview
-//        setCurrentProfilePicture(view)
-
-
-
         // Profile button extracted from the layout file
         val profileButton = view.findViewById<ImageView>(R.id.imageView)
 
@@ -107,45 +124,40 @@ class ProfileFragment : Fragment() {
         // Settings Button
         val button = view.findViewById<Button>(R.id.edit_button)
 
+        model.currentlyLoggedInUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+            Log.d("ProfileFragment", "currentlyLoggedInUser: ${item.toString()}")
+            val currentlyLoggedInUser = item
+            model.selectedUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+                button?.setOnClickListener {
+                    val buttoninfo = view.edit_button.text.toString()
 
-        button?.setOnClickListener {
-           val buttoninfo = view.edit_button.text.toString()
-
-            if(buttoninfo=="Edit Profile") {
-                val intent = Intent (this@ProfileFragment.context, SettingActivity::class.java)
-                startActivity(intent)
+                    if(buttoninfo=="Edit Profile") {
+                        val intent = Intent (this@ProfileFragment.context, SettingActivity::class.java)
+                        startActivity(intent)
 
 
-            }
+                    }
 
-            else if(buttoninfo=="Connect")
-            {
-                firebaseuser?.uid.let { lambda ->
-                    FirebaseDatabase.getInstance().reference
-                        .child("Connect").child(lambda.toString())
-                        .child("Connected").child(IDforprofile).setValue(true)
+                    else if(buttoninfo=="Connect")
+                    {
+                        Log.d("ProfileFragment", "Pressed Connect button")
+                        val ref = FirebaseDatabase.getInstance().getReference("/Connect/${currentlyLoggedInUser.getusersID()}")
+                        ref.child("Connected").child(item.getusersID()).setValue(true)
+                        button.text = "Connected"
+                    }
+
+                    else if(buttoninfo == "Connected")
+                    {
+                        Log.d("ProfileFragment", "Pressed Connect when already connect button")
+                        val ref = FirebaseDatabase.getInstance().getReference("/Connect/${currentlyLoggedInUser.getusersID()}")
+                        ref.child("Connected").child(item.getusersID()).removeValue()
+                        button.text = "Connect"
+                    }
                 }
-            }
+            })
 
-            else
-            {
-               val follow = firebaseuser?.uid.let { lambda ->
-                    FirebaseDatabase.getInstance().reference
-                        .child("Connect").child(lambda.toString())
-                        .child("Connected").child(IDforprofile).removeValue()
-                }
+        })
 
-
-
-
-
-
-
-
-            }
-
-
-        }
 
         // Logout Button extracted from the layout file
         imagelogoutbutton?.setOnClickListener {
