@@ -6,7 +6,7 @@ An app to connect investees to investor
 * Peer-to-peer video calling
 * Create startup posts
 * Send payments to users
-* 
+
 
 ## Getting Started
 
