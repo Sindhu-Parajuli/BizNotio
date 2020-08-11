@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.widget.RatingBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_rating.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class Rating : AppCompatActivity() {
 

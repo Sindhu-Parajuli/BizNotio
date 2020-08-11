@@ -1,9 +1,7 @@
 package com.example.biznoti0.ViewModels
-import androidx.annotation.MainThread
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.biznoti0.Model.ProfileUser
-import com.example.biznoti0.Model.User
 
 
 class SearchViewModel : ViewModel() {

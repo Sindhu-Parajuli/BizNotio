@@ -1,7 +1,5 @@
 package com.example.biznoti0.Adapter
 
-import Fragments.ProfileFragment
-import Fragments.SearchFragment
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,19 +9,13 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.R
 import com.example.biznoti0.ViewModels.SearchViewModel
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ProfileAdapter (

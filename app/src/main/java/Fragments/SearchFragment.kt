@@ -9,13 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.biznoti0.Adapter.ProfileAdapter
 import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.R
-import com.example.biznoti0.ViewModels.ChatViewModel
 import com.example.biznoti0.ViewModels.SearchViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -38,6 +36,7 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         searchedView = view.findViewById(R.id.recycler_view)

@@ -20,7 +20,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_create_post.*
-import kotlinx.android.synthetic.main.single_post.view.*
 import java.util.*
 import kotlin.collections.HashMap
 

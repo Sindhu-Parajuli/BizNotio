@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.biznoti0.Adapter.ProposalsAdapter
 import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.Model.Proposal
-import com.example.biznoti0.Model.User
 import com.example.biznoti0.R
 import com.example.biznoti0.ViewModels.SearchViewModel
 import com.google.firebase.auth.FirebaseAuth
