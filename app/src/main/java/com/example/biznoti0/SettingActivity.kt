@@ -51,10 +51,10 @@ class SettingActivity : AppCompatActivity() {
          val currUserHashMap = HashMap<String, Any>()
 
 
-         currUserHashMap["Profession"] = EnterProfession.text.toString().toLowerCase()
-         currUserHashMap["Education"] = EnterEducation.text.toString().toLowerCase()
-         currUserHashMap["BizNotioGoals"] = EnterBizNotioGoals.text.toString().toLowerCase()
-         currUserHashMap["Interests"] = EnterInterest.text.toString().toLowerCase()
+         currUserHashMap["Profession"] = EnterProfession.text.toString()
+         currUserHashMap["Education"] = EnterEducation.text.toString()
+         currUserHashMap["BizNotioGoals"] = EnterBizNotioGoals.text.toString()
+         currUserHashMap["Interests"] = EnterInterest.text.toString()
 
 
          userreference.child(firebaseuser.uid).updateChildren(currUserHashMap)
