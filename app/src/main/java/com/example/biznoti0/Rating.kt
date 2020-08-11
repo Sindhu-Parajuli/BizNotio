@@ -22,6 +22,7 @@ class Rating : AppCompatActivity() {
 
                 Toast.makeText(this@Rating, "Given rating is: $p1", Toast.LENGTH_SHORT).show()
                // number.text = "$p1"
+
                 val intent = Intent(this@Rating, MainActivity::class.java)
                 startActivity(intent)
 
