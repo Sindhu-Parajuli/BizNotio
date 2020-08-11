@@ -1,24 +1,33 @@
 package com.example.biznoti0.Adapter
 
 import Fragments.ProfileFragment
+import Fragments.SearchFragment
 import android.content.Context
-import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.biznoti0.MainActivity
 import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.R
+import com.example.biznoti0.ViewModels.SearchViewModel
 import com.squareup.picasso.Picasso
 
-class ProfileAdapter (private var usercontext: Context,
-                       private var userlist:List<ProfileUser>,
-                      private var Fragment: Boolean = false) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>()
+class ProfileAdapter (
+                        private var model: SearchViewModel,
+                        private var usercontext: Context,
+                        private var userlist:List<ProfileUser>,
+                        private var Fragment: Boolean = false) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>()
 
 {
     //View holder to return views on the layout created
@@ -42,22 +51,13 @@ class ProfileAdapter (private var usercontext: Context,
 
 
       holder.itemView.setOnClickListener(View.OnClickListener {
-          if (Fragment) {
-              val preference = usercontext.getSharedPreferences("Preferences", Context.MODE_PRIVATE).edit()
-              preference.putString("IDforprofile", userobtainer.getusersID())
-              preference.apply()
-              (usercontext as FragmentActivity).supportFragmentManager.beginTransaction()
-                  .replace(R.id.nav_host_fragment_container, ProfileFragment()).commit()
-          }
-          else
-          {
-              val preference = usercontext.getSharedPreferences("Preferences", Context.MODE_PRIVATE).edit()
-              preference.putString("IDforprofile", userobtainer.getusersID())
-              preference.apply()
-              (usercontext as FragmentActivity).supportFragmentManager.beginTransaction()
-                  .replace(R.id.nav_host_fragment_container, ProfileFragment()).commit()
-          }
+          Log.d("ProfileAdapter", "userobtainer: ${userobtainer.toString()}")
+          Log.d("ProfileAdapter", "context: $usercontext")
+          model.select(userobtainer)
+          it.findNavController().navigate(R.id.navigation_profile, null)
 
+          val imm = usercontext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+          imm.hideSoftInputFromWindow(it.windowToken, 0)
 
 
 

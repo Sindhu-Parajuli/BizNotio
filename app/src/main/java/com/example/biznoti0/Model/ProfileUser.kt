@@ -21,9 +21,11 @@ private var ACType:String = ""
 
     private var Interests: String = ""
 
+    private var profileImageUrl: String = ""
+
     constructor()
 
-    constructor(ACType:String, FName:String, LName:String, usersID:String, Image:String, Profession:String, Education:String, BizNotioGoals:String, Interests:String)
+    constructor(ACType:String, FName:String, LName:String, usersID:String, Image:String, Profession:String, Education:String, BizNotioGoals:String, Interests:String, profileImageUrl: String)
     {
         this.ACType = ACType
         this.FName = FName
@@ -34,6 +36,7 @@ private var ACType:String = ""
         this.Education = Education
         this.Interests=Interests
         this.Profession= Profession
+        this.profileImageUrl = profileImageUrl
 
     }
 
@@ -111,6 +114,15 @@ private var ACType:String = ""
 
     fun setImage(Image: String) {
         this.Image = Image
+    }
+
+    fun getProfileImageUrl(): String {
+        return this.profileImageUrl
+    }
+
+//    ACType:String, FName:String, LName:String, usersID:String, Image:String, Profession:String, Education:String, BizNotioGoals:String, Interests:String
+    override fun toString(): String {
+        return "account type: ${this.ACType} first name: ${this.FName} last name: ${this.LName} user id: ${this.usersID} image: ${this.Image} profession: ${this.Profession} education: ${this.Education} goals: ${this.BizNotioGoals} interests: ${this.Interests} profileImageUrl: ${this.profileImageUrl}"
     }
 
 

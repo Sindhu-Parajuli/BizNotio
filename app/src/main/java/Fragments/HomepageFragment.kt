@@ -8,11 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.biznoti0.Adapter.ProposalsAdapter
+import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.Model.Proposal
+import com.example.biznoti0.Model.User
 import com.example.biznoti0.R
+import com.example.biznoti0.ViewModels.SearchViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_homepage.*
@@ -34,9 +43,12 @@ class HomepageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_homepage, container, false)
     }
 
+
+    private val model: SearchViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        fetchCurrentUser()
         val imageButton = view.findViewById<ImageButton>(R.id.messenger)
         imageButton?.setOnClickListener{
             findNavController().navigate(R.id.chatListFragment, null)
@@ -65,6 +77,23 @@ class HomepageFragment : Fragment() {
                 Log.i(TAG, "View ${proposal}")
             }
         }
+    }
+
+    private fun fetchCurrentUser() {
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val currentUser = snapshot.getValue(ProfileUser::class.java)
+                Log.d("ProfileAdapter", "Current user: ${currentUser.toString()}")
+                if (currentUser != null) {
+                    model.select(currentUser)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
     }
 
 }

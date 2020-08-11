@@ -15,6 +15,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -22,6 +24,7 @@ import com.example.biznoti0.Model.ProfileUser
 import com.example.biznoti0.R
 import com.example.biznoti0.SettingActivity
 import com.example.biznoti0.SignInActivity
+import com.example.biznoti0.ViewModels.SearchViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -54,13 +57,13 @@ class ProfileFragment : Fragment() {
     }
 
     private var progressDialog: ProgressDialog? = null
-
+    private val model: SearchViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // load the current image from firebase to imageview
-        setCurrentProfilePicture(view)
+//        setCurrentProfilePicture(view)
 
 
 
@@ -306,40 +309,63 @@ class ProfileFragment : Fragment() {
 
     private fun storeuserData()
     {
-        val userdata = FirebaseDatabase.getInstance().getReference().child("usersID").child(IDforprofile)
-        userdata.addValueEventListener(object : ValueEventListener
+        model.selectedUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+            view?.textView?.text = item!!.getFNAME()  + " " + item.getLName()
+            view?.Education?.text= item.getEducation()
+            view?.Goals?.text= item.getBizNotioGoals()
+            view?.Interests?.text= item.getInterests()
+            view?.profession?.text= item.getProfession()
+            val requestOptions = RequestOptions()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
 
-        {
-            override fun onCancelled(error: DatabaseError) {
-
+            // So the tutorial was using picasso but I found better loading times with glide
+            Glide.with(view?.context!!)
+                .applyDefaultRequestOptions(requestOptions)
+                .load(item.getProfileImageUrl())
+                .into(view?.findViewById<CircleImageView>(R.id.circle_image_profile)!!)
+            try {
+                imageView.alpha = 0f
+            }
+            catch (e: Exception) {
+                Log.d("ProfileFragment", "Prevented fatal crash, imageView is null...")
             }
 
-            override fun onDataChange(snapshot: DataSnapshot) {
-/*
-                if(context!=null)
-                {
-                    return
-                }
-*/
-                if(snapshot.exists())
-                {
-                    val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
-                    //Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(view?.circle_image_profile)
-                        view?.textView?.text = newuser!!.getFNAME()  + " " + newuser.getLName()
-                    view?.Education?.text=newuser!!.getEducation()
-                    view?.Goals?.text=newuser!!.getBizNotioGoals()
-                    view?.Interests?.text=newuser!!.getInterests()
-                    view?.profession?.text=newuser!!.getProfession()
-
-
-                }
-
-            }
-
-        }
-
-
-        )
+        })
+//        val userdata = FirebaseDatabase.getInstance().getReference().child("usersID").child(IDforprofile)
+//        userdata.addValueEventListener(object : ValueEventListener
+//
+//        {
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(snapshot: DataSnapshot) {
+///*
+//                if(context!=null)
+//                {
+//                    return
+//                }
+//*/
+//                if(snapshot.exists())
+//                {
+//                    val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
+//                    //Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(view?.circle_image_profile)
+//                        view?.textView?.text = newuser!!.getFNAME()  + " " + newuser.getLName()
+//                    view?.Education?.text=newuser!!.getEducation()
+//                    view?.Goals?.text=newuser!!.getBizNotioGoals()
+//                    view?.Interests?.text=newuser!!.getInterests()
+//                    view?.profession?.text=newuser!!.getProfession()
+//
+//
+//                }
+//
+//            }
+//
+//        }
+//
+//
+//        )
     }
 
 

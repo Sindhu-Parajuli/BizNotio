@@ -73,6 +73,7 @@ class ChatListFragment : Fragment() {
             val row = item as LatestMessageRow
 
             model.select(row.user!!)
+
             findNavController().navigate(R.id.chatLogFragment, null)
         }
 //        setupDummyRows()
