@@ -88,6 +88,7 @@ class HomepageFragment : Fragment() {
                 Log.d("ProfileAdapter", "Current user: ${currentUser.toString()}")
                 if (currentUser != null) {
                     model.select(currentUser)
+                    model.setCurrentUser(currentUser)
                 }
             }
             override fun onCancelled(error: DatabaseError) {

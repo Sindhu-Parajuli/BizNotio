@@ -44,24 +44,37 @@ import java.util.*
 class ProfileFragment : Fragment() {
     private lateinit var IDforprofile:String
     private lateinit var firebaseuser:FirebaseUser
+
+    private val model: SearchViewModel by activityViewModels()
+//    private lateinit var selectedUserRef: ProfileUser
+//    private lateinit var currentlyLoggedInUserRef: ProfileUser
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        model.currentlyLoggedInUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+            Log.d("ProfileFragment", "currentlyLoggedInUser: ${item.toString()}")
+            val currentlyLoggedInUser = item
+            model.selectedUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+                Log.d("ProfileFragment", "selectedUser: ${item.toString()}")
+                if (currentlyLoggedInUser.getusersID() != item.getusersID()) {
+                    edit_button.visibility = View.GONE
+                }
+            })
 
-
-
+        })
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
     private var progressDialog: ProgressDialog? = null
-    private val model: SearchViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        Log.d("ProfileFragment", "ref: ${selectedUserRef.toString()}")
+//        Log.d("ProfileFragment", "ref: ${currentlyLoggedInUserRef.toString()}")
         // load the current image from firebase to imageview
 //        setCurrentProfilePicture(view)
 
@@ -69,6 +82,7 @@ class ProfileFragment : Fragment() {
 
         // Profile button extracted from the layout file
         val profileButton = view.findViewById<ImageView>(R.id.imageView)
+
 
 
         profileButton?.setOnClickListener{
@@ -92,6 +106,8 @@ class ProfileFragment : Fragment() {
 
         // Settings Button
         val button = view.findViewById<Button>(R.id.edit_button)
+
+
         button?.setOnClickListener {
            val buttoninfo = view.edit_button.text.toString()
 
@@ -309,6 +325,10 @@ class ProfileFragment : Fragment() {
 
     private fun storeuserData()
     {
+
+//        model.currentlyLoggedInUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
+//            currentlyLoggedInUserRef = item
+//        })
         model.selectedUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
             view?.textView?.text = item!!.getFNAME()  + " " + item.getLName()
             view?.Education?.text= item.getEducation()
