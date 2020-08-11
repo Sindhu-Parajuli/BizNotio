@@ -144,23 +144,20 @@ class AddPost : AppCompatActivity() {
 
     private fun uploadDatabase(uri: String, proposalId: String)
     {
-        //val ImagePostId = UUID.randomUUID().toString()
-        //var curruserId = mFireAuth.currentUser!!.uid
-        // userreference = FirebaseDatabase.getInstance().reference.child("usersID").child(curruserId)
+
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/ImagePosts/$proposalId")
-        //val postId = ref.push().key
+
         val postMap = HashMap<String, Any>()
-        //postMap["postid"] = postId!!
+
         postMap["publisher"] = FirebaseAuth.getInstance().currentUser!!.uid
         postMap["postimage"] = uri
 
         ref.setValue(postMap)
             .addOnSuccessListener {
-                //Toast.makeText(this, "Image has been Posted", Toast.LENGTH_LONG).show()
+
                 finish()
-                //startActivity(Intent(this@AddPost, MainActivity::class.java))
-                //findNavController().navigate(R.id.navigation_home)
+
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Image cannot be Posted: ERROR", Toast.LENGTH_LONG).show()

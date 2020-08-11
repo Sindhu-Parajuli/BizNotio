@@ -174,18 +174,12 @@ class ChatListFragment : Fragment() {
     }
 
 
-
-
-
-
-
-
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/usersID/$uid")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-//                currentUser = snapshot.getValue<User>()
+
                 currentUser = snapshot.getValue(User::class.java)
                 Log.d("ChatListFragment", "Current user: ${currentUser?.usersID}")
             }

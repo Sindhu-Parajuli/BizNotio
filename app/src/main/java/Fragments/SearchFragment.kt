@@ -82,7 +82,7 @@ class SearchFragment : Fragment() {
     private fun results(enteredtext: String) {
         val query = FirebaseDatabase.getInstance().getReference()
             .child("usersID")
-            //.orderByChild("FName").startAt(enteredtext).endAt(enteredtext+"\uf8ff")
+
             .orderByChild("ACType").startAt(enteredtext).endAt(enteredtext+"\uf8ff")
 
 

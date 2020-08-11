@@ -148,45 +148,6 @@ class AppointmentSetupFragment : Fragment() {
         val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
         latestMessageToRef.setValue(chatMessage)
 
-//        val proposalId = UUID.randomUUID().toString()
-//        val ref = FirebaseDatabase.getInstance().getReference("/proposals/$proposalId")
-//
-//        val uid = FirebaseAuth.getInstance().uid ?: ""
-//
-//        val proposalName: String = ProposalName.text.toString()
-//        val proposalType: String = ProposalType.text.toString()
-//        val proposalDescription: String = ProposalDescription.text.toString()
-//        val minimumCase: String = MinimumCase.text.toString()
-//        val link: String = Link.text.toString()
-//        val owner: String = uid
-//
-//        val proposal = com.example.biznoti0.Model.Proposal(
-//            owner,
-//            proposalId,
-//            proposalName,
-//            proposalType,
-//            proposalDescription,
-//            minimumCase,
-//            link
-//        )
-//
-//
-//        ref.setValue(proposal)
-//            .addOnSuccessListener {
-//                Log.d("CreatePost", "Finally we saved the proposal to Firebase Database")
-//            }
-//            .addOnFailureListener {
-//                Log.d("CreatePost", "Failed to set value to database: ${it.message}")
-//            }
+
     }
 }
-
-
-
-/**
- * appointment title plain text id is "appointment_title"
- * detail box id is "appointment_detail"
- * date textView id is "dateTextView"
- * time textView id is "timeTextView"
- * submission button id is "requestAppointment"
- */

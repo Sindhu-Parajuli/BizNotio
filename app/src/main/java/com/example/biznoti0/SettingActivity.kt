@@ -81,17 +81,11 @@ class SettingActivity : AppCompatActivity() {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-/*
-                if(context!=null)
-                {
-                    return
-                }
-*/
+
+
                     if(snapshot.exists())
                     {
                         val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
-                        //Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(profile_image_clickable)
-
                         EnterEducation?.setText(newuser!!.getEducation())
                         EnterBizNotioGoals?.setText(newuser!!.getBizNotioGoals())
                         EnterInterest?.setText(newuser!!.getInterests())
@@ -107,9 +101,6 @@ class SettingActivity : AppCompatActivity() {
 
             )
         }
-
-
-
 
 
 

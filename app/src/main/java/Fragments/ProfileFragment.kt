@@ -44,8 +44,7 @@ class ProfileFragment : Fragment() {
     private lateinit var firebaseuser:FirebaseUser
 
     private val model: SearchViewModel by activityViewModels()
-//    private lateinit var selectedUserRef: ProfileUser
-//    private lateinit var currentlyLoggedInUserRef: ProfileUser
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -110,13 +109,10 @@ class ProfileFragment : Fragment() {
 
         }
 
-        //Rating button
 
-        //val ratingbutton = view.findViewById<Button>(R.id.Rating)
         Rating.setOnClickListener {
             findNavController().navigate(R.id.Rating, null)
-            //val intent = Intent (this@ProfileFragment.context, Rating::class.java)
-            //startActivity(intent)
+
 
         }
 
@@ -280,17 +276,15 @@ class ProfileFragment : Fragment() {
             // where the image is stored on the machine
             selectedPhotoUri = data.data
 
-           // val contentResolver = getActivity().getContentResolver()
+
             val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, selectedPhotoUri)
 
-            // set the image to the circle viewholder
+
             circle_image_profile.setImageBitmap(bitmap)
 
-            // make the button invisible to the updated image (circle_image_profile) visible
+
             imageView.alpha = 0f
-            // set the background for the xml id element
-            // val bitMapDrawable = BitmapDrawable(bitmap)
-            // profile_image_clickable.setBackgroundDrawable(bitMapDrawable)
+
 
             uploadImageToFirebaseStorage()
         }
@@ -299,11 +293,10 @@ class ProfileFragment : Fragment() {
     private fun uploadImageToFirebaseStorage() {
         if (selectedPhotoUri == null) return
 
-        // make a file name that is a random string, the name will be long
+
         val filename = UUID.randomUUID().toString()
 
-        // get the location of your firebase storage by giving it the name of the directory you use
-        // in our case we use the "user Info"
+
         val ref = FirebaseStorage.getInstance().getReference("/userStorage/$filename")
 
         ref.putFile(selectedPhotoUri!!)
@@ -338,9 +331,7 @@ class ProfileFragment : Fragment() {
     private fun storeuserData()
     {
 
-//        model.currentlyLoggedInUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
-//            currentlyLoggedInUserRef = item
-//        })
+
         model.selectedUser.observe(viewLifecycleOwner, Observer<ProfileUser> { item ->
             view?.textView?.text = item!!.getFNAME()  + " " + item.getLName()
             view?.Education?.text= item.getEducation()
@@ -364,40 +355,7 @@ class ProfileFragment : Fragment() {
             }
 
         })
-//        val userdata = FirebaseDatabase.getInstance().getReference().child("usersID").child(IDforprofile)
-//        userdata.addValueEventListener(object : ValueEventListener
-//
-//        {
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-///*
-//                if(context!=null)
-//                {
-//                    return
-//                }
-//*/
-//                if(snapshot.exists())
-//                {
-//                    val newuser = snapshot.getValue<ProfileUser>(ProfileUser::class.java)
-//                    //Picasso.get().load(newuser!!.getImage()).placeholder(R.drawable.profile).into(view?.circle_image_profile)
-//                        view?.textView?.text = newuser!!.getFNAME()  + " " + newuser.getLName()
-//                    view?.Education?.text=newuser!!.getEducation()
-//                    view?.Goals?.text=newuser!!.getBizNotioGoals()
-//                    view?.Interests?.text=newuser!!.getInterests()
-//                    view?.profession?.text=newuser!!.getProfession()
-//
-//
-//                }
-//
-//            }
-//
-//        }
-//
-//
-//        )
+
     }
 
 

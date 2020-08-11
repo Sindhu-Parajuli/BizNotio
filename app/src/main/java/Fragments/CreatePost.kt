@@ -93,7 +93,7 @@ class CreatePost : Fragment() {
             val intent = Intent(activity, AddPost::class.java)
             intent.putExtra("ProposalId", proposalId)
             startActivity(intent)
-            //findNavController().navigate(R.id.Addpost, null)
+
         }
 
 
@@ -110,7 +110,6 @@ class CreatePost : Fragment() {
         val proposalType: String = ProposalType.text.toString()
         val proposalDescription: String = ProposalDescription.text.toString()
         val minimumCase: String = MinimumCase.text.toString()
-        //val link: String = tvLink.text.toString()
         val owner: String = uid
 
 
@@ -148,7 +147,7 @@ class CreatePost : Fragment() {
                 proposalItem.put("proposalType", proposalType)
                 proposalItem.put("proposalDescription", proposalDescription)
                 proposalItem.put("minimumCase", minimumCase)
-                //proposalItem.put("link", link)
+
                 proposalItem.put("timeCreated", System.currentTimeMillis())
                 dbRef.document(proposalId).set(proposalItem).addOnSuccessListener { void: Void? ->
                     Toast.makeText(requireContext(), "Proposal has been Posted", Toast.LENGTH_LONG).show()

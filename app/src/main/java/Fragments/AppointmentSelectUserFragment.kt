@@ -64,7 +64,7 @@ class AppointmentSelectUserFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-        //var
+
     }
 
     private val model: AppointmentViewModel by activityViewModels()
@@ -93,7 +93,7 @@ class AppointmentSelectUserFragment : Fragment() {
                     }
                 }
                 adapter.setOnItemClickListener {item, view ->
-                    // type casting to the appropriate class we use for our recycler view
+
                     val userItem = item as UserItem
                     model.select(userItem.user!!)
                     findNavController().navigate(R.id.appointmentSetup, null)

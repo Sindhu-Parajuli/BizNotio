@@ -103,11 +103,11 @@ class ChatLogFragment : Fragment() {
             findNavController().navigate(R.id.chatListFragment, null)
         }
 
-        //val paybutton = view.findViewById(R.id.text_field_pay_button)
+
         text_field_pay_button.setOnClickListener {
             Log.d("ChatLogFragment", "Pay Button Pressed")
             findNavController().navigate(R.id.Payment, null)
-            //findNavController().navigate(R.id.navigation_home)
+
         }
 
         text_field_attachment_button.setOnClickListener {
@@ -115,22 +115,7 @@ class ChatLogFragment : Fragment() {
             intent.type = "*/*"
             startActivityForResult(intent, 1000)
 
-            //findNavController().navigate(R.id.Addpost, null)
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         text_field_send_button.visibility = View.GONE
@@ -316,7 +301,7 @@ class ChatLogFragment : Fragment() {
                         postMap["sender"] = FirebaseAuth.getInstance().currentUser!!.uid
                         postMap["receiver"] = ""
                         postMap["url"]=url
-// val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+
 
                         ref.child("user-messages").child(id.toString()!!).setValue(postMap)
                             .addOnCompleteListener {
@@ -324,8 +309,7 @@ class ChatLogFragment : Fragment() {
                                 if(task.isSuccessful)
                                 {
                                     val chatref = FirebaseDatabase.getInstance().reference.child("Images Chat")
-                                        //.child(firebaseUser!!.uid)
-                                        //.child(vis)
+
 
                                     chatref.addListenerForSingleValueEvent(object :ValueEventListener
                                     {
