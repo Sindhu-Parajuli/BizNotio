@@ -69,7 +69,7 @@ class ChatListFragment : Fragment() {
         chat_list_recycler_view.adapter = adapter
         chat_list_recycler_view.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
         adapter.setOnItemClickListener {item, _ ->
-            Log.d("ChatListFragment", "123")
+            Log.d("ChatListFragment", "clicked")
             val row = item as LatestMessageRow
 
             model.select(row.user!!)
