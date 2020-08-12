@@ -104,7 +104,7 @@ Now after you hook up the backend credentials to your clone
 you will have a fully functioning Biznotio app! 😎✨🎉
 
 ## Demo
-![Quick-demo-gif](https://i.giphy.com/media/W30YWRyCuy72mjlby6/source.gif)
+![Quick-demo-gif](source.gif)
 
 ## Built With
 
