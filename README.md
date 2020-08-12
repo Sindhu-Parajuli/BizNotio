@@ -70,6 +70,8 @@ Steps to build from source:
 Open IntelliJ and select new project from existing source 
 ```
 
+![Quick-build-tutorial](source_biznotio_build_tutorial.gif)
+
 On URL put this link
 ```
 https://github.com/Sindhu-Parajuli/BizNotio2.git
@@ -77,11 +79,17 @@ https://github.com/Sindhu-Parajuli/BizNotio2.git
 ![IntelliJ clone repo](https://i.ibb.co/ScYQhk2/image.png)
 
 ```
-Press build on top portion of screen
+Wait for the gradle sync to finish. Press build on top portion of screen
 ```
+Copy these two lines in `temp.txt`
+```
+TWILIO_ACCESS_TOKEN_SERVER=https://citrine-speckled-recess.glitch.me/
+USE_TOKEN_SERVER=true
+```
+to `local.properties`
 
 ```
-You will have a running app but you won't be able to have the proper database connection 
+You will have a running app but if you want your own database follow the instructions below! 
 ```
 
 ### Set up the backend
