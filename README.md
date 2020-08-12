@@ -58,13 +58,14 @@ build.gradle
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+To install the application, check out the releases tab on the Github repo. This should be a simple APK 
+that you can install directly to the phone. Since this APK will have our database connected, you won't 
+need to deploy your own Firebase project or Node.js server to run the application. If you do want 
+to build from source you will need to launch your own Firebase app and connect it to Android, you will
+also have to launch your own server to handle token authorization for the Twilio programmable video SDK.
 
-Say what the step will be
 
-```
-Open IntelliJ and select new project from existing source 
-```
+Steps to build from source:
 ```
 Open IntelliJ and select new project from existing source 
 ```
@@ -79,12 +80,31 @@ https://github.com/Sindhu-Parajuli/BizNotio2.git
 Press build on top portion of screen
 ```
 
+```
+You will have a running app but you won't be able to have the proper database connection 
+```
 
+### Set up the backend
+[Create a Firebase project and link it to your clone](https://firebase.google.com/docs/android/setup)
+
+[Follow this tutorial for Twilio programmable voice](https://github.com/twilio/video-quickstart-android)
+
+[Launch the Node.js server for token authorization](https://github.com/TwilioDevEd/video-access-token-server-node)
+
+That's all you need to do for the backend! 
+
+### Back to IntelliJ
 Run the app on your emulator from AVD Manager or use your phone
 Instructions on testing the app on your phone can be found here:
+
 [Android Developers Guide](https://developer.android.com/studio/run/device)
 
-<img src="https://media.giphy.com/media/W30YWRyCuy72mjlby6/source.gif" width="250"/>
+
+Now after you hook up the backend credentials to your clone
+you will have a fully functioning Biznotio app! 😎✨🎉
+
+## Demo
+![Quick-demo-gif](https://media.giphy.com/media/W30YWRyCuy72mjlby6/source.gif)
 
 ## Built With
 
